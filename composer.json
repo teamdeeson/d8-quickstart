@@ -21,7 +21,9 @@
     "cweagans/composer-patches": "~1.0",
     "drupal/core": "~8",
     "drupal/console": "~1.0",
-    "drush/drush": "~8"
+    "drush/drush": "~8",
+    "drupal/drupal-extension": "^3.2",
+    "guzzlehttp/guzzle" : "^6.0@dev"
   },
   "require-dev": {
     "behat/mink": "~1.7",
@@ -71,4 +73,3 @@
     }
   }
 }
-
