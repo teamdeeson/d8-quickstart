@@ -4,7 +4,7 @@ ENVIRONMENT?=vdd
 DRUSH_ARGS?=-y --nocolor
 DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
 DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
-COMPOSER?=$(which composer)
+COMPOSER?=$(shell command -v composer 2> /dev/null)
 
 # Build by default.
 default: build
