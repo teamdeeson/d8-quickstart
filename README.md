@@ -21,6 +21,8 @@ Now you will need to update the repository to point to your new project. If you 
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments.
 
+It is highly recommended that you create a site.aliases.drushrc.php and configure your local environment.
+
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
 This ensures we have a universal mechanism for task running across all of our projects. 
