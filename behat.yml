@@ -1,0 +1,40 @@
+default:
+  autoload:
+    '': %paths.base%/behat-tests/bootstrap
+  suites:
+    default:
+      paths:
+        - %paths.base%/behat-tests
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2: ~
+      base_url: http://localhost/
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: 'docroot'
+      selectors:
+        message_selector: '.message'
+        error_message_selector: '.error'
+        success_message_selector: '.success'
+        warning_message_selector: '.warning'
+      region_map:
+        comments: '.comments'
+
+
+vdd:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://PROJECT.dev/
+    Drupal\DrupalExtension:
+      api_driver: 'drupal'
+      drush:
+        alias: 'vdd'
