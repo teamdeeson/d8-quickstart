@@ -1,0 +1,11 @@
+image: phpunit/phpunit:5.0.3
+
+# We only need the current commit.
+clone:
+  depth: full
+
+pipelines:
+  default:
+    - step:
+        script:
+          - make deploy RUN_DESTRUCTIVE=true
