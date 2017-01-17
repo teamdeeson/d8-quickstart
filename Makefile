@@ -24,10 +24,9 @@ build-prod:
 	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs
 
 # Run automated tests
-test:
-
-# Run the tests on VDD.
-test-local:
+test: build
+	vendor/bin/phpunit
+	vendor/bin/behat
 
 # Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
 deploy:	build-prod test
