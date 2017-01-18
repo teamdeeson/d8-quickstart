@@ -5,7 +5,7 @@ This repository provides a quick-start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use vdd for managing local development and this repository comes with some default configuration for working with VDD. You are of course free to use alternatives, but additional configuration may be required.
+We use [vdd](http://handbook.deeson.co.uk/development/vdd/) for managing local development and this repository comes with some default configuration for working with VDD. You are of course free to use alternatives, but additional configuration may be required.
 
 ## Creating a new Drupal site
 
