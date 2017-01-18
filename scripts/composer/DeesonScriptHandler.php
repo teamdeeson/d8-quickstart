@@ -67,7 +67,7 @@ class DeesonScriptHandler {
       $oldmask = umask(0);
       $fs->mkdir($drupal_root . '/sites/default/files', 0777);
       umask($oldmask);
-      $event->getIO()->write("Create a sites/default/files directory with chmod 0777");
+      $event->getIO()->write("Created a sites/default/files directory with chmod 0777");
     }
   }
 
