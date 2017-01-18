@@ -5,61 +5,98 @@ This repository provides a quick-start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
+We use vdd for managing local development and this repository comes with some default configuration for working with VDD. You are of course free to use alternatives, but additional configuration may be required.
+
 ## Creating a new Drupal site
 
 Clone this repository.
 
-```git clone https://bitbucket.org/deesongroup6346/d8-quick-start.git <your-project-name>```
+```bash
+git clone https://bitbucket.org/deesongroup6346/d8-quick-start.git <your-project-name>
+```
 
 This will create a copy of this repository in the directory you specified (<your-project-name>).
 
 Now you will need to update the repository to point to your new project. If you haven't already, create a new Bitbucket or Github repository
  for your project first and note the Git URL.
 
-```git remote set-url origin <your-project-git-url>```
+```bash
+git remote set-url origin <your-project-git-url>
+```
 
 ### Required configuration
-You should check through all of the services and settings files and make any required amendments.
+You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
+
+`settings/settings.php:` Configure your domain names and VDD location
+
+`drush/example.site.aliases.drushrc.php:` Create a site.aliases.drushrc.php from the example provided and configure your local environment.
+
+`behat.yml` Configure your vdd URL
 
 It is highly recommended that you create a site.aliases.drushrc.php and configure your local environment.
 
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
+
 This ensures we have a universal mechanism for task running across all of our projects. 
 
 The project can be built using the included Makefile.
 
-```make build```
-will build the project based on the assumed environment. This will create the `docroot/` folder and build your website. 
-
-```make install```
-will install the site and associated configuration. You will be prompted to optionally perform a site install. If you proceed this will erase your existing site database. 
-
+```bash
+make
+```
+will build the project based on the assumed environment. This will create the `docroot/` folder and build your website.
+ 
 You can specify the environment explicitly with the ENVIRONMENT variable which will add or remove dev dependencies:
 
-```make build ENVIRONMENT=dev```
+```bash
+make build ENVIRONMENT=dev
+```
 
-```make build ENVIRONMENT=prod```
+```bash
+make build ENVIRONMENT=prod
+```
 
+You can also safely remove your docroot at any point if you need to:
+
+```bash
+make clean
+```
+
+Once you have run the build, you can run the Drupal installation:
+
+```bash
+make install
+```
+will install the site and associated configuration. You will be prompted to optionally perform a site install. If you proceed this will erase your existing site database.
 
 ## Managing dependencies with composer
+All of your dependencies should be managed through composer. This includes any off-the-shelf code such as Drupal core, contrib modules and themes, and any 3rd party libraries.
 
 ### To add a module (e.g. redirect):
-```composer require drupal/redirect```
+```bash
+composer require drupal/redirect
+```
 
 ### To update a module (e.g. redirect):
-```composer update drupal/redirect```
+```bash
+composer update drupal/redirect
+```
 
 ### To update Drupal core:
-```composer update drupal/core --with-dependencies```
+```bash
+composer update drupal/core --with-dependencies
+```
 
-You should commit your composer.lock file to the repository as this will guarantee that any subsequent builds will use the same exact version of all
-your dependencies.
+**You should commit your composer.lock file to the repository as this will guarantee that any subsequent builds will use the same exact version of all
+your dependencies.**
 
 For further details, see the Drupal Composer project documentation:
+
 https://github.com/drupal-composer/drupal-project#composer-template-for-drupal-projects
 
 Composer project usage guide:
+
 https://getcomposer.org/doc/01-basic-usage.md
 
 ## Running tests
@@ -69,7 +106,10 @@ PHPUnit tests should be defined within you custom modules, in the tests/ sub-dir
 
 Behat tests should be defined in the behat-tests directory in the project root.
 
-```make test``` will run all of the Project's automated tests.
+```bash
+make test
+```
+will run all of the Project's automated tests.
 
 ## Project structure
 
@@ -101,7 +141,9 @@ You can define your services YAML files here.
 
 These need to be included in your settings file in the usual way:
 
-```$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services/development.services.yml';```
+```php
+$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services/development.services.yml';
+```
 
 ### settings/
 This contains the Drupal site settings, extracted from settings.php as per: 
@@ -120,4 +162,4 @@ Anything within `themes/` will be made available in `docroot/themes/custom/`
 This is the composer vendor directory, which contains project dependencies, tools and libraries. This should be excluded from your repository.
 
 ### web/
-This and docroot/ are symlinked to the same location for wider compatibility and should also be excluded from your repository.
+This and `docroot/` are symlinked to the same location for wider compatibility and should also be excluded from your repository.
