@@ -30,6 +30,8 @@ You should check through all of the services and settings files and make any req
 
 `settings/settings.php:` Configure your domain names and VDD location
 
+`settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
+
 `drush/example.site.aliases.drushrc.php:` Create a site.aliases.drushrc.php from the example provided and configure your local environment.
 
 `behat.yml` Configure your vdd URL
