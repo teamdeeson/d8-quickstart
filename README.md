@@ -19,6 +19,12 @@ composer create-project teamdeeson/d8-quickstart <project-name> --stability dev 
 
 You should now create a new git repository, and commit all files not excluded by the .gitignore file.
 
+```bash
+git init
+git add .
+git commit -m "Created the project."
+```
+
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
 
