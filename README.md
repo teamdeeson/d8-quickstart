@@ -1,7 +1,7 @@
 # Drupal 8
 The preferred way to manage Drupal 8 sites is to use composer, and the Drupal Composer project helps integrate Drupal core with composer.
 
-This repository provides a quick-start wrapper around Drupal Composer and includes common configuration and recommended modules for Deeson Drupal 8 projects.
+This repository provides a quick start wrapper around Drupal Composer and includes common configuration and recommended modules for Deeson Drupal 8 projects.
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
@@ -9,20 +9,15 @@ We use [vdd](http://handbook.deeson.co.uk/development/vdd/) for managing local d
 
 ## Creating a new Drupal site
 
-Clone this repository.
+First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+
+Then you can create a new project using composer:
 
 ```bash
-git clone https://github.com/teamdeeson/d8-quickstart.git <your-project-name>
+composer create-project teamdeeson/d8-quickstart <project-name> --stability dev --no-interaction
 ```
 
-This will create a copy of this repository in the directory you specified (<your-project-name>).
-
-Now you will need to update the repository to point to your new project. If you haven't already, create a new Bitbucket or Github repository
- for your project first and note the Git URL.
-
-```bash
-git remote set-url origin <your-project-git-url>
-```
+You should now create a new git repository, and commit all files not excluded by the .gitignore file.
 
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
