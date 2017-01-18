@@ -12,7 +12,7 @@ We use [vdd](http://handbook.deeson.co.uk/development/vdd/) for managing local d
 Clone this repository.
 
 ```bash
-git clone https://bitbucket.org/deesongroup6346/d8-quick-start.git <your-project-name>
+git clone https://github.com/teamdeeson/d8-quickstart.git <your-project-name>
 ```
 
 This will create a copy of this repository in the directory you specified (<your-project-name>).
