@@ -67,6 +67,16 @@
     ]
   },
   "extra": {
+    "drupal-scaffold": {
+      "omit-defaults": true,
+      "includes": [
+        "index.php"
+      ],
+      "initial": {
+        ".htaccess": ".htaccess",
+        "robots.txt": "robots.txt"
+      }
+    },
     "installer-paths": {
       "web/core": ["type:drupal-core"],
       "web/libraries/{$name}": ["type:drupal-library"],
