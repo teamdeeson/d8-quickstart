@@ -1,6 +1,6 @@
 image: phpunit/phpunit:5.0.3
 
-# We only need the current commit.
+# We need the full commit history for deployment.
 clone:
   depth: full
 
@@ -8,4 +8,5 @@ pipelines:
   default:
     - step:
         script:
+          - make test
           - make deploy RUN_DESTRUCTIVE=true
