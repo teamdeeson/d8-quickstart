@@ -30,4 +30,4 @@
  *   );
  * @endcode
  */
-$config_directories[CONFIG_SYNC_DIRECTORY] = dirname(DRUPAL_ROOT) . '/config/sync';
+$config_directories[CONFIG_SYNC_DIRECTORY] = dirname(DRUPAL_ROOT) . '/config';
