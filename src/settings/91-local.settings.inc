@@ -32,7 +32,7 @@ if (SETTINGS_ENVIRONMENT == 'local') {
   /*
    * Enable local development services.
    */
-  $settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services/development.services.yml';
+  $settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/src/services/development.services.yml';
 
   /*
    * Show all error messages, with backtrace information.
