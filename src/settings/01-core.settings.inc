@@ -44,7 +44,7 @@ $settings['install_profile'] = 'standard';
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'ENTER_A_VALUE_HERE';
+// $settings['hash_salt'] = 'ENTER_A_VALUE_HERE';
 
 /**
  * Deployment identifier.
