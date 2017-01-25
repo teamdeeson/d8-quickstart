@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Default Drupal configuration file sites/default/settings.php
+ * Default Drupal configuration file sites/default/settings.php.
  */
 
 /**

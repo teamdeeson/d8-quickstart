@@ -15,4 +15,4 @@ if (($_SERVER['HTTPS'] === 'OFF') && (php_sapi_name() != "cli")) {
       exit();
   }
 }
-*/
+// */

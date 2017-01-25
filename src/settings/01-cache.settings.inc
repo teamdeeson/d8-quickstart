@@ -38,11 +38,9 @@ if (SETTINGS_ENVIRONMENT != 'local') {
 }
 
 if (in_array(SETTINGS_ENVIRONMENT, ['test', 'live'])) {
-    $config['system.performance']['css']['gzip'] = TRUE;
-    $config['system.performance']['css']['preprocess'] = TRUE;
+  $config['system.performance']['css']['gzip'] = TRUE;
+  $config['system.performance']['css']['preprocess'] = TRUE;
 
-    $config['system.performance']['js']['gzip'] = TRUE;
-    $config['system.performance']['js']['preprocess'] = TRUE;
-
-    // $config['system.performance']['cache']['page']['max_age'] = 86400;
+  $config['system.performance']['js']['gzip'] = TRUE;
+  $config['system.performance']['js']['preprocess'] = TRUE;
 }

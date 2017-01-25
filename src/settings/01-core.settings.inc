@@ -5,6 +5,8 @@
  * Drupal core settings settings/01-core.settings.inc
  */
 
+// @codingStandardsIgnoreFile
+
 /**
  * Settings:
  *

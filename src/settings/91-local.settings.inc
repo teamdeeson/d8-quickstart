@@ -7,8 +7,10 @@
  * Include late/last so we can override configuration from other setting files.
  */
 
+use \Drupal\Component\Assertion\Handle;
+
 if (SETTINGS_ENVIRONMENT == 'local') {
-  /**
+  /*
    * Assertions.
    *
    * The Drupal project primarily uses runtime assertions to enforce the
@@ -25,14 +27,14 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    * @see https://wiki.php.net/rfc/expectations
    */
   assert_options(ASSERT_ACTIVE, TRUE);
-  \Drupal\Component\Assertion\Handle::register();
+  Handle::register();
 
-  /**
+  /*
    * Enable local development services.
    */
   $settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services/development.services.yml';
 
-  /**
+  /*
    * Show all error messages, with backtrace information.
    *
    * In case the error level could not be fetched from the database, as for
@@ -40,13 +42,13 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    */
   $config['system.logging']['error_level'] = 'verbose';
 
-  /**
+  /*
    * Disable CSS and JS aggregation.
    */
   $config['system.performance']['css']['preprocess'] = FALSE;
   $config['system.performance']['js']['preprocess'] = FALSE;
 
-  /**
+  /*
    * Disable the render cache (this includes the page cache).
    *
    * Note: you should test with the render cache enabled, to ensure the correct
@@ -60,7 +62,7 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    */
   $settings['cache']['bins']['render'] = 'cache.backend.null';
 
-  /**
+  /*
    * Disable Dynamic Page Cache.
    *
    * Note: you should test with Dynamic Page Cache enabled, to ensure the correct
@@ -69,7 +71,7 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    */
   $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 
-  /**
+  /*
    * Allow test modules and themes to be installed.
    *
    * Drupal ignores test modules and themes by default for performance reasons.
@@ -78,7 +80,7 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    */
   $settings['extension_discovery_scan_tests'] = TRUE;
 
-  /**
+  /*
    * Enable access to rebuild.php.
    *
    * This setting can be enabled to allow Drupal's php and database cached
@@ -88,7 +90,7 @@ if (SETTINGS_ENVIRONMENT == 'local') {
    */
   $settings['rebuild_access'] = TRUE;
 
-  /**
+  /*
    * Skip file system permissions hardening.
    *
    * The system module will periodically check the permissions of your site's
