@@ -28,15 +28,15 @@ git commit -m "Created the project."
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
 
-`settings/settings.php:` Configure your domain names and VDD location
+`src/settings/settings.php:` Configure your domain names and VDD location
 
-`settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
+`src/settings/01-core.settings.inc:` Configure a hash salt.
+
+`src/settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
 
 `drush/example.site.aliases.drushrc.php:` Create a site.aliases.drushrc.php from the example provided and configure your local environment.
 
 `behat.yml` Configure your vdd URL
-
-It is highly recommended that you create a site.aliases.drushrc.php and configure your local environment.
 
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
@@ -103,7 +103,7 @@ Composer project usage guide:
 https://getcomposer.org/doc/01-basic-usage.md
 
 ## Running tests
-This repository contains the starting point for running both Behat and PHPUnit test suites.
+This repository contains the starting point for running both Behat and PHPUnit test suites as well as Drupal coding standards checks with PHPCS.
 
 PHPUnit tests should be defined within you custom modules, in the tests/ sub-directory.
 
@@ -128,27 +128,21 @@ This directory contains compiled content and should not normally be committed to
 ### drush/
 This contains your drush site aliases file(s).
 
-### frontend/
+### src/
+This contains all of your project source code. As follows:
+
+#### src/frontend/
 If you are using a different toolset for your front-end components this is where it should be. We use NPM and Gulp to compile our SCSS and Javascript, and to generate fonts and icon-sets.
 
-### modules/
+#### src/modules/
 This is where you place your custom modules.
 
-Anything within `modules/` will be made available in `docroot/modules/custom/`
+Anything within `src/modules/` will be made available in `docroot/modules/custom/`
 
-### scripts/
-This is for any compilation or deployment scripts you may want to add.
-
-### services/
+#### src/services/
 You can define your services YAML files here.
 
-These need to be included in your settings file in the usual way:
-
-```php
-$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services/development.services.yml';
-```
-
-### settings/
+#### src/settings/
 This contains the Drupal site settings, extracted from settings.php as per: 
 http://handbook.deeson.co.uk/development/drupal8/#settings-file-configuration
 
@@ -156,10 +150,19 @@ This has been moved from either sites/default/settings/ or sites/conf/ mentioned
 
 settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php. 
 
-### themes/
+#### src/themes/
 This is where you place your custom theme(s).
 
-Anything within `themes/` will be made available in `docroot/themes/custom/`
+Anything within `src/themes/` will be made available in `docroot/themes/custom/`
+
+### scripts/
+This is for any compilation or deployment scripts you may want to add.
+
+These need to be included in your settings file in the usual way:
+
+```php
+$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/src/services/development.services.yml';
+```
 
 ### vendor/
 This is the composer vendor directory, which contains project dependencies, tools and libraries. This should be excluded from your repository.
