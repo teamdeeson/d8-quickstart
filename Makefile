@@ -23,6 +23,7 @@ build-local:
 build-prod:
 	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs
 
+# Run coding standards checks.
 test-code-quality: build-dev
 	# Configure Drupal Coder support.
 	${ROOT_DIR}/vendor/bin/phpcs --config-set installed_paths ${ROOT_DIR}/vendor/drupal/coder/coder_sniffer
@@ -30,14 +31,17 @@ test-code-quality: build-dev
 	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=Drupal --extensions=php,inc,module,theme ${ROOT_DIR}/src/
 	# Run the Drupal best practice checks.
 	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=DrupalPractice --extensions=php,inc,module,theme ${ROOT_DIR}/src/
-
-# Run automated tests
-test: build-dev test-code-quality
-	vendor/bin/phpunit
-	vendor/bin/behat
+# Run unit tests.
+test-phpunit: build-dev
+	${ROOT_DIR}/vendor/bin/phpunit
+# Run functional tests.
+test-behat: build-dev
+	# ${ROOT_DIR}/vendor/bin/behat
+# Run all automated tests
+test: build-dev test-code-quality test-phpunit test-behat
 
 # Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
-deploy:	build-prod test
+deploy:	test build-prod
 	if $(RUN_DESTRUCTIVE); then ./scripts/deploy.sh; else exit 1; fi
 
 # Cleanup
