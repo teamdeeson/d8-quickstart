@@ -23,6 +23,6 @@ if (file_exists($local_settings)) {
   define('SETTINGS_HOSTING', 'vdd');
 }
 
-foreach (glob(dirname(DRUPAL_ROOT) . '/settings/*.settings.inc') as $file) {
+foreach (glob(dirname(DRUPAL_ROOT) . '/src/settings/*.settings.inc') as $file) {
   require_once $file;
 }

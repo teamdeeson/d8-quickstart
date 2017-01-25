@@ -41,8 +41,8 @@ class DeesonScriptHandler {
     }
 
     $links = [
-      'modules' => 'modules/custom',
-      'themes' => 'themes/custom',
+      'src/modules' => 'modules/custom',
+      'src/themes' => 'themes/custom',
     ];
 
     // Create symlinks within the docroot.
@@ -58,7 +58,7 @@ class DeesonScriptHandler {
 
     // Prepare the settings file.
     if (!$fs->exists($drupal_root . '/sites/default/settings.php')) {
-      $fs->symlink('../../../settings/settings.php', $drupal_root . '/sites/default/settings.php');
+      $fs->symlink('../../../src/settings/settings.php', $drupal_root . '/sites/default/settings.php');
       $event->getIO()->write("Created a symlink for sites/default/settings.php");
     }
 

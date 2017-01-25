@@ -415,8 +415,7 @@ if ($settings['hash_salt']) {
 /**
  * Load services definition file.
  */
-$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/services.yml';
-$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/' . $site_path . '.services.yml';
+$settings['container_yamls'][] = dirname(DRUPAL_ROOT) . '/src/services.yml';
 
 /**
  * Override the default service container class.
