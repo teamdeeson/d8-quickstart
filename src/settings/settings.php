@@ -27,7 +27,7 @@ if (!defined('SETTINGS_ENVIRONMENT')) {
 }
 
 // Assume the site is running on vdd if no hosting settings have been defined.
-if (!defined('SETTINGS_ENVIRONMENT')) {
+if (!defined('SETTINGS_HOSTING')) {
   define('SETTINGS_HOSTING', 'vdd');
 }
 
