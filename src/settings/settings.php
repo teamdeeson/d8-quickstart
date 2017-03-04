@@ -19,7 +19,15 @@ $base_domains = [
 $local_settings = '/var/www/settings/PROJECT/settings.inc';
 if (file_exists($local_settings)) {
   require_once $local_settings;
+}
+
+// Assume local development environment if no environment has been defined.
+if (!defined('SETTINGS_ENVIRONMENT')) {
   define('SETTINGS_ENVIRONMENT', 'local');
+}
+
+// Assume the site is running on vdd if no hosting settings have been defined.
+if (!defined('SETTINGS_HOSTING')) {
   define('SETTINGS_HOSTING', 'vdd');
 }
 
