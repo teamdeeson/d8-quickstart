@@ -71,7 +71,9 @@
     "drupal-scaffold": {
       "omit-defaults": true,
       "includes": [
-        "index.php"
+        "index.php",
+        "sites/default/default.settings.php",
+        "sites/default/default.services.yml"
       ],
       "initial": {
         ".htaccess": ".htaccess",
