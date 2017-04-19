@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class DeesonScriptHandler {
 
   protected static function getDrupalRoot($project_root) {
-    return $project_root . '/web';
+    return $project_root . '/docroot';
   }
 
   public static function createRequiredFiles(Event $event) {
@@ -21,9 +21,9 @@ class DeesonScriptHandler {
     $project_root = getcwd();
     $drupal_root = static::getDrupalRoot($project_root);
 
-    // Create a docroot symlink.
-    if (!$fs->exists($project_root . '/docroot')) {
-      $fs->symlink('web', $project_root . '/docroot');
+    // Create a web symlink.
+    if (!$fs->exists($project_root . '/web')) {
+      $fs->symlink('docroot', $project_root . '/web');
     }
 
     $dirs = [
