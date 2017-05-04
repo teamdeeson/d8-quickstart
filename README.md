@@ -5,9 +5,11 @@ This repository provides a quick start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use [vdd](http://handbook.deeson.co.uk/development/vdd/) for managing local development and this repository comes with some default configuration for working with VDD. You are of course free to use alternatives, but additional configuration may be required.
+We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
 
 ## Creating a new Drupal site
+
+You do not need to clone this repo, our quick start is checked out using composer.
 
 First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
@@ -66,12 +68,28 @@ You can also safely remove your docroot at any point if you need to:
 make clean
 ```
 
-Once you have run the build, you can run the Drupal installation:
+Once you have run the build for the first time, you can setup and run your Docker environment using the following command.
+
+```
+docker-compose up -d
+```
+
+Your should now be able to access a vanilla Drupal site at http://drupal.docker.localhost
+
+You can now run the Drupal installation, eithe through the interface or from the command line using:
 
 ```bash
 make install
 ```
 will install the site and associated configuration. You will be prompted to optionally perform a site install. If you proceed this will erase your existing site database.
+
+You can stop docker at any time using the command below:
+
+```
+docker-compose stop
+```
+
+Note, never use docker-compose down to stop docker as you'll lose data in the db.
 
 ## Managing dependencies with composer
 All of your dependencies should be managed through composer. This includes any off-the-shelf code such as Drupal core, contrib modules and themes, and any 3rd party libraries.
@@ -169,3 +187,17 @@ This is the composer vendor directory, which contains project dependencies, tool
 
 ### web/
 This and `docroot/` are symlinked to the same location for wider compatibility and should also be excluded from your repository.
+
+# Helpful Docker commands
+
+To list the active Docker instances use
+
+```
+docker ps
+```
+
+To get a bash terminal inside the web instance you can use the following. Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
+
+```
+sudo docker exec -i -t a7faeb64a052 /bin/bash
+```

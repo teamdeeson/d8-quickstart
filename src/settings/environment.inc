@@ -8,7 +8,7 @@
 /**
  * This defines your project short-code and should be used throughout your application.
  */
-define('PROJECT_SLUG', __PROJECT_SLUG__);
+define('PROJECT_SLUG', 'drupal');
 
 /**
  * Map domains to environment types here.
@@ -16,6 +16,7 @@ define('PROJECT_SLUG', __PROJECT_SLUG__);
 $base_domains = [
   PROJECT_SLUG => 'local',
   PROJECT_SLUG . '.dev' => 'local',
+  PROJECT_SLUG . '.docker.localhost' => 'local',
   'dev-site.com' => 'dev',
   'test-site.com' => 'test',
   'live-site.com' => 'live',
