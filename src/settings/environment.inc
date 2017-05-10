@@ -70,4 +70,8 @@ else {
     define('SETTINGS_ENVIRONMENT', 'local');
     define('SETTINGS_HOSTING', 'vdd');
   }
+  elseif (getenv('DOCKER_LOCAL')) {
+    define('SETTINGS_ENVIRONMENT', 'local');
+    define('SETTINGS_HOSTING', 'docker');
+  }
 }
