@@ -190,6 +190,17 @@ This and `docroot/` are symlinked to the same location for wider compatibility a
 
 # Helpful Docker commands
 
+You can use the docker-compose tool as a shortcut for common docker commands. To run a command within one of the containers you can use:
+```bash
+docker-compose exec <container-name> <command>
+```
+For example to start a mysql client ont he database container (mariadb) run:
+```bash
+docker-compose exec mariadb mysql
+```
+
+You can also use the more standard docker commands.
+
 To list the active Docker instances use
 
 ```
