@@ -74,22 +74,22 @@ Once you have run the build for the first time, you can setup and run your Docke
 docker-compose up -d
 ```
 
-Your should now be able to access a vanilla Drupal site at http://drupal.docker.localhost
+You should now be able to access a vanilla Drupal site at http://localhost
 
-You can now run the Drupal installation, eithe through the interface or from the command line using:
+You can now run the Drupal installation, either through the interface or from the command line using:
 
 ```bash
 make install
 ```
 will install the site and associated configuration. You will be prompted to optionally perform a site install. If you proceed this will erase your existing site database.
 
-You can stop docker at any time using the command below:
+You can stop the docker environment at any time using the command below:
 
 ```
-docker-compose stop
+docker-compose down
 ```
 
-Note, never use docker-compose down to stop docker as you'll lose data in the db.
+Your site files and database will be stored outside of docker in the .persist hidden directory.
 
 ## Managing dependencies with composer
 All of your dependencies should be managed through composer. This includes any off-the-shelf code such as Drupal core, contrib modules and themes, and any 3rd party libraries.
