@@ -142,6 +142,3 @@ services:
 #volumes:
 #  docker-sync-unison:
 #    external: true
-
-volumes:
-  codebase:
