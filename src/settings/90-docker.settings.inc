@@ -24,7 +24,7 @@ if (SETTINGS_ENVIRONMENT == 'local' && SETTINGS_HOSTING == 'docker') {
   }
 
   $base_protocol = $https ? 'https' : 'http';
-  $base_url = $base_protocol . '://' . PROJECT_SLUG . '.localhost';
+  $base_url = $base_protocol . '://localhost';
 
   // File paths...
   $conf['file_temporary_path'] = '/tmp';

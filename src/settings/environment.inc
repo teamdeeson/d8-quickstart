@@ -64,7 +64,7 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
 }
 else {
   // Environment settings for VDD.
-  $local_settings = '/var/www/settings/' . PROJECT_SLUG . '/settings.inc';
+  $local_settings = '/var/www/settings/PROJECT/settings.inc';
   if (file_exists($local_settings)) {
     require_once $local_settings;
     define('SETTINGS_ENVIRONMENT', 'local');
