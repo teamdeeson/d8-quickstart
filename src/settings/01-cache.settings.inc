@@ -29,7 +29,7 @@ if (SETTINGS_ENVIRONMENT != 'local') {
     $settings['cache']['bins']['discovery'] = 'cache.backend.chainedfast';
     $settings['cache']['bins']['config'] = 'cache.backend.chainedfast';
 
-    $settings['container_yamls'][] = 'modules/redis/example.services.yml';
+    $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
   }
   if (CACHE_ENABLE_MEMCACHE) {
     // @todo Memcache integration.
