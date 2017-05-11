@@ -203,12 +203,18 @@ You can also use the more standard docker commands.
 
 To list the active Docker instances use
 
-```
+```bash
 docker ps
 ```
 
 To get a bash terminal inside the web instance you can use the following. Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
 
+```bash
+docker exec -i -t a7faeb64a052 /bin/bash
 ```
-sudo docker exec -i -t a7faeb64a052 /bin/bash
+
+To import an exported site database into the database container (please note the -t option must be omitted):
+
+```bash
+cat database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
