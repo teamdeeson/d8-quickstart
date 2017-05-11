@@ -194,7 +194,7 @@ You can use the docker-compose tool as a shortcut for common docker commands. To
 ```bash
 docker-compose exec <container-name> <command>
 ```
-For example to start a mysql client ont he database container (mariadb) run:
+For example to start a mysql client on the database container (mariadb) run:
 ```bash
 docker-compose exec mariadb mysql
 ```
