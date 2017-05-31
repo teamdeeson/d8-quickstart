@@ -5,9 +5,11 @@ This repository provides a quick start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use [vdd](http://handbook.deeson.co.uk/development/vdd/) for managing local development and this repository comes with some default configuration for working with VDD. You are of course free to use alternatives, but additional configuration may be required.
+We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
 
 ## Creating a new Drupal site
+
+You do not need to clone this repo, our quick start is checked out using composer.
 
 First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
@@ -34,7 +36,7 @@ You should check through all of the services and settings files and make any req
 
 `src/settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
 
-`drush/example.site.aliases.drushrc.php:` Create a site.aliases.drushrc.php from the example provided and configure your local environment.
+`drush/example.site.aliases.drushrc.php:` Rename this to site.aliases.drushrc.php and configure your local and remote environments.
 
 `behat.yml` Configure your vdd URL
 
@@ -66,12 +68,28 @@ You can also safely remove your docroot at any point if you need to:
 make clean
 ```
 
-Once you have run the build, you can run the Drupal installation:
+Once you have run the build for the first time, you can setup and run your Docker environment using the following command.
+
+```
+docker-compose up -d
+```
+
+You should now be able to access a vanilla Drupal site at http://localhost
+
+You can now run the Drupal installation, either through the interface or from the command line using:
 
 ```bash
 make install
 ```
 will install the site and associated configuration. You will be prompted to optionally perform a site install. If you proceed this will erase your existing site database.
+
+You can stop the docker environment at any time using the command below:
+
+```
+docker-compose down
+```
+
+Your site files and database will be stored outside of docker in the .persist hidden directory.
 
 ## Managing dependencies with composer
 All of your dependencies should be managed through composer. This includes any off-the-shelf code such as Drupal core, contrib modules and themes, and any 3rd party libraries.
@@ -169,3 +187,34 @@ This is the composer vendor directory, which contains project dependencies, tool
 
 ### web/
 This and `docroot/` are symlinked to the same location for wider compatibility and should also be excluded from your repository.
+
+# Helpful Docker commands
+
+You can use the docker-compose tool as a shortcut for common docker commands. To run a command within one of the containers you can use:
+```bash
+docker-compose exec <container-name> <command>
+```
+For example to start a mysql client on the database container (mariadb) run:
+```bash
+docker-compose exec mariadb mysql
+```
+
+You can also use the more standard docker commands.
+
+To list the active Docker instances use
+
+```bash
+docker ps
+```
+
+To get a bash terminal inside the web instance you can use the following. Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
+
+```bash
+docker exec -i -t a7faeb64a052 /bin/bash
+```
+
+To import an exported site database into the database container (please note the -t option must be omitted):
+
+```bash
+cat database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
+```

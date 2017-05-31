@@ -24,3 +24,8 @@ if (!file_exists('/var/www/vhosts/PROJECT.dev/docroot')) {
   $aliases['vdd']['remote-host'] = 'dev.local';
   $aliases['vdd']['remote-user'] = 'vagrant';
 }
+
+$aliases['docker'] = array(
+  'php' => dirname(dirname(__FILE__)) . '/scripts/docker-drush-launcher.sh',
+  'root' => '/var/www/html/docroot',
+);

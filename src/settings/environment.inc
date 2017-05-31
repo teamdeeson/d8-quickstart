@@ -6,16 +6,10 @@
  */
 
 /**
- * This defines your project short-code and should be used throughout your application.
- */
-define('PROJECT_SLUG', __PROJECT_SLUG__);
-
-/**
  * Map domains to environment types here.
  */
 $base_domains = [
-  PROJECT_SLUG => 'local',
-  PROJECT_SLUG . '.dev' => 'local',
+  'localhost' => 'local',
   'dev-site.com' => 'dev',
   'test-site.com' => 'test',
   'live-site.com' => 'live',
@@ -70,10 +64,14 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
 }
 else {
   // Environment settings for VDD.
-  $local_settings = '/var/www/settings/' . PROJECT_SLUG . '/settings.inc';
+  $local_settings = '/var/www/settings/PROJECT/settings.inc';
   if (file_exists($local_settings)) {
     require_once $local_settings;
     define('SETTINGS_ENVIRONMENT', 'local');
     define('SETTINGS_HOSTING', 'vdd');
+  }
+  elseif (getenv('DOCKER_LOCAL')) {
+    define('SETTINGS_ENVIRONMENT', 'local');
+    define('SETTINGS_HOSTING', 'docker');
   }
 }
