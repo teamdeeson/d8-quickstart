@@ -10,7 +10,6 @@ DRUPAL_EXCLUDED_SNIFFS=(
 )
 IGNORE="src/frontend/assets"
 IGNORE="$IGNORE,src/frontend/node_modules"
-IGNORE="$IGNORE,src/themes/cc_admin_theme/css"
 IGNORE="$IGNORE,src/frontend/src/font"
 
 echo "Running coding standard checks in ${PHPCS_CHECK_DIR}"
