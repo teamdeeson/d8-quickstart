@@ -25,12 +25,7 @@ build-prod:
 
 # Run coding standards checks.
 test-code-quality: build-dev
-	# Configure Drupal Coder support.
-	${ROOT_DIR}/vendor/bin/phpcs --config-set installed_paths ${ROOT_DIR}/vendor/drupal/coder/coder_sniffer
-	# Run the coding standards checks.
-	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=Drupal --extensions=php,inc,module,theme ${ROOT_DIR}/src/
-	# Run the Drupal best practice checks.
-	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=DrupalPractice --extensions=php,inc,module,theme ${ROOT_DIR}/src/
+	./scripts/make/code_standards.sh
 # Run unit tests.
 test-phpunit: build-dev
 	${ROOT_DIR}/vendor/bin/phpunit
@@ -42,7 +37,7 @@ test: build-dev test-code-quality test-phpunit test-behat
 
 # Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
 deploy:	test build-prod
-	if $(RUN_DESTRUCTIVE); then ./scripts/deploy.sh; else exit 1; fi
+	if $(RUN_DESTRUCTIVE); then ./scripts/make/deploy.sh; else exit 1; fi
 
 # Cleanup
 clean:
