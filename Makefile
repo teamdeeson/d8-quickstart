@@ -25,7 +25,7 @@ build-prod:
 
 # Run coding standards checks.
 test-code-quality: build-dev
-	./scripts/make/code_standards.sh
+	./scripts/make/code_standards.sh "src scripts"
 # Run unit tests.
 test-phpunit: build-dev
 	${ROOT_DIR}/vendor/bin/phpunit
