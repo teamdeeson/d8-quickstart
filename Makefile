@@ -21,7 +21,7 @@ build-local:
 	${COMPOSER} install
 # Build dependencies for prod environment.
 build-prod:
-	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs
+	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader
 
 # Run coding standards checks.
 test-code-quality: build-dev
