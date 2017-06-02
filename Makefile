@@ -43,6 +43,10 @@ test: build-dev test-code-quality test-phpunit test-behat
 # Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
 deploy:	test build-prod
 	if $(RUN_DESTRUCTIVE); then ./scripts/deploy.sh; else exit 1; fi
+# Alias deploy to allow different deployment strategies for different environments
+deploy-test: deploy
+deploy-stage: deploy
+deploy-prod: deploy
 
 # Cleanup
 clean:

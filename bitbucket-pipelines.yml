@@ -14,15 +14,15 @@ pipelines:
       - step:
           script:
             - make test
-            - make deploy
+            - make deploy-stage
     develop:
       - step:
           script:
             - make test
-            - make deploy
+            - make deploy-test
   tags:
     '*':
       - step:
           script:
             - make test
-            - make deploy
+            - make deploy-prod
