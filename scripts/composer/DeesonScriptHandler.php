@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \DrupalProject\composer\DeesonScriptHandler.
- */
-
 namespace DrupalProject\composer;
 
 use Composer\Script\Event;
@@ -37,7 +32,7 @@ class DeesonScriptHandler {
       'themes',
     ];
 
-    // Required for unit testing
+    // Required for unit testing.
     foreach ($dirs as $dir) {
       if (!$fs->exists($drupal_root . '/' . $dir)) {
         $fs->mkdir($drupal_root . '/' . $dir);
@@ -55,7 +50,7 @@ class DeesonScriptHandler {
       $fs->symlink('../../' . $src, $drupal_root . '/' . $dest);
     }
 
-    // Link drush/ to docroot/drush/
+    // Link drush/ to docroot/drush/.
     if (!$fs->exists($drupal_root . '/drush')) {
       $fs->symlink('../drush', $drupal_root . '/drush');
       $event->getIO()->write("Created a symlink for drush/");
@@ -68,7 +63,7 @@ class DeesonScriptHandler {
         ->write("Created a symlink for sites/default/settings.php");
     }
 
-    // Create the files directory with chmod 0777
+    // Create the files directory with chmod 0777.
     if (!$fs->exists($drupal_root . '/sites/default/files')) {
       $oldmask = umask(0);
       $fs->mkdir($drupal_root . '/sites/default/files', 0777);

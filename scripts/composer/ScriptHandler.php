@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \DrupalProject\composer\ScriptHandler.
- */
-
 namespace DrupalProject\composer;
 
 use Composer\Script\Event;
@@ -32,7 +27,7 @@ class ScriptHandler {
       'themes',
     ];
 
-    // Required for unit testing
+    // Required for unit testing.
     foreach ($dirs as $dir) {
       if (!$fs->exists($root . '/' . $dir)) {
         $fs->mkdir($root . '/' . $dir);
@@ -40,7 +35,7 @@ class ScriptHandler {
       }
     }
 
-    // Prepare the settings file for installation
+    // Prepare the settings file for installation.
     if (!$fs->exists($root . '/sites/default/settings.php') and $fs->exists($root . '/sites/default/default.settings.php')) {
       $fs->copy($root . '/sites/default/default.settings.php', $root . '/sites/default/settings.php');
       $fs->chmod($root . '/sites/default/settings.php', 0666);
@@ -48,7 +43,7 @@ class ScriptHandler {
         ->write("Create a sites/default/settings.php file with chmod 0666");
     }
 
-    // Prepare the services file for installation
+    // Prepare the services file for installation.
     if (!$fs->exists($root . '/sites/default/services.yml') and $fs->exists($root . '/sites/default/default.services.yml')) {
       $fs->copy($root . '/sites/default/default.services.yml', $root . '/sites/default/services.yml');
       $fs->chmod($root . '/sites/default/services.yml', 0666);
@@ -56,7 +51,7 @@ class ScriptHandler {
         ->write("Create a sites/default/services.yml file with chmod 0666");
     }
 
-    // Create the files directory with chmod 0777
+    // Create the files directory with chmod 0777.
     if (!$fs->exists($root . '/sites/default/files')) {
       $oldmask = umask(0);
       $fs->mkdir($root . '/sites/default/files', 0777);
