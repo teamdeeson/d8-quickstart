@@ -54,9 +54,11 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
     case 'master':
       define('SETTINGS_ENVIRONMENT', 'live');
       break;
+
     case 'develop':
       define('SETTINGS_ENVIRONMENT', 'test');
       break;
+
     default:
       define('SETTINGS_ENVIRONMENT', 'dev');
       break;

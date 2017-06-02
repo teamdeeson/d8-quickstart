@@ -7,7 +7,7 @@
  * Include late/last so we can override configuration from other setting files.
  */
 
-use \Drupal\Component\Assertion\Handle;
+use Drupal\Component\Assertion\Handle;
 
 if (SETTINGS_ENVIRONMENT == 'local') {
   /*
