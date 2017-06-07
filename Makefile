@@ -1,6 +1,6 @@
 ROOT_DIR=${PWD}
 RUN_DESTRUCTIVE?=false
-ENVIRONMENT?=vdd
+ENVIRONMENT?=docker
 DRUSH_ARGS?=-y --nocolor
 DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
 DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
@@ -13,6 +13,7 @@ default: build
 build: build-${ENVIRONMENT}
 
 # Environment aliases.
+build-docker: build-local
 build-vdd: build-local
 build-dev: build-local
 
@@ -53,6 +54,7 @@ install: install-${ENVIRONMENT}
 # Do nothing. Don't re-install prod.
 install-prod:
 # Local installation
+install-docker: install-vdd
 install-vdd:
 	cd docroot && ${DRUSH_CMD} site-install || echo 'Skipping site installation.'
 	cd docroot && ${DRUSH} cim
