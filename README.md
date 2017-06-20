@@ -218,3 +218,19 @@ To import an exported site database into the database container (please note the
 ```bash
 cat database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
+
+# Help with Drush
+
+The following bashrc extension makes it easier to work with drush locally. You should add this to the end of your ~/.bashrc file
+
+https://github.com/drush-ops/drush/blob/master/examples/example.bashrc
+
+Once done, consider changing local drush to always use the one checked out for your project. This is always found at 
+vendor/bin/drush. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
+
+```
+drush() {
+    local drupal_root=`_drupal_root` && \
+      $drupal_root/../vendor/bin/drush "$@"
+}
+```
