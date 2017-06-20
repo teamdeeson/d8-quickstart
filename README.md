@@ -30,15 +30,13 @@ git commit -m "Created the project."
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
 
-`src/settings/environment.inc:` Configure your domain names and VDD location
+`.env:` Configure your project name (optional)
+
+`src/settings/environment.inc:` Configure your domain names
 
 `src/settings/01-core.settings.inc:` Configure a hash salt.
 
 `src/settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
-
-`drush/example.site.aliases.drushrc.php:` Rename this to site.aliases.drushrc.php and configure your local and remote environments.
-
-`behat.yml` Configure your vdd URL
 
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
