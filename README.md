@@ -30,7 +30,7 @@ git commit -m "Created the project."
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
 
-`src/settings/settings.php:` Configure your domain names and VDD location
+`src/settings/environment.inc:` Configure your domain names and VDD location
 
 `src/settings/01-core.settings.inc:` Configure a hash salt.
 
