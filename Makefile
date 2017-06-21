@@ -1,9 +1,18 @@
 ROOT_DIR=${PWD}
 RUN_DESTRUCTIVE?=false
 ENVIRONMENT?=vdd
+
+DATABASE_USER?=root
+DATABASE_PASSWORD?=root
+DATABASE_HOST?=localhost
+DATABASE_NAME?=quickstart
+DATABASE_URL?='mysql://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)'
+
 DRUSH_ARGS?=-y --nocolor
-DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
-DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
+DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush
+DRUSH_ENVIRONMENT?=@$(ENVIRONMENT)
+DRUSH?=${DRUSH_CMD} $(DRUSH_ENVIRONMENT) $(DRUSH_ARGS)
+
 COMPOSER?=$(shell command -v composer 2> /dev/null)
 
 # Build by default.
@@ -47,15 +56,28 @@ deploy:	test build-prod
 # Cleanup
 clean:
 	rm -Rf ./docroot ./vendor ./web
+# Drop database
+dropdb:
+	cd docroot && ${DRUSH} sql-drop
 
 # Installation script
 install: install-${ENVIRONMENT}
 # Do nothing. Don't re-install prod.
 install-prod:
+# Test environment installation
+install-test: install-vdd
 # Local installation
-install-vdd:
-	cd docroot && ${DRUSH_CMD} site-install || echo 'Skipping site installation.'
-	cd docroot && ${DRUSH} cim
+install-vdd: build
+	if [ $(firstword $(wildcard config/*.yml)) ]; then \
+		echo "Installing site from existing configuration..." && cd docroot && ${DRUSH} site-install config_installer --db-url=$(DATABASE_URL)|| echo 'Installation failed.'; \
+	else \
+		cd docroot && ${DRUSH} site-install --db-url=$(DATABASE_URL)|| echo 'Installation failed.'; \
+	fi
+
+	cd docroot && ${DRUSH} cex
+
+# Reinstallation script
+reinstall: dropdb install
 
 # Do stuff to Drupal now it's in a live environment.
 post-deploy:
