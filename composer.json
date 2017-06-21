@@ -87,6 +87,11 @@
       "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
       "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
       "drush/contrib/{$name}": ["type:drupal-drush"]
+    },
+    "patches": {
+      "drush/drush": {
+        "Make drush uli work with docker - stop closing pipes": "https://github.com/drush-ops/drush/commit/70fe65a5ce0b1df37c1ac841395158228e5f9be6.patch"
+      }
     }
   }
 }
