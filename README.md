@@ -52,7 +52,7 @@ The project can be built using the included Makefile.
 make
 ```
 will build the project based on the assumed environment. This will create the `docroot/` folder and build your website.
- 
+
 You can specify the environment explicitly with the ENVIRONMENT variable which will add or remove dev dependencies:
 
 ```bash
@@ -188,6 +188,10 @@ This is the composer vendor directory, which contains project dependencies, tool
 
 ### web/
 This and `docroot/` are symlinked to the same location for wider compatibility and should also be excluded from your repository.
+
+# Known limitations
+
+*Drush locking up*: Some drush commands will hang the terminal, notabily `drush @docker ssh` and `drush @docker sql-cli`. Use the *Helpful docker commands* section below to see the alternatives. The reason for this [is here](https://github.com/jeroenpeeters/docker-ssh/issues/27)
 
 # Helpful Docker commands
 
