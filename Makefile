@@ -13,8 +13,8 @@ default: build
 build: build-${ENVIRONMENT}
 
 # Environment aliases.
-build-docker: build-local
 build-vdd: build-local
+build-docker: build-local
 build-dev: build-local
 
 # Build dependencies for dev environments.
@@ -37,7 +37,7 @@ test-phpunit: build-dev
 	${ROOT_DIR}/vendor/bin/phpunit
 # Run functional tests.
 test-behat: build-dev
-	# ${ROOT_DIR}/vendor/bin/behat
+	cd docroot && ${ROOT_DIR}/vendor/bin/behat --config=${ROOT_DIR}/behat.yml
 # Run all automated tests
 test: build-dev test-code-quality test-phpunit test-behat
 
