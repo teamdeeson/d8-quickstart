@@ -7,6 +7,9 @@ Quick-start projects use composer for dependency management, including Drupal co
 
 We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
 
+For drush to work with Docker, you'll need to add the following line to your `/etc/hosts` file:
+127.0.0.1 docker.local
+
 ## Creating a new Drupal site
 
 You do not need to clone this repo, our quick start is checked out using composer.
