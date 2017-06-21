@@ -16,7 +16,7 @@ You do not need to clone this repo, our quick start is checked out using compose
 
 First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
-Then you can create a new project using composer:
+Then you can create a new project using composer, keep the project name short and without punctuation (e.g. myproject)
 
 ```bash
 composer create-project teamdeeson/d8-quickstart <project-name> --stability dev --no-interaction
@@ -33,7 +33,7 @@ git commit -m "Created the project."
 ### Required configuration
 You should check through all of the services and settings files and make any required amendments. The following amendments need to be made at a minimum:
 
-`.env:` Configure your project name (optional)
+`.env:` Add your project name in here, use the same one as used with composer (e.g. myproject)
 
 `src/settings/environment.inc:` Configure your domain names
 

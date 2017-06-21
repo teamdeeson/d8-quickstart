@@ -5,11 +5,6 @@
  * Drush environment aliases drush/sites.aliases.drushrc.php
  */
 
-if (!isset($drush_major_version)) {
-  $drush_version_components = explode('.', DRUSH_VERSION);
-  $drush_major_version = $drush_version_components[0];
-}
-
 // VDD.
 $aliases['vdd'] = array(
   'env' => 'vdd',
@@ -37,7 +32,7 @@ $aliases['docker'] = array(
 if (!file_exists('/var/www/html')) {
   // You will need to add an entry to your hosts file as follows:
   // 127.0.0.1 docker.local
-  $alias['docker']['remote-host'] = 'docker.local';
-  $alias['docker']['remote-user'] = 'www-data';
-  $alias['docker']['ssh-options'] = '-p 2223';
+  $aliases['docker']['remote-host'] = 'docker.local';
+  $aliases['docker']['remote-user'] = 'www-data';
+  $aliases['docker']['ssh-options'] = '-p 2223';
 }
