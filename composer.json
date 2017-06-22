@@ -27,7 +27,8 @@
     "drupal/redis": "^1.0@alpha",
     "drupal/reroute_email": "^1.0@beta",
     "drupal/shield": "^1.0",
-    "drupal/warden": "^1.0"
+    "drupal/warden": "^1.0",
+    "drupal/config_installer": "^1.4"
   },
   "require-dev": {
     "behat/mink": "~1.7",

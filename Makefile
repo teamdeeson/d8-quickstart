@@ -55,8 +55,12 @@ install-prod:
 # Local installation
 install-docker: install-vdd
 install-vdd:
-	cd docroot && ${DRUSH_CMD} site-install || echo 'Skipping site installation.'
-	cd docroot && ${DRUSH} cim
+# Drupal needs the settings file to be writable.
+	chmod 777 docroot/sites/default/settings.php
+	cd docroot && ${DRUSH_CMD} -y site-install config_installer
+# Get rid of any changes made to the settings file.
+	git checkout src/settings/settings.php
+	chmod 644 docroot/sites/default/settings.php
 
 # Do stuff to Drupal now it's in a live environment.
 post-deploy:
