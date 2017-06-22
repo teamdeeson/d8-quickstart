@@ -36,10 +36,10 @@ services:
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
     volumes:
-      - ./:/var/www/html
+#     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
       - ./.persist/private:/private
-#      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
+      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
@@ -54,9 +54,9 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
-      - ./:/var/www/html
+#     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
-#      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
+      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
@@ -153,6 +153,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 # Docker-sync for macOS users
-#volumes:
-#  docker-sync-unison:
-#    external: true
+volumes:
+  docker-sync-unison:
+    external: true
