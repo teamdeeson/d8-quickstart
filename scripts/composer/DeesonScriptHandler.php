@@ -43,6 +43,7 @@ class DeesonScriptHandler {
     $links = [
       'src/modules' => 'modules/custom',
       'src/themes' => 'themes/custom',
+      'src/profiles' => 'profiles/custom',
     ];
 
     // Create symlinks within the docroot.
