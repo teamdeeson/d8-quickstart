@@ -1,8 +1,10 @@
 ROOT_DIR=${PWD}
 RUN_DESTRUCTIVE?=false
 ENVIRONMENT?=docker
+BEHAT?=${ROOT_DIR}/vendor/bin/behat
 DRUSH_ARGS?=-y --nocolor
-DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
+DRUSH_PATH?=${ROOT_DIR}/vendor/bin/drush
+DRUSH_CMD?=${DRUSH_PATH} @$(ENVIRONMENT)
 DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
 COMPOSER?=$(shell command -v composer 2> /dev/null)
 
@@ -31,8 +33,25 @@ test-code-quality: build-dev
 test-phpunit: build-dev
 	${ROOT_DIR}/vendor/bin/phpunit
 # Run functional tests.
-test-behat: build-dev
-	cd docroot && ${ROOT_DIR}/vendor/bin/behat --config=${ROOT_DIR}/behat.yml
+mock-services:
+    # We have to get rid of sendmail because Drupal tries to send an e-mail during installation.
+	mv /usr/sbin/sendmail /usr/sbin/sendmail_back
+	echo "exit 0" > /usr/sbin/sendmail
+	chmod +x /usr/sbin/sendmail
+    # Pipelines doesn't come with drush, so we'll symlink our own into place.
+	ln -s ${DRUSH_PATH} /usr/sbin/drush
+test-behat: mock-services test-behat-no-mock
+test-behat-no-mock: build-dev
+    # Check if drush is present on the path and fail fast if it isn't.
+	which drush
+    # Install the site in a sqlite database
+	cd docroot && ${DRUSH_PATH} si -y config_installer --db-url=sqlite://../testdb.sqlite
+    # Start php built-in webserver in the background
+    cd docroot && php -S localhost:8080 > /dev/null 2>&1 &
+	cd docroot && ${BEHAT} --config=${ROOT_DIR}/behat.yml --profile=pipelines
+# Run functional tests locally.
+local-behat: build-dev
+	cd docroot && ${BEHAT} --config=${ROOT_DIR}/behat.yml
 # Run all automated tests
 test: build-dev test-code-quality test-phpunit test-behat
 

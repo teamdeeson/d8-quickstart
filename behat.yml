@@ -29,7 +29,6 @@ default:
       region_map:
         comments: '.comments'
 
-
 vdd:
   extensions:
     Behat\MinkExtension:
@@ -38,3 +37,11 @@ vdd:
       api_driver: 'drupal'
       drush:
         alias: 'vdd'
+
+pipelines:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://localhost:8080/
+    Drupal\DrupalExtension:
+      drush:
+        alias: 'pipelines'
