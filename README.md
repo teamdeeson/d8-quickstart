@@ -121,7 +121,12 @@ Composer project usage guide:
 
 https://getcomposer.org/doc/01-basic-usage.md
 
+## XDebug
+
+You need to run `sudo ifconfig lo0 alias 10.254.254.254` before you can use xdebug.
+
 ## Running tests
+
 This repository contains the starting point for running both Behat and PHPUnit test suites as well as Drupal coding standards checks with PHPCS.
 
 PHPUnit tests should be defined within you custom modules, in the tests/ sub-directory.
