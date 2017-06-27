@@ -17,10 +17,9 @@ default:
       selenium2: ~
       base_url: http://localhost/
     Drupal\DrupalExtension:
-      blackbox: ~
-      api_driver: 'drush'
-      drush:
-        alias: 'docker'
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: '%paths.base%/docroot'
       selectors:
         message_selector: '.message'
         error_message_selector: '.error'

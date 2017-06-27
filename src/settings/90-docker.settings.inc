@@ -7,14 +7,18 @@
 
 if (SETTINGS_ENVIRONMENT == 'local' && SETTINGS_HOSTING == 'docker') {
   $databases['default']['default'] = [
-    'database' => getenv('DB_NAME'),
-    'username' => getenv('DB_USER'),
-    'password' => getenv('DB_PASSWORD'),
+    'database' => getenv('DB_NAME') ? getenv('DB_NAME') : 'drupal',
+    'username' => getenv('DB_USER') ? getenv('DB_USER') : 'drupal',
+    'password' => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : 'drupal',
     'prefix' => '',
-    'host' => getenv('DB_HOST'),
+    'host' => getenv('DB_HOST') ? getenv('DB_HOST') : '127.0.0.1',
     'port' => '3306',
-    'driver' => getenv('DB_DRIVER'),
+    'driver' => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
   ];
+
+  if ($databases['default']['default']['host'] === '127.0.0.1') {
+    $databases['default']['default']['port'] = '3307';
+  }
 
   $https = TRUE;
 
