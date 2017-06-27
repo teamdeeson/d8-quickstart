@@ -72,7 +72,7 @@ make clean
 Once you have run the build for the first time, you can setup and run your Docker environment using the following command.
 
 ```
-docker-compose up -d
+make docker-start
 ```
 
 You should now be able to access a vanilla Drupal site at http://localhost
@@ -87,7 +87,7 @@ will install the site and associated configuration. You will be prompted to opti
 You can stop the docker environment at any time using the command below:
 
 ```
-docker-compose down
+make docker-stop
 ```
 
 Your site files and database will be stored outside of docker in the .persist hidden directory.
