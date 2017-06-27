@@ -39,7 +39,7 @@ services:
 #     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
       - ./.persist/private:/private
-      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
+      - docker-sync:/var/www/html # Docker-sync for macOS users
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
@@ -56,7 +56,7 @@ services:
     volumes:
 #     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
-      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
+      - docker-sync:/var/www/html # Docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
@@ -154,5 +154,6 @@ services:
 
 # Docker-sync for macOS users
 volumes:
-  docker-sync-unison:
-    external: true
+  docker-sync:
+    external:
+      name: "${COMPOSE_PROJECT_NAME}-docker-sync"
