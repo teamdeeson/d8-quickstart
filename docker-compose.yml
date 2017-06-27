@@ -35,6 +35,7 @@ services:
       PHP_XDEBUG_DEFAULT_ENABLE: 1
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
+      PHP_IDE_CONFIG: "serverName=drupal"       # Needed for xdebug for drush commands.
     volumes:
 #     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
