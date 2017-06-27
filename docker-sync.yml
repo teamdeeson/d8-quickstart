@@ -1,7 +1,7 @@
 version: "2"
 
-options:
-  verbose: true
+#options:
+#  verbose: true
 syncs:
   ${COMPOSE_PROJECT_NAME}-docker-sync:
     src: './'
