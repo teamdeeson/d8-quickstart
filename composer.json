@@ -11,13 +11,12 @@
   ],
   "require": {
     "composer/installers": "^1.2",
-    "drupal-composer/drupal-scaffold": "^2.2",
     "cweagans/composer-patches": "~1.0",
-    "drupal/core": "~8",
+    "drupal-composer/drupal-scaffold": "^2.2",
+    "drupal/config_installer": "^1.4",
     "drupal/console": "~1.0",
-    "drush/drush": "~8",
+    "drupal/core": "^8.3",
     "drupal/drupal-extension": "^3.2",
-    "guzzlehttp/guzzle" : "^6.0@dev",
     "drupal/entity": "^1.0@alpha",
     "drupal/google_analytics": "^2.1",
     "drupal/masquerade": "^2.0@beta",
@@ -28,7 +27,8 @@
     "drupal/reroute_email": "^1.0@beta",
     "drupal/shield": "^1.0",
     "drupal/warden": "^1.0",
-    "drupal/config_installer": "^1.4"
+    "drush/drush": "~8",
+    "guzzlehttp/guzzle": "^6.0@dev"
   },
   "require-dev": {
     "behat/mink": "~1.7",
@@ -94,5 +94,8 @@
         "Make drush uli work with docker - stop closing pipes": "https://github.com/drush-ops/drush/commit/70fe65a5ce0b1df37c1ac841395158228e5f9be6.patch"
       }
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }
