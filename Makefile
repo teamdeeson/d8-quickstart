@@ -19,13 +19,17 @@ build-vdd: build-local
 build-docker: build-local
 build-dev: build-local
 
+# Frontend build.
+fe-prod:
+	if [ -f ./scripts/make/fe.sh ]; then BUILD_ENV=prod ./scripts/make/fe.sh; else true; fi;
+
 # Build dependencies for dev environments.
-build-local:
+build-local: fe-prod
 	${COMPOSER} install
 build-docker: docker-up
 	docker-compose exec php composer install
 # Build dependencies for prod environment.
-build-prod:
+build-prod: fe-prod
 	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader
 
 # Run coding standards checks.

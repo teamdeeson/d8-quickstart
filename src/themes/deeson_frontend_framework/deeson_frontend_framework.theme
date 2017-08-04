@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Deeson Frontend Framework theme.
+ */
+
+require_once __DIR__ . '/assets/component-templates.php';
+
+/**
+ * Implements hook_theme().
+ */
+function deeson_frontend_framework_theme() {
+  return deeson_twig_component_templates();
+}
