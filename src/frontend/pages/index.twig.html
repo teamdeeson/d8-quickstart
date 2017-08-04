@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ base_path ~ directory }}/assets/app.css">
+    <script type="text/javascript" src="{{ base_path ~ directory }}/assets/app.js"></script>
+  </head>
+  <body>
+    <h1>This is a blank slate</h1>
+
+    {% include '@components/myFooter/myFooter.html.twig' with {
+      content: {
+        someRegionFromDrupal: '<p>Some markup from the depths of drupal.</p>'
+      }
+    }%}
+  </body>
+</html>
