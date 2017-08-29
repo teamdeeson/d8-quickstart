@@ -2,7 +2,7 @@ version: "2"
 
 services:
   mariadb:
-    image: wodby/mariadb:10.1-2.1.0
+    image: wodby/mariadb:10.1-2.3.3
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: drupal
@@ -19,7 +19,7 @@ services:
 
   php:
 # 2. Images without Drupal – wodby/drupal-php:[PHP_VERSION]-[STABILITY_TAG].
-    image: wodby/drupal-php:7.1-2.1.0
+    image: wodby/drupal-php:7.1-2.4.3
 #    image: wodby/drupal-php:7.0-2.1.0
 #    image: wodby/drupal-php:5.6-2.1.0
 #    image: wodby/drupal-php:5.3-2.1.0
@@ -44,7 +44,7 @@ services:
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
-    image: wodby/drupal-nginx:8-1.10-2.1.0
+    image: wodby/drupal-nginx:8-1.13-2.4.2
 #    image: wodby/drupal-nginx:7-1.10-2.1.0
 #    image: wodby/drupal-nginx:6-1.10-2.1.0
     depends_on:
