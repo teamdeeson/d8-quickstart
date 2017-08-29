@@ -223,10 +223,10 @@ To get a bash terminal inside the web instance you can use the following. Replac
 docker exec -i -t a7faeb64a052 /bin/bash
 ```
 
-To import an exported site database into the database container (please note the -t option must be omitted):
+To import an exported site database into the database container (if you don't have pv installed you can do so with `brew install pv`):
 
 ```bash
-cat database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
+pv database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
 
 # Help with Drush

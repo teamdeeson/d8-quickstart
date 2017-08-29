@@ -132,12 +132,14 @@ services:
 
   traefik:
     image: traefik
-    command: -c /dev/null --web --docker --logLevel=INFO
+    command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https,http' --entryPoints='Name:https Address::443 TLS:/certs/local.crt,/certs/local.key' --entryPoints='Name:http Address::80'
     ports:
       - '80:80'
+      - '443:443'
 #      - '8080:8080' # Dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./.persist/certs:/certs
 
 # PHP ssh connection. For Drush access.
   ssh:
