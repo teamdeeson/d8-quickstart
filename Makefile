@@ -72,7 +72,7 @@ post-deploy:
 
 # Start Docker using docker-sync
 docker-start: docker-up
-docker-up:
+docker-up: docker-local-ssl
 	docker-sync start && docker-compose up -d
 
 # Stop Docker and docker-sync
@@ -82,3 +82,8 @@ docker-down:
 
 # Restart docker
 docker-restart: docker-stop docker-start
+
+docker-local-ssl: .persist/certs/local.key .persist/certs/local.crt
+.persist/certs/local.%:
+	mkdir -p ./.persist/certs
+	./scripts/make/genlocalcrt.sh ./.persist/certs
