@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
+    ports:
+      - "3307:3306"
     volumes:
 #      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - ./.persist/mysql:/var/lib/mysql # I want to manage volumes manually.
@@ -35,7 +37,7 @@ services:
       PHP_XDEBUG_DEFAULT_ENABLE: 1
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
-      PHP_IDE_CONFIG: "serverName=drupal"       # Needed for xdebug for drush commands.
+      PHP_IDE_CONFIG: "serverName=localhost"       # Needed for xdebug for drush commands.
     volumes:
 #     - ./:/var/www/html
       - ./.persist/public:/var/www/html/docroot/sites/default/files
