@@ -43,7 +43,7 @@ elseif (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   }
   // Other Acquia environment.
   else {
-    define('SETTINGS_ENVIRONMENT', $_ENV['PANTHEON_ENVIRONMENT']);
+    define('SETTINGS_ENVIRONMENT', $_ENV['AH_SITE_ENVIRONMENT']);
   }
 }
 // Platform.sh environment settings.
