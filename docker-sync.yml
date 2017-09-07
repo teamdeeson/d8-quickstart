@@ -6,4 +6,4 @@ syncs:
   ${COMPOSE_PROJECT_NAME}-docker-sync:
     src: './'
     sync_userid: '82'
-    sync_excludes: ['.gitignore', '.git', '.idea']
+    sync_excludes: ['.gitignore', '.git', '.idea', '.persist']
