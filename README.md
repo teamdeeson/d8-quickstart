@@ -5,7 +5,12 @@ This repository provides a quick start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
+We use [Docker](https://docs.docker.com/engine/installation/),
+[Docker compose](https://docs.docker.com/compose/install/) and
+[Docker sync](http://docker-sync.io/) ([Setup instructions](#setup-docker-sync)) for managing local development and this
+repository comes with some default configuration for working with Docker.
+You are of course free to use alternatives, but additional configuration may be
+required.
 
 For drush to work with Docker, you'll need to add the following line to your `/etc/hosts` file:
 127.0.0.1 docker.local
@@ -44,7 +49,7 @@ You should check through all of the services and settings files and make any req
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
 
-This ensures we have a universal mechanism for task running across all of our projects. 
+This ensures we have a universal mechanism for task running across all of our projects.
 
 The project can be built using the included Makefile.
 
@@ -167,12 +172,12 @@ Anything within `src/modules/` will be made available in `docroot/modules/custom
 You can define your services YAML files here.
 
 #### src/settings/
-This contains the Drupal site settings, extracted from settings.php as per: 
+This contains the Drupal site settings, extracted from settings.php as per:
 http://handbook.deeson.co.uk/development/drupal8/#settings-file-configuration
 
 This has been moved from either sites/default/settings/ or sites/conf/ mentioned in the blog post.
 
-settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php. 
+settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php.
 
 #### src/themes/
 This is where you place your custom theme(s).
@@ -235,7 +240,7 @@ The following bashrc extension makes it easier to work with drush locally. You s
 
 https://github.com/drush-ops/drush/blob/master/examples/example.bashrc
 
-Once done, consider changing local drush to always use the one checked out for your project. This is always found at 
+Once done, consider changing local drush to always use the one checked out for your project. This is always found at
 vendor/bin/drush. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
 
 ```
@@ -243,4 +248,24 @@ drush() {
     local drupal_root=`_drupal_root` && \
       $drupal_root/../vendor/bin/drush "$@"
 }
+```
+
+# Setup docker sync
+
+The installation of docker sync is pretty straight forward:
+
+`gem install docker-sync --user-install`
+
+After that you might receive a message similar to:
+
+```
+WARNING:  You don't have $HOME/.gem/ruby/2.0.0/bin in your PATH,
+	  gem executables will not run.
+```
+
+Then add the line from the warning to your `.zshrc` or `.bashrc` file.
+
+Example:
+```
+echo 'export PATH="$HOME/.gem/ruby/2.0.0/bin:$PATH"' >> ~/.zshrc
 ```
