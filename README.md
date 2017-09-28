@@ -5,7 +5,7 @@ This repository provides a quick start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
+We use [Docker](https://docs.docker.com/engine/installation/), [Docker compose](https://docs.docker.com/compose/install/) and [Docker sync](http://docker-sync.io/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
 
 For drush to work with Docker, you'll need to add the following line to your `/etc/hosts` file:
 127.0.0.1 docker.local
