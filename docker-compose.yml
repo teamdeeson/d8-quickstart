@@ -18,7 +18,6 @@ services:
       - 'traefik.port=3306'
       - 'traefik.frontend.rule=Host:localhost'
 
-
   php:
 # 2. Images without Drupal – wodby/drupal-php:[PHP_VERSION]-[STABILITY_TAG].
     image: wodby/drupal-php:7.1-2.4.3
@@ -39,10 +38,9 @@ services:
       PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
       PHP_IDE_CONFIG: "serverName=localhost"       # Needed for xdebug for drush commands.
     volumes:
-#     - ./:/var/www/html
+      - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
       - ./.persist/private:/private
-      - docker-sync:/var/www/html:nocopy # Docker-sync for macOS users
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
@@ -57,9 +55,8 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
-#     - ./:/var/www/html
+      - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
-      - docker-sync:/var/www/html:nocopy # Docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
@@ -156,9 +153,3 @@ services:
       - '2223:22'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-# Docker-sync for macOS users
-volumes:
-  docker-sync:
-    external:
-      name: "${COMPOSE_PROJECT_NAME}-docker-sync"
