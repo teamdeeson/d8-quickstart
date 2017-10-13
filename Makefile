@@ -70,15 +70,15 @@ post-deploy:
 	cd docroot && $(DRUSH) cr
 	cd docroot && $(DRUSH) cc css-js
 
-# Start Docker using docker-sync
+# Start Docker
 docker-start: docker-up
 docker-up: docker-local-ssl
-	docker-sync start && docker-compose up -d
+	docker-compose up -d
 
-# Stop Docker and docker-sync
+# Stop Docker
 docker-stop: docker-down
 docker-down:
-	docker-compose down && docker-sync stop
+	docker-compose down
 
 # Restart docker
 docker-restart: docker-stop docker-start
