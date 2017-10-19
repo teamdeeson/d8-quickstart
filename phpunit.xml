@@ -1,23 +1,37 @@
 <phpunit
         bootstrap="web/core/tests/bootstrap.php"
         colors="true"
+        beStrictAboutTestsThatDoNotTestAnything="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutChangesToGlobalState="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true">
+    <php>
+        <!-- Set error reporting to E_ALL. -->
+        <ini name="error_reporting" value="32767"/>
+        <!-- Do not limit the amount of memory tests take to run. -->
+        <ini name="memory_limit" value="-1"/>
+        <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
+        <env name="SIMPLETEST_BASE_URL" value=""/>
+        <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
+        <env name="SIMPLETEST_DB" value=""/>
+        <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
+        <env name="BROWSERTEST_OUTPUT_DIRECTORY" value=""/>
+    </php>
     <testsuites>
         <testsuite name="Custom modules">
-            <directory>docroot/modules/custom/*/tests</directory>
+            <directory>web/modules/custom/*/tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">docroot/modules/custom</directory>
+            <directory suffix=".php">web/modules/custom</directory>
             <exclude>
-                <directory suffix=".php">docroot/modules/custom/*/tests</directory>
+                <directory suffix=".php">web/modules/custom/*/tests</directory>
             </exclude>
         </whitelist>
     </filter>
 </phpunit>
-
