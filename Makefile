@@ -5,6 +5,8 @@ DRUSH_ARGS?=-y --nocolor
 DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
 DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
 COMPOSER?=$(shell command -v composer 2> /dev/null)
+HOST=php
+COMMAND=/bin/bash
 
 # Build by default.
 default: build
@@ -87,3 +89,11 @@ docker-local-ssl: .persist/certs/local.key .persist/certs/local.crt
 .persist/certs/local.%:
 	mkdir -p ./.persist/certs
 	./scripts/make/genlocalcrt.sh ./.persist/certs
+
+build-solr:
+	make docker-shell HOST=solr COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
+
+# Connect to the shell on a docker host, defaults to HOST=php COMMAND=/bin/bash
+# Usage: make docker-shell HOST=[container name] COMMAND=[command]
+docker-shell:
+	docker exec -i -t `docker ps | grep $(HOST)_1 | cut -d' ' -f 1` $(COMMAND)
