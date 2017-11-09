@@ -10,9 +10,10 @@
  */
 $base_domains = [
   'localhost' => 'local',
-  'dev-site.com' => 'dev',
-  'test-site.com' => 'test',
-  'live-site.com' => 'live',
+  'docker.local' => 'local',
+  'dev.example.com' => 'dev',
+  'test.example.com' => 'test',
+  'www.example.com' => 'live',
 ];
 
 // Pantheon environment settings.
