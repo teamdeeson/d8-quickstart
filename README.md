@@ -44,7 +44,7 @@ You should check through all of the services and settings files and make any req
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
 
-This ensures we have a universal mechanism for task running across all of our projects. 
+This ensures we have a universal mechanism for task running across all of our projects.
 
 The project can be built using the included Makefile.
 
@@ -167,12 +167,12 @@ Anything within `src/modules/` will be made available in `docroot/modules/custom
 You can define your services YAML files here.
 
 #### src/settings/
-This contains the Drupal site settings, extracted from settings.php as per: 
+This contains the Drupal site settings, extracted from settings.php as per:
 http://handbook.deeson.co.uk/development/drupal8/#settings-file-configuration
 
 This has been moved from either sites/default/settings/ or sites/conf/ mentioned in the blog post.
 
-settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php. 
+settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php.
 
 #### src/themes/
 This is where you place your custom theme(s).
@@ -217,7 +217,7 @@ To list the active Docker instances run the following in the project root direct
 docker-compose ps
 ```
 
-To get a bash terminal inside the PHP container you can use the following: 
+To get a bash terminal inside the PHP container you can use the following:
 
 ```bash
 docker-compose exec php
@@ -236,8 +236,8 @@ The following bashrc extension makes it easier to work with drush locally. You s
 
 https://github.com/drush-ops/drush/blob/master/examples/example.bashrc
 
-Once done, consider changing local drush to always use the one checked out for your project. This is always found at 
-vendor/bin/drush. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
+Once done, consider changing local drush to always use the one checked out for your project. This is always found at
+`vendor/bin/drush`. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
 
 ```
 drush() {
