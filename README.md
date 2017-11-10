@@ -5,7 +5,7 @@ This repository provides a quick start wrapper around Drupal Composer and includ
 
 Quick-start projects use composer for dependency management, including Drupal core, contrib and 3rd party libraries. The contents of docroot/ should be considered expendable during development and can be recompiled from the contents of the repository.
 
-We use [Docker](https://docs.docker.com/engine/installation/), [Docker compose](https://docs.docker.com/compose/install/) and [Docker sync](http://docker-sync.io/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
+We use [Docker](https://docs.docker.com/engine/installation/) and [Docker compose](https://docs.docker.com/compose/install/) for managing local development and this repository comes with some default configuration for working with Docker. You are of course free to use alternatives, but additional configuration may be required.
 
 For drush to work with Docker, you'll need to add the following line to your `/etc/hosts` file:
 127.0.0.1 docker.local
@@ -37,14 +37,14 @@ You should check through all of the services and settings files and make any req
 
 `src/settings/environment.inc:` Configure your domain names
 
-`src/settings/01-core.settings.inc:` Configure a hash salt.
+`src/settings/01-core.settings.inc:` Configure a hash salt. See [http://drupalhashsalt.com/](http://drupalhashsalt.com/)
 
 `src/settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
 
 ## Build and install
 At Deeson we use Makefiles to orchestrate any additional tasks such as building dependencies and running tests.
 
-This ensures we have a universal mechanism for task running across all of our projects. 
+This ensures we have a universal mechanism for task running across all of our projects.
 
 The project can be built using the included Makefile.
 
@@ -72,7 +72,7 @@ make clean
 Once you have run the build for the first time, you can setup and run your Docker environment using the following command.
 
 ```
-make docker-start
+make docker-up
 ```
 
 You should now be able to access a vanilla Drupal site at http://localhost
@@ -87,10 +87,10 @@ will install the site and associated configuration. You will be prompted to opti
 You can stop the docker environment at any time using the command below:
 
 ```
-make docker-stop
+make docker-down
 ```
 
-Your site files and database will be stored outside of docker in the .persist hidden directory.
+Your site files and database will be stored outside of docker in the `.persist` hidden directory.
 
 ## Managing dependencies with composer
 All of your dependencies should be managed through composer. This includes any off-the-shelf code such as Drupal core, contrib modules and themes, and any 3rd party libraries.
@@ -123,7 +123,7 @@ https://getcomposer.org/doc/01-basic-usage.md
 
 ## XDebug
 
-You need to run `sudo ifconfig lo0 alias 10.254.254.254` before you can use xdebug.
+You need to run `sudo ifconfig lo0 alias 10.254.254.254` before xdebug connections will work. This is usually required each time you log-in to your development machine, but is safe to run periodically.
 
 ## Running tests
 
@@ -167,12 +167,12 @@ Anything within `src/modules/` will be made available in `docroot/modules/custom
 You can define your services YAML files here.
 
 #### src/settings/
-This contains the Drupal site settings, extracted from settings.php as per: 
+This contains the Drupal site settings, extracted from settings.php as per:
 http://handbook.deeson.co.uk/development/drupal8/#settings-file-configuration
 
 This has been moved from either sites/default/settings/ or sites/conf/ mentioned in the blog post.
 
-settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php. 
+settings.php will be made available in `docroot/sites/default/`. All other files will be included in-place by settings.php.
 
 #### src/themes/
 This is where you place your custom theme(s).
@@ -211,16 +211,16 @@ docker-compose exec mariadb mysql
 
 You can also use the more standard docker commands.
 
-To list the active Docker instances use
+To list the active Docker instances run the following in the project root directory:
 
 ```bash
-docker ps
+docker-compose ps
 ```
 
-To get a bash terminal inside the web instance you can use the following. Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
+To get a bash terminal inside the PHP container you can use the following:
 
 ```bash
-docker exec -i -t a7faeb64a052 /bin/bash
+docker-compose exec php
 ```
 
 To import an exported site database into the database container (if you don't have pv installed you can do so with `brew install pv`):
@@ -228,6 +228,7 @@ To import an exported site database into the database container (if you don't ha
 ```bash
 pv database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
+Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
 
 # Help with Drush
 
@@ -235,8 +236,8 @@ The following bashrc extension makes it easier to work with drush locally. You s
 
 https://github.com/drush-ops/drush/blob/master/examples/example.bashrc
 
-Once done, consider changing local drush to always use the one checked out for your project. This is always found at 
-vendor/bin/drush. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
+Once done, consider changing local drush to always use the one checked out for your project. This is always found at
+`vendor/bin/drush`. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
 
 ```
 drush() {
