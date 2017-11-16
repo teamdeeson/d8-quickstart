@@ -25,6 +25,7 @@ module:
   page_cache: 0
   path: 0
   rdf: 0
+  redis: 0
   search: 0
   system: 0
   taxonomy: 0

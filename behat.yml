@@ -17,10 +17,9 @@ default:
       selenium2: ~
       base_url: http://localhost/
     Drupal\DrupalExtension:
-      blackbox: ~
-      api_driver: 'drush'
-      drush:
-        alias: 'docker'
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: '%paths.base%/docroot'
       selectors:
         message_selector: '.message'
         error_message_selector: '.error'
@@ -28,7 +27,6 @@ default:
         warning_message_selector: '.warning'
       region_map:
         comments: '.comments'
-
 
 vdd:
   extensions:
@@ -38,3 +36,11 @@ vdd:
       api_driver: 'drupal'
       drush:
         alias: 'vdd'
+
+pipelines:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://localhost:8080/
+    Drupal\DrupalExtension:
+      drush:
+        alias: 'pipelines'

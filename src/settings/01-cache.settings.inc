@@ -10,7 +10,7 @@
  *
  * Set to TRUE if the Redis module is present AND enabled, and the Redis service is available.
  */
-define('CACHE_ENABLE_REDIS', FALSE);
+define('CACHE_ENABLE_REDIS', class_exists(Redis::class));
 /**
  * Enables Memcache cache service.
  *

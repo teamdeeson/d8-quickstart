@@ -36,3 +36,11 @@ if (!file_exists('/var/www/html')) {
   $aliases['docker']['remote-user'] = 'www-data';
   $aliases['docker']['ssh-options'] = '-p 2223';
 }
+
+$aliases['pipelines'] = array(
+  'uri' => 'localhost',
+  'root' => __DIR__ . '/../docroot',
+  'path-aliases' => array(
+    '%drush-script' => __DIR__ . '/../vendor/bin/drush',
+  ),
+);
