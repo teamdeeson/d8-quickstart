@@ -139,17 +139,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./.persist/certs:/certs
-
-# PHP ssh connection. For Drush access.
-  ssh:
-    image: jeroenpeeters/docker-ssh
-    environment:
-      AUTH_MECHANISM: noAuth
-      # COMPOSE_PROJECT_NAME is defined in the compose .env file.
-      CONTAINER: ${COMPOSE_PROJECT_NAME}_php_1
-      HTTP_ENABLED: 'false'
-    ports:
-      # Use local port 2223 for SSH connections.
-      - '2223:22'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
