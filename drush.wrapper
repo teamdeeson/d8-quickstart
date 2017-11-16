@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+#
+# DRUSH WRAPPER
+# This wrapper script enables Drush to be seamlessly run inside of our PHP
+# Docker container, using the locally installed Drush.
+# You can find out more about Drush wrapper scripts from their repo in the
+# examples folder.
+
+# This wrapper has been tested with the following Drush commands.
+# drush @docker status
+# drush @docker status | tee file.txt
+#
+# drush @docker sql-cli
+# echo "show tables" | drush @docker sql-cli
+# echo "show tables" | drush @docker sql-cli | tee file.txt
+
+
+# Only running Drush on the docker container when it's being requested means
+# that it is still possible to connect to remote services, because the Docker
+# container doesn't have access to our ssh keys.
+if [[ $@ == *"@docker"* ]]; then
+
+    CONTAINER=$(docker-compose ps -q php)
+    if [ -z "$CONTAINER" ]; then
+        >&2 echo "Error: Docker doesn't appear to be running, only remote commands will work at the moment."
+        exit 1
+    fi
+
+    ARGS="-i"
+    # For the case where no pipes are being used, opening a TTY makes
+    # interactions work properly.
+    if [ -t 0 -a -t 1 ]; then
+        ARGS="-it"
+    fi;
+    docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush "$@"
+else
+    vendor/bin/drush.launcher --alias-path=./drush "$@"
+fi
+
