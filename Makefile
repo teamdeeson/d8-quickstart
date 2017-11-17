@@ -20,6 +20,8 @@ build-dev: build-local
 # Build dependencies for dev environments.
 build-local:
 	${COMPOSER} install
+build-docker: docker-up
+	docker-compose exec php composer install
 # Build dependencies for prod environment.
 build-prod:
 	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader
@@ -73,11 +75,13 @@ post-deploy:
 # Start Docker
 docker-start: docker-up
 docker-up: docker-local-ssl
+	@echo Bringing docker containers up
 	docker-compose up -d
 
 # Stop Docker
 docker-stop: docker-down
 docker-down:
+	@echo Bringing docker containers down
 	docker-compose down
 
 # Restart docker
