@@ -83,6 +83,10 @@ docker-down:
 # Restart docker
 docker-restart: docker-stop docker-start
 
+# Stop all running container
+docker-stop-all:
+	docker stop $(docker ps -aq)
+
 docker-local-ssl: .persist/certs/local.key .persist/certs/local.crt
 .persist/certs/local.%:
 	mkdir -p ./.persist/certs
