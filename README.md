@@ -156,7 +156,7 @@ This contains your drush site aliases file(s).
 This contains all of your project source code. As follows:
 
 #### src/frontend/
-If you are using a different toolset for your front-end components this is where it should be. We use NPM and Gulp to compile our SCSS and Javascript, and to generate fonts and icon-sets.
+For all your front end needs. This makes use of our front end setup, you can find out how here : https://github.com/teamdeeson/deeson-webpack-config
 
 #### src/modules/
 This is where you place your custom modules.
@@ -178,6 +178,9 @@ settings.php will be made available in `docroot/sites/default/`. All other files
 This is where you place your custom theme(s).
 
 Anything within `src/themes/` will be made available in `docroot/themes/custom/`
+
+##### src/themes/deeson_frontend_framework
+The default hook up between drupal and src/frontend. Your theme can either inherit from this or follow the instructions from https://github.com/teamdeeson/deeson-webpack-config to do it yourself (its not tricky).
 
 ### scripts/
 This is for any compilation or deployment scripts you may want to add.

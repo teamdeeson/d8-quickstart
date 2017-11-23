@@ -7,22 +7,22 @@ pipelines:
   default:
     - step:
         script:
-          - make test
+          - ENVIRONMENT=pipelines make test
 
   branches:
     master:
       - step:
           script:
-            - make test
-            - make deploy-stage
+            - ENVIRONMENT=pipelines make test
+            - ENVIRONMENT=pipelines make deploy-stage
     develop:
       - step:
           script:
-            - make test
-            - make deploy-test
+            - ENVIRONMENT=pipelines make test
+            - ENVIRONMENT=pipelines make deploy-test
   tags:
     '*':
       - step:
           script:
-            - make test
-            - make deploy-prod
+            - ENVIRONMENT=pipelines make test
+            - ENVIRONMENT=pipelines make deploy-prod
