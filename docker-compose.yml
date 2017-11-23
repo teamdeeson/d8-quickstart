@@ -2,12 +2,14 @@ version: "2"
 
 services:
   mariadb:
-    image: wodby/mariadb:10.1-2.1.0
+    image: wodby/mariadb:10.1-2.3.3
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
+    ports:
+      - "3307:3306"
     volumes:
 #      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - ./.persist/mysql:/var/lib/mysql # I want to manage volumes manually.
@@ -16,10 +18,9 @@ services:
       - 'traefik.port=3306'
       - 'traefik.frontend.rule=Host:localhost'
 
-
   php:
 # 2. Images without Drupal – wodby/drupal-php:[PHP_VERSION]-[STABILITY_TAG].
-    image: wodby/drupal-php:7.1-2.1.0
+    image: wodby/drupal-php:7.1-2.4.3
 #    image: wodby/drupal-php:7.0-2.1.0
 #    image: wodby/drupal-php:5.6-2.1.0
 #    image: wodby/drupal-php:5.3-2.1.0
@@ -35,15 +36,15 @@ services:
       PHP_XDEBUG_DEFAULT_ENABLE: 1
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
+      PHP_IDE_CONFIG: "serverName=localhost"       # Needed for xdebug for drush commands.
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
       - ./.persist/private:/private
-#      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
-    image: wodby/drupal-nginx:8-1.10-2.1.0
+    image: wodby/drupal-nginx:8-1.13-2.4.2
 #    image: wodby/drupal-nginx:7-1.10-2.1.0
 #    image: wodby/drupal-nginx:6-1.10-2.1.0
     depends_on:
@@ -54,9 +55,8 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/docroot
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
-#      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
@@ -131,12 +131,14 @@ services:
 
   traefik:
     image: traefik
-    command: -c /dev/null --web --docker --logLevel=INFO
+    command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https,http' --entryPoints='Name:https Address::443 TLS:/certs/local.crt,/certs/local.key' --entryPoints='Name:http Address::80'
     ports:
       - '80:80'
+      - '443:443'
 #      - '8080:8080' # Dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./.persist/certs:/certs
 
 # PHP ssh connection. For Drush access.
   ssh:
@@ -151,8 +153,3 @@ services:
       - '2223:22'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-# Docker-sync for macOS users
-#volumes:
-#  docker-sync-unison:
-#    external: true

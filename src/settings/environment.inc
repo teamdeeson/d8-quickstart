@@ -10,9 +10,10 @@
  */
 $base_domains = [
   'localhost' => 'local',
-  'dev-site.com' => 'dev',
-  'test-site.com' => 'test',
-  'live-site.com' => 'live',
+  'docker.local' => 'local',
+  'dev.example.com' => 'dev',
+  'test.example.com' => 'test',
+  'www.example.com' => 'live',
 ];
 
 // Pantheon environment settings.
@@ -43,7 +44,7 @@ elseif (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   }
   // Other Acquia environment.
   else {
-    define('SETTINGS_ENVIRONMENT', $_ENV['PANTHEON_ENVIRONMENT']);
+    define('SETTINGS_ENVIRONMENT', $_ENV['AH_SITE_ENVIRONMENT']);
   }
 }
 // Platform.sh environment settings.
@@ -54,9 +55,11 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
     case 'master':
       define('SETTINGS_ENVIRONMENT', 'live');
       break;
+
     case 'develop':
       define('SETTINGS_ENVIRONMENT', 'test');
       break;
+
     default:
       define('SETTINGS_ENVIRONMENT', 'dev');
       break;

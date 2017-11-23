@@ -6,7 +6,7 @@ default:
       paths:
         - %paths.base%/behat-tests
       contexts:
-        - FeatureContext
+        - DefaultFeatureContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext
@@ -18,9 +18,9 @@ default:
       base_url: http://localhost/
     Drupal\DrupalExtension:
       blackbox: ~
-      api_driver: 'drupal'
-      drupal:
-        drupal_root: 'docroot'
+      api_driver: 'drush'
+      drush:
+        alias: 'docker'
       selectors:
         message_selector: '.message'
         error_message_selector: '.error'

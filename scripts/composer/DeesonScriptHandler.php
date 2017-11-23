@@ -1,21 +1,21 @@
 <?php
 
-/**
- * @file
- * Contains \DrupalProject\composer\DeesonScriptHandler.
- */
-
 namespace DrupalProject\composer;
 
 use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Class DeesonScriptHandler
+ *
+ * @package DrupalProject\composer
+ */
 class DeesonScriptHandler {
 
-  protected static function getDrupalRoot($project_root) {
-    return $project_root . '/docroot';
-  }
-
+  /**
+   * @param \Composer\Script\Event $event
+   *   The event.
+   */
   public static function createRequiredFiles(Event $event) {
     $fs = new Filesystem();
     $project_root = getcwd();
@@ -32,17 +32,18 @@ class DeesonScriptHandler {
       'themes',
     ];
 
-    // Required for unit testing
+    // Required for unit testing.
     foreach ($dirs as $dir) {
-      if (!$fs->exists($drupal_root . '/'. $dir)) {
-        $fs->mkdir($drupal_root . '/'. $dir);
-        $fs->touch($drupal_root . '/'. $dir . '/.gitkeep');
+      if (!$fs->exists($drupal_root . '/' . $dir)) {
+        $fs->mkdir($drupal_root . '/' . $dir);
+        $fs->touch($drupal_root . '/' . $dir . '/.gitkeep');
       }
     }
 
     $links = [
       'src/modules' => 'modules/custom',
       'src/themes' => 'themes/custom',
+      'src/profiles' => 'profiles/custom',
     ];
 
     // Create symlinks within the docroot.
@@ -50,7 +51,7 @@ class DeesonScriptHandler {
       $fs->symlink('../../' . $src, $drupal_root . '/' . $dest);
     }
 
-    // Link drush/ to docroot/drush/
+    // Link drush/ to docroot/drush/.
     if (!$fs->exists($drupal_root . '/drush')) {
       $fs->symlink('../drush', $drupal_root . '/drush');
       $event->getIO()->write("Created a symlink for drush/");
@@ -59,16 +60,28 @@ class DeesonScriptHandler {
     // Prepare the settings file.
     if (!$fs->exists($drupal_root . '/sites/default/settings.php')) {
       $fs->symlink('../../../src/settings/settings.php', $drupal_root . '/sites/default/settings.php');
-      $event->getIO()->write("Created a symlink for sites/default/settings.php");
+      $event->getIO()
+        ->write("Created a symlink for sites/default/settings.php");
     }
 
-    // Create the files directory with chmod 0777
+    // Create the files directory with chmod 0777.
     if (!$fs->exists($drupal_root . '/sites/default/files')) {
       $oldmask = umask(0);
       $fs->mkdir($drupal_root . '/sites/default/files', 0777);
       umask($oldmask);
-      $event->getIO()->write("Created a sites/default/files directory with chmod 0777");
+      $event->getIO()
+        ->write("Created a sites/default/files directory with chmod 0777");
     }
+  }
+
+  /**
+   * @param string $project_root
+   *   The project root directory path.
+   * @return string
+   *   The drupal root directory path.
+   */
+  protected static function getDrupalRoot($project_root) {
+    return $project_root . '/docroot';
   }
 
 }

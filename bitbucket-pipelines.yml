@@ -1,6 +1,5 @@
-image: phpunit/phpunit:5.0.3
+image: deeson/default-pipeline:latest
 
-# We need the full commit history for deployment.
 clone:
   depth: full
 
@@ -9,4 +8,21 @@ pipelines:
     - step:
         script:
           - make test
-          - make deploy RUN_DESTRUCTIVE=true
+
+  branches:
+    master:
+      - step:
+          script:
+            - make test
+            - make deploy-stage
+    develop:
+      - step:
+          script:
+            - make test
+            - make deploy-test
+  tags:
+    '*':
+      - step:
+          script:
+            - make test
+            - make deploy-prod

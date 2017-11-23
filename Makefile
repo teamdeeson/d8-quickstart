@@ -1,10 +1,12 @@
 ROOT_DIR=${PWD}
 RUN_DESTRUCTIVE?=false
-ENVIRONMENT?=vdd
+ENVIRONMENT?=docker
 DRUSH_ARGS?=-y --nocolor
 DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
 DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
 COMPOSER?=$(shell command -v composer 2> /dev/null)
+HOST=php
+COMMAND=/bin/bash
 
 # Build by default.
 default: build
@@ -14,35 +16,37 @@ build: build-${ENVIRONMENT}
 
 # Environment aliases.
 build-vdd: build-local
+build-docker: build-local
 build-dev: build-local
 
 # Build dependencies for dev environments.
 build-local:
 	${COMPOSER} install
+build-docker: docker-up
+	docker-compose exec php composer install
 # Build dependencies for prod environment.
 build-prod:
-	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs
+	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader
 
 # Run coding standards checks.
 test-code-quality: build-dev
-	# Configure Drupal Coder support.
-	${ROOT_DIR}/vendor/bin/phpcs --config-set installed_paths ${ROOT_DIR}/vendor/drupal/coder/coder_sniffer
-	# Run the coding standards checks.
-	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=Drupal --extensions=php,inc,module,theme ${ROOT_DIR}/src/
-	# Run the Drupal best practice checks.
-	${ROOT_DIR}/vendor/bin/phpcs -nq --standard=DrupalPractice --extensions=php,inc,module,theme ${ROOT_DIR}/src/
+	./scripts/make/code_standards.sh "src scripts"
 # Run unit tests.
 test-phpunit: build-dev
 	${ROOT_DIR}/vendor/bin/phpunit
 # Run functional tests.
 test-behat: build-dev
-	# ${ROOT_DIR}/vendor/bin/behat
+	cd docroot && ${ROOT_DIR}/vendor/bin/behat --config=${ROOT_DIR}/behat.yml
 # Run all automated tests
 test: build-dev test-code-quality test-phpunit test-behat
 
 # Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
 deploy:	test build-prod
-	if $(RUN_DESTRUCTIVE); then ./scripts/deploy.sh; else exit 1; fi
+	if $(RUN_DESTRUCTIVE); then ./scripts/make/deploy.sh; else exit 1; fi
+# Alias deploy to allow different deployment strategies for different environments
+deploy-test: deploy
+deploy-stage: deploy
+deploy-prod: deploy
 
 # Cleanup
 clean:
@@ -53,9 +57,14 @@ install: install-${ENVIRONMENT}
 # Do nothing. Don't re-install prod.
 install-prod:
 # Local installation
+install-docker: install-vdd
 install-vdd:
-	cd docroot && ${DRUSH_CMD} site-install || echo 'Skipping site installation.'
-	cd docroot && ${DRUSH} cim
+# Drupal needs the settings file to be writable.
+	chmod 777 docroot/sites/default/settings.php
+	cd docroot && ${DRUSH_CMD} -y site-install config_installer
+# Get rid of any changes made to the settings file.
+	git checkout src/settings/settings.php
+	chmod 644 docroot/sites/default/settings.php
 
 # Do stuff to Drupal now it's in a live environment.
 post-deploy:
@@ -65,3 +74,30 @@ post-deploy:
 	cd docroot && $(DRUSH) cr
 	cd docroot && $(DRUSH) cc css-js
 
+# Start Docker
+docker-start: docker-up
+docker-up: docker-local-ssl
+	@echo Bringing docker containers up
+	docker-compose up -d
+
+# Stop Docker
+docker-stop: docker-down
+docker-down:
+	@echo Bringing docker containers down
+	docker-compose down
+
+# Restart docker
+docker-restart: docker-stop docker-start
+
+docker-local-ssl: .persist/certs/local.key .persist/certs/local.crt
+.persist/certs/local.%:
+	mkdir -p ./.persist/certs
+	./scripts/make/genlocalcrt.sh ./.persist/certs
+
+build-solr:
+	make docker-shell HOST=solr COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
+
+# Connect to the shell on a docker host, defaults to HOST=php COMMAND=/bin/bash
+# Usage: make docker-shell HOST=[container name] COMMAND=[command]
+docker-shell:
+	docker exec -i -t `docker ps | grep $(HOST)_1 | cut -d' ' -f 1` $(COMMAND)
