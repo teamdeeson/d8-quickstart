@@ -56,6 +56,16 @@ class DeesonScriptHandler {
       $fs->symlink('../drush', $drupal_root . '/drush');
       $event->getIO()->write("Created a symlink for drush/");
     }
+    // Link the drush wrapper so it can be used anywhere in the project directory structure.
+    if (!$fs->exists($drupal_root . '/drush.wrapper')) {
+      $fs->symlink('../drush.wrapper', $drupal_root . '/drush.wrapper');
+      $event->getIO()->write("Created a symlink for drush.wrapper");
+    }
+    // Link the docker-compose environment file so docker-compose commands work in the docroot.
+    if (!$fs->exists($drupal_root . '/.env')) {
+      $fs->symlink('../.env', $drupal_root . '/.env');
+      $event->getIO()->write("Created a symlink for .env");
+    }
 
     // Prepare the settings file.
     if (!$fs->exists($drupal_root . '/sites/default/settings.php')) {
