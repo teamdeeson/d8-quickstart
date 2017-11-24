@@ -14,6 +14,8 @@
 # echo "show tables" | drush @docker sql-cli
 # echo "show tables" | drush @docker sql-cli | tee file.txt
 
+script="$0"
+basename="$(dirname $script)"
 
 # Only running Drush on the docker container when it's being requested means
 # that it is still possible to connect to remote services, because the Docker
@@ -34,6 +36,5 @@ if [[ $@ == *"@docker"* ]]; then
     fi;
     docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush "$@"
 else
-    vendor/bin/drush.launcher --alias-path=./drush "$@"
+    ${basename}/vendor/bin/drush.launcher --alias-path=./drush "$@"
 fi
-
