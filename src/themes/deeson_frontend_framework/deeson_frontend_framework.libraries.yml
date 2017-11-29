@@ -1,0 +1,8 @@
+base:
+  css:
+    theme:
+      assets/app.css: {}
+  js:
+    assets/app.js: {}
+  dependencies:
+    - core/drupalSettings
