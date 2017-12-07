@@ -197,10 +197,6 @@ This is the composer vendor directory, which contains project dependencies, tool
 ### web/
 This and `docroot/` are symlinked to the same location for wider compatibility and should also be excluded from your repository.
 
-# Known limitations
-
-*Drush locking up*: Some drush commands will hang the terminal, notabily `drush @docker ssh` and `drush @docker sql-cli`. Use the *Helpful docker commands* section below to see the alternatives. The reason for this [is here](https://github.com/jeroenpeeters/docker-ssh/issues/27)
-
 # Helpful Docker commands
 
 You can use the docker-compose tool as a shortcut for common docker commands. To run a command within one of the containers you can use:
@@ -232,19 +228,3 @@ To import an exported site database into the database container (if you don't ha
 pv database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
 Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
-
-# Help with Drush
-
-The following bashrc extension makes it easier to work with drush locally. You should add this to the end of your ~/.bashrc file
-
-https://github.com/drush-ops/drush/blob/master/examples/example.bashrc
-
-Once done, consider changing local drush to always use the one checked out for your project. This is always found at
-`vendor/bin/drush`. Add the following to the end of your ~/.bashrc file to make drush always use the one in the local project.
-
-```
-drush() {
-    local drupal_root=`_drupal_root` && \
-      $drupal_root/../vendor/bin/drush "$@"
-}
-```
