@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #
 # DRUSH WRAPPER
 # This wrapper script enables Drush to be seamlessly run inside of our PHP

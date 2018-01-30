@@ -88,7 +88,7 @@ docker-up: docker-local-ssl
 docker-stop: docker-down
 docker-down:
 	@echo Bringing docker containers down
-	docker-compose down
+	docker-compose down --remove-orphans
 
 # Restart docker
 docker-restart: docker-stop docker-start
