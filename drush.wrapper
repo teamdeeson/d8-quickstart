@@ -34,7 +34,7 @@ if [[ $@ == *"@docker"* ]]; then
     if [ -t 0 -a -t 1 ]; then
         ARGS="-it"
     fi;
-    docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush "$@"
+    docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush --reserve-margin=80 "$@"
 else
-    ${basename}/vendor/bin/drush.launcher --alias-path=./drush "$@"
+    ${basename}/vendor/bin/drush.launcher --alias-path=./drush  --reserve-margin=80 "$@"
 fi
