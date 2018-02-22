@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #
 # DRUSH WRAPPER
 # This wrapper script enables Drush to be seamlessly run inside of our PHP
@@ -34,7 +34,11 @@ if [[ $@ == *"@docker"* ]]; then
     if [ -t 0 -a -t 1 ]; then
         ARGS="-it"
     fi;
-    docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush --reserve-margin=80 "$@"
+
+    # Tell Docker the number of columns in our terminal.
+    ARGS="${ARGS} -e COLUMNS="`tput cols`
+
+    docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush "$@"
 else
-    ${basename}/vendor/bin/drush.launcher --alias-path=./drush  --reserve-margin=80 "$@"
+    ${basename}/vendor/bin/drush.launcher --alias-path=./drush "$@"
 fi
