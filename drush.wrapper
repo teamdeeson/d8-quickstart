@@ -34,6 +34,10 @@ if [[ $@ == *"@docker"* ]]; then
     if [ -t 0 -a -t 1 ]; then
         ARGS="-it"
     fi;
+
+    # Tell Docker the number of columns in our terminal.
+    ARGS="${ARGS} -e COLUMNS="`tput cols`
+
     docker exec $ARGS $CONTAINER ./vendor/bin/drush.launcher --local --alias-path=./drush "$@"
 else
     ${basename}/vendor/bin/drush.launcher --alias-path=./drush "$@"
