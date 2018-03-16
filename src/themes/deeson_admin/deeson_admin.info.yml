@@ -1,0 +1,8 @@
+name: Deeson Admin
+type: theme
+description: 'This is a admin sub-theme of theme Seven, made by Deeson for the web.'
+core: 8.x
+base theme: seven
+
+libraries:
+  - deeson_admin/global-styling

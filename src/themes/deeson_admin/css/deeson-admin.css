@@ -1,0 +1,54 @@
+/* Deeson Admin Theme overrides file. All selectors must start with ".deeson-admin" */
+
+/* ////////////////////////
+  Fonts
+//////////////////////// */
+
+/* @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTRsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/uYKcPVoh6c5R0NpdEY5A-Q.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/MTP_ySUJH_bn48VBG8sNShsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+} */
+
+/*html {
+  zoom: 1.1;
+}*/
+
+/* Fix drag and drop offset in ckeditor toolbar configuration */
+
+/*.adminimal .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
+  zoom: 0.9;
+}*/
+
+/* body.adminimal {
+  font: normal 81.3%/1.538em "Open Sans", sans-serif;
+} */
+
+/* .adminimal h1,
+.adminimal .heading-a {
+  font-weight: 300;
+  margin-bottom: 19px;
+  margin-bottom: 1rem;
+  font-size: 2.35em;
+  line-height: 1.2em;
+  color: #fff;
+} */
+
+body.deeson-admin {
+  /* background: red; */
+}
