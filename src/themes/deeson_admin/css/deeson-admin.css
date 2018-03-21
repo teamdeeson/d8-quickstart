@@ -1,6 +1,19 @@
 /* Deeson Admin Theme overrides file. All selectors must start with ".deeson-admin" */
 
 /* ////////////////////////
+  Colours
+//////////////////////// */
+
+.colors {
+  color: #4d84b9;
+  color: #5595d2;
+  color: #ff0046;
+  color: #cfc6cc;
+  color: #46af9b;
+  color: #edeee9;
+}
+
+/* ////////////////////////
   Fonts
 //////////////////////// */
 
@@ -31,16 +44,16 @@
 
 /* Fix drag and drop offset in ckeditor toolbar configuration */
 
-/*.adminimal .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
+/*.deeson-admin .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
   zoom: 0.9;
 }*/
 
-/* body.adminimal {
+/* body.deeson-admin {
   font: normal 81.3%/1.538em "Open Sans", sans-serif;
 } */
 
-/* .adminimal h1,
-.adminimal .heading-a {
+/* .deeson-admin h1,
+.deeson-admin .heading-a {
   font-weight: 300;
   margin-bottom: 19px;
   margin-bottom: 1rem;
@@ -51,4 +64,1145 @@
 
 body.deeson-admin {
   /* background: red; */
+}
+
+/* .deeson-admin .content-header {
+  background-color: #ff0046;
+} */
+
+/* ////////////////////////
+  Buttons
+//////////////////////// */
+
+/* button button--primary */
+
+/* .deeson-admin .button {
+  font-size: 16px;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 0;
+  background-image: none;
+  background-color: none;
+}
+
+.deeson-admin .button:hover, .deeson-admin .button:focus {
+  background-image: none;
+  background-color: none;
+}
+
+a.button.button-action.button--primary.button--small {
+  font-size: 16px;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 0;
+}
+
+.deeson-admin .button-action {
+  background-color: #46af9b;
+}
+
+.deeson-admin .button-action:hover, .deeson-admin .button-action:focus {
+  background-color: #429C8A;
+}
+
+.deeson-admin .is-active {
+  background-color: #5595d2;
+  color: #fff;
+} */
+
+/* deeson-admin Theme overrides file. All selectors must start with ".deeson-admin" */
+
+/* Import the Open Sans webfont from Google CDN */
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'),
+    url(https://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTRsxEYwM7FgeyaSgU71cLG0.woff)
+      format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'),
+    url(https://themes.googleusercontent.com/static/fonts/opensans/v6/uYKcPVoh6c5R0NpdEY5A-Q.woff)
+      format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'),
+    url(https://themes.googleusercontent.com/static/fonts/opensans/v6/MTP_ySUJH_bn48VBG8sNShsxEYwM7FgeyaSgU71cLG0.woff)
+      format('woff');
+}
+
+/* @import url('https://fonts.googleapis.com/css?family=Lato:400,700|Playfair+Display:400,700,900');
+
+
+font-family: 'Playfair Display', serif;
+font-family: 'Lato', sans-serif;
+
+@font-face {
+    font-family: 'Playfair Display', serif;
+    font-style: normal;
+    font-weight: 400;
+    src:
+            local('Playfair Display, serif'),
+            local('RacingSansOne-Regular'),
+            url(http://really-long-url.woff) format('woff');
+} */
+
+/*html {
+  zoom: 1.1;
+}*/
+
+/* Fix drag and drop offset in ckeditor toolbar configuration */
+
+/*.deeson-admin .ckeditor-toolbar-configuration.js-form-wrapper.form-wrapper {
+  zoom: 0.9;
+}*/
+
+/* .deeson-admin .button {
+  padding: 0.7rem 3rem;
+  background: transparent;
+  border: 2px solid blue;
+}
+
+.deeson-admin .button:before {
+  border: 2px solid rgba(0, 160, 80, 0);
+  color: green;
+}
+
+.deeson-admin .button:before,
+.deeson-admin .button:after {
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  -webkit-transform: scale(0);
+  transition: 0.5s;
+}
+
+.deeson-admin.button:hover::after,
+.deeson-admin.button:hover::before {
+  -webkit-transform: scale(1);
+}
+
+.deeson-admin.button::before {
+  border-bottom: 3px solid #fff;
+  border-left: 3px solid #fff;
+  -webkit-transform-origin: 0 100%;
+}
+
+.deeson-admin.button::after {
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  -webkit-transform-origin: 100% 0%;
+} */
+
+/* RESET */
+body.deeson-admin {
+  font: normal 81.3%/1.538em 'Open Sans', sans-serif;
+}
+
+.deeson-admin h1,
+.deeson-admin .heading-a {
+  font-weight: 300;
+  margin-bottom: 19px;
+  margin-bottom: 1rem;
+  font-size: 2.35em;
+  line-height: 1.2em;
+  color: #fff;
+}
+
+.deeson-admin .content-header {
+  background-color: #333;
+  padding: 1rem 0 0;
+}
+
+.deeson-admin.toolbar-tray-open.toolbar-fixed.toolbar-horizontal {
+  padding-top: 4rem !important;
+}
+
+.deeson-admin thead th {
+  border: none;
+  color: #909090;
+  text-transform: none;
+  font-weight: 500;
+  font-size: 0.91rem;
+}
+
+.deeson-admin thead th.is-active {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #5595d2;
+  border-left: 1px solid #5595d2;
+  border-right: 1px solid #5595d2;
+}
+
+.deeson-admin th.is-active > a,
+.deeson-admin th.is-active > a:hover {
+  color: #333;
+}
+
+.deeson-admin th > a:hover {
+  text-decoration: underline;
+}
+
+.deeson-admin th > a:after,
+.deeson-admin th.is-active > a:after {
+  display: none;
+}
+
+.deeson-admin thead > tr {
+  border-bottom: 1px solid #e6e4df;
+}
+
+.deeson-admin .tabs__tab {
+  border: 1px solid transparent;
+}
+
+.deeson-admin .tabs.primary {
+  margin: 0;
+  margin: 0;
+}
+
+.deeson-admin .tabs.primary .tabs__tab.is-active {
+  border-radius: 0;
+  /* LTR */
+}
+
+[dir='rtl'] .deeson-admin .tabs.primary .tabs__tab.is-active {
+  border-top-right-radius: 0;
+}
+
+.deeson-admin .is-collapse-enabled .tabs__trigger {
+  border-radius: 0;
+  /* LTR */
+}
+
+[dir='rtl'] .is-collapse-enabled .tabs__trigger {
+  border-left: 1px solid transparent;
+  border-radius: 0 0 0 0;
+}
+
+.deeson-admin .is-open .tabs__tab.is-active {
+  border-bottom: 1px solid transparent;
+}
+
+.deeson-admin .is-horizontal .tabs__tab {
+  transition: all, 0.3s;
+}
+
+.deeson-admin .is-horizontal .tabs__tab + .tabs__tab,
+[dir='rtl'] .deeson-admin .is-horizontal .tabs__tab + .tabs__tab,
+.deeson-admin .is-horizontal .tabs.primary .tabs__tab:first-child,
+[dir='rtl'] .deeson-admin .is-horizontal .tabs.primary .tabs__tab:first-child,
+.deeson-admin .is-horizontal .tabs.primary .tabs__tab:last-child,
+[dir='rtl'] .deeson-admin .is-horizontal .tabs.primary .tabs__tab:last-child,
+.deeson-admin .is-horizontal .tabs__tab.is-active,
+.deeson-admin .is-horizontal .tabs.primary .tabs__tab.is-active,
+[dir='rtl'] .deeson-admin .is-horizontal .tabs.primary .tabs__tab.is-active {
+  border-radius: 0;
+  border: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.deeson-admin .is-collapse-enabled .tabs:before,
+.deeson-admin .is-horizontal .tabs:before {
+  display: none;
+}
+
+.deeson-admin .tabs__tab,
+.deeson-admin .tabs__tab:hover,
+.deeson-admin .tabs__tab:focus,
+.deeson-admin .tabs.primary a:focus {
+  background: transparent;
+}
+
+.deeson-admin .is-horizontal .tabs.primary a:hover {
+  text-decoration: underline;
+}
+
+.deeson-admin
+  nav.is-horizontal.is-collapsible.position-container.is-horizontal-enabled
+  ul.tabs.primary {
+  display: flex;
+  justify-content: flex-end;
+  background: #edeee9;
+  margin-left: -2.1rem;
+  margin-right: -2.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.deeson-admin .is-horizontal .tabs.primary .tabs__tab:first-child.is-active {
+  box-shadow: -0.5rem 0px 0 #fff;
+}
+
+.deeson-admin .is-horizontal ul.tabs.secondary li:first-of-type {
+  margin-left: 0;
+}
+
+[dir='rtl'] .deeson-admin .is-horizontal ul.tabs.secondary li:first-of-type {
+  margin-left: 1em;
+}
+
+[dir='rtl'] .deeson-admin .is-horizontal ul.tabs.secondary li:first-of-type {
+  margin-right: 0;
+}
+
+.deeson-admin .vertical-tabs {
+  border-radius: 0;
+  border: 1px solid #b5b5b5;
+  background: #f2f2f0;
+}
+
+.deeson-admin .vertical-tabs__panes {
+  border: none;
+}
+
+.deeson-admin .vertical-tabs__menu {
+  border-bottom: none;
+}
+
+.deeson-admin .vertical-tabs__menu-item a {
+  border: 0 none;
+  transition: all, 0.2s;
+}
+
+.deeson-admin .vertical-tabs__menu-item a:hover,
+.deeson-admin .vertical-tabs__menu-item a:focus {
+  background: #d2e7f4;
+}
+
+.deeson-admin .vertical-tabs__menu-item.is-selected a:hover,
+.deeson-admin .vertical-tabs__menu-item.is-selected a:focus {
+  background: #fff;
+}
+
+.deeson-admin .vertical-tabs__menu-item.is-selected {
+  border: 0 none;
+  box-shadow: none;
+}
+
+/* /////////// Buttons ///////////////// */
+
+.deeson-admin .button {
+  border-radius: 0;
+  background-image: none;
+  background-color: #f9f9f9;
+  text-shadow: none;
+  transition: all, 0.2s;
+}
+
+.deeson-admin .button:hover,
+.deeson-admin .button:focus {
+  background-color: #ffffff;
+  border-color: #008ee6;
+  background-image: none;
+}
+
+.deeson-admin .button-action:before {
+  display: none;
+}
+
+.deeson-admin .action-links {
+  margin: 2em 0;
+}
+
+.deeson-admin .button--primary {
+  background: #5595d2;
+  border-color: #5595d2;
+}
+
+.deeson-admin .button--primary:hover,
+.deeson-admin .button--primary:focus {
+  background-image: none;
+  background-color: #4d84b9;
+  border-color: #4d84b9;
+}
+
+.deeson-admin .button:focus {
+  box-shadow: none;
+  border-color: rgb(104, 163, 207);
+  outline: rgb(193, 224, 255) solid 2px;
+}
+
+.deeson-admin .button--small:focus {
+  outline: none;
+}
+
+.deeson-admin .action-links .button--primary {
+  color: #5595d2;
+  background: #fff;
+  font-size: 14px;
+
+  padding: 1rem 2rem;
+  border: 2px solid #5595d2;
+  font-family: sans-serif;
+
+  font-weight: 600;
+}
+
+.deeson-admin .action-links .button--primary:hover,
+.deeson-admin .action-links .button--primary:focus {
+  color: #fff;
+  box-shadow: none;
+  background-image: none;
+  background-color: #5595d2;
+}
+
+.deeson-admin .action-links .button--primary:focus {
+  border-color: #08639b;
+  outline: none;
+}
+
+.deeson-admin .button--small {
+  border-color: #cacaca;
+  border-radius: 0.2rem;
+  color: #b1b1b1;
+  font-weight: 500;
+  background: #fff;
+}
+
+.deeson-admin .button--danger {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.deeson-admin .button--danger:hover {
+  text-decoration: underline;
+}
+
+/* /////////// END ///////////////// */
+
+.deeson-admin select {
+  min-height: 28px;
+  text-shadow: none;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .deeson-admin select {
+    border-radius: 0;
+    background: url(../images/caret-down.svg) no-repeat 98% 64% #fff;
+  }
+  .deeson-admin select:focus,
+  .deeson-admin select:hover {
+    background: url(../images/caret-down.svg) no-repeat 98% 64% #fff;
+  }
+  .deeson-admin select:focus {
+    border-color: #68a3cf;
+    outline: 2px solid #c1e0ff;
+    outline-offset: 0px;
+    color: #000;
+  }
+}
+
+.js .deeson-admin .form-actions .dropbutton .dropbutton-action > * {
+  text-shadow: none;
+}
+
+.js .deeson-admin .form-actions .dropbutton .dropbutton-action > *,
+.js .deeson-admin .dropbutton-widget .dropbutton-action a,
+.js .deeson-admin .dropbutton-widget .dropbutton-action input,
+.js .deeson-admin .dropbutton-widget .dropbutton-action button,
+.js .deeson-admin .dropbutton-multiple .dropbutton-widget,
+.js .deeson-admin .dropbutton-widget .dropbutton-action input,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-toggle
+  button {
+  border-radius: 0;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  a:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  button:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  input:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  a:focus,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  button:focus,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  input:focus {
+  box-shadow: none;
+}
+
+.js
+  .deeson-admin
+  .form-actions
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-toggle
+  button,
+.deeson-admin .form-actions .dropbutton .secondary-action {
+  border-color: #ffffff;
+}
+
+.js .deeson-admin .dropbutton-multiple .dropbutton-widget {
+  background: #fff;
+  background-image: none;
+  text-shadow: none;
+}
+
+.js .deeson-admin .form-actions .dropbutton-multiple .dropbutton-widget {
+  background-color: #5595d2;
+}
+
+.js .deeson-admin .dropbutton-multiple .dropbutton-widget {
+  text-shadow: none;
+}
+
+.js .deeson-admin .dropbutton-multiple.open .dropbutton-action:first-child a,
+.js
+  .deeson-admin
+  .dropbutton-multiple.open
+  .dropbutton-action:first-child
+  .button {
+  border-radius: 0;
+}
+
+.js
+  .deeson-admin
+  .form-actions
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  .button:hover,
+.js
+  .deeson-admin
+  .form-actions
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  .button:focus {
+  background-image: none;
+  box-shadow: none;
+}
+
+.deeson-admin label {
+  margin: 0 0 0.2em;
+}
+
+.deeson-admin input.form-autocomplete,
+.deeson-admin input.form-text,
+.deeson-admin input.form-tel,
+.deeson-admin input.form-email,
+.deeson-admin input.form-url,
+.deeson-admin input.form-search,
+.deeson-admin input.form-number,
+.deeson-admin input.form-color,
+.deeson-admin input.form-file,
+.deeson-admin input.form-date,
+.deeson-admin input.form-time,
+.deeson-admin textarea.form-textarea {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.deeson-admin .form-text:focus,
+.deeson-admin .form-tel:focus,
+.deeson-admin .form-email:focus,
+.deeson-admin .form-url:focus,
+.deeson-admin .form-search:focus,
+.deeson-admin .form-number:focus,
+.deeson-admin .form-color:focus,
+.deeson-admin .form-file:focus,
+.deeson-admin .form-textarea:focus,
+.deeson-admin .form-date:focus,
+.deeson-admin .form-time:focus {
+  border-color: #68a3cf;
+  outline: 2px solid #c1e0ff;
+  outline-offset: 0px;
+  color: #000;
+}
+
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  a:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  button:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  input:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  a:focus,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  button:focus,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-action
+  input:focus,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-toggle
+  button:hover,
+.js
+  .deeson-admin
+  .dropbutton-wrapper
+  .dropbutton-widget
+  .dropbutton-toggle
+  button:focus {
+  background-image: none;
+  background-color: #ffffff;
+}
+
+.deeson-admin .link.tabledrag-toggle-weight {
+  margin-bottom: 0.3em;
+}
+
+.deeson-admin .toolbar {
+  font-family: 'Open Sans';
+}
+
+.deeson-admin.toolbar-fixed.toolbar-vertical {
+  padding-top: 32px !important;
+}
+
+.deeson-admin .toolbar a {
+  transition: all, 0.2s;
+}
+
+.deeson-admin .toolbar .toolbar-bar {
+  box-shadow: none;
+  background-color: #2d2d2d;
+}
+
+.deeson-admin .toolbar .toolbar-menu {
+  background: #333;
+}
+
+.deeson-admin .toolbar .toolbar-tray-vertical {
+  border: none;
+  box-shadow: none;
+}
+
+.deeson-admin .toolbar-tray a {
+  color: #fff;
+}
+
+.deeson-admin .toolbar .toolbar-bar .toolbar-tab > .toolbar-item {
+  font-weight: 600;
+}
+
+.deeson-admin .toolbar .toolbar-bar .toolbar-item {
+  color: #bebebe;
+}
+
+.deeson-admin .toolbar .toolbar-bar .toolbar-tab > .toolbar-item:hover {
+  background-image: none;
+  background-color: #2d2d2d;
+  color: #fff;
+  text-decoration: none;
+}
+
+.deeson-admin .toolbar .toolbar-bar .toolbar-tab > .toolbar-item.is-active,
+.deeson-admin .toolbar .toolbar-bar .toolbar-tab > .toolbar-item:focus {
+  background-image: none;
+  background-color: #333;
+  text-decoration: none;
+}
+
+.deeson-admin .toolbar .toolbar-tray-horizontal .menu-item + .menu-item,
+[dir='rtl']
+  .deeson-admin
+  .toolbar
+  .toolbar-tray-horizontal
+  .menu-item
+  + .menu-item,
+.deeson-admin .toolbar .toolbar-tray-horizontal .menu-item:last-child {
+  border-left: none;
+  /* LTR */
+  border-right: none;
+}
+
+.deeson-admin .toolbar .toolbar-tray .menu-item--active-trail > .toolbar-box a,
+.deeson-admin .toolbar .toolbar-tray a.is-active {
+  color: #5595d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.deeson-admin .toolbar .toolbar-tray-vertical .menu-item + .menu-item {
+  border: 0 none;
+}
+
+.deeson-admin .toolbar .toolbar-tray {
+  background-color: #333;
+  box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.85);
+}
+
+.deeson-admin .toolbar .toolbar-tray-horizontal {
+  border-bottom: 1px solid #333;
+  box-shadow: none;
+}
+
+.deeson-admin .toolbar .toolbar-toggle-orientation {
+  background-color: #333;
+}
+
+.deeson-admin .toolbar .toolbar-icon.toolbar-handle:focus {
+  background-color: transparent;
+}
+
+.deeson-admin .toolbar .toolbar-icon.toolbar-handle:before {
+  background-image: url(../images/chevron-disc-down.svg);
+}
+
+.deeson-admin .toolbar .toolbar-icon.toolbar-handle:hover:before {
+  background-image: url(../images/chevron-disc-down-hover.svg);
+}
+
+.deeson-admin .toolbar .toolbar-icon.toolbar-handle.open:before {
+  background-image: url(../images//chevron-disc-up.svg);
+}
+
+.deeson-admin
+  .toolbar
+  .toolbar-menu
+  .toolbar-menu
+  .toolbar-icon.toolbar-handle:before {
+  background-image: url(../images/chevron-disc-down.svg);
+}
+
+.deeson-admin
+  .toolbar
+  .toolbar-menu
+  .toolbar-menu
+  .toolbar-icon.toolbar-handle:hover:before {
+  background-image: url(../images/chevron-disc-down-hover.svg);
+}
+
+.deeson-admin
+  .toolbar
+  .toolbar-menu
+  .toolbar-menu
+  .toolbar-icon.toolbar-handle.open:before {
+  background-image: url(../images//chevron-disc-up.svg);
+}
+
+.deeson-admin .toolbar-tray-horizontal a:focus,
+.toolbar-box a:focus {
+  background: transparent;
+}
+
+.deeson-admin .toolbar .toolbar-tray-vertical .toolbar-menu a {
+  color: #bbb;
+}
+
+.deeson-admin .toolbar .toolbar-tray-vertical .toolbar-menu a:hover {
+  color: #fff;
+}
+
+.deeson-admin .toolbar .toolbar-tray-vertical .toolbar-menu ul ul {
+  border: none;
+}
+
+.deeson-admin .toolbar .toolbar-tray-horizontal .toolbar-toggle-orientation {
+  border: none;
+}
+
+/* Style checkbox and radio buttons in Chrome + Safari + Opera */
+
+@supports (-webkit-appearance: none) {
+  input[type='checkbox'],
+  input[type='radio'],
+  input[type='checkbox']#edit-delete {
+    -webkit-appearance: none;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    margin-right: 0.25em;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #b5b5b5;
+    width: 16px !important;
+    height: 16px !important;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: background 0.5s ease;
+    outline: none;
+  }
+  .deeson-admin-theme .location .form-item input.form-checkbox {
+    width: 16px;
+    display: inline-block;
+  }
+  input[type='checkbox']#edit-delete {
+    margin-bottom: 0;
+  }
+  input[type='radio'] {
+    border-radius: 50%;
+  }
+  input[type='checkbox']:hover,
+  input[type='checkbox']:focus,
+  input[type='radio']:hover,
+  input[type='radio']:focus {
+    border-color: #0074bd;
+    cursor: pointer;
+  }
+  input[type='checkbox']#edit-delete:hover,
+  input[type='checkbox']#edit-delete:focus {
+    border-color: #ff0046;
+    cursor: pointer;
+  }
+  input[type='checkbox']:checked,
+  input[type='checkbox']:disabled:checked,
+  input[type='radio']:checked,
+  input[type='radio']:disabled:checked {
+    background: #0074bd;
+    box-shadow: inset 0px 0px 0px 3px #fff;
+  }
+  input[type='checkbox']#edit-delete:checked,
+  input[type='checkbox']#edit-delete:disabled:checked {
+    background: #ff0046;
+    box-shadow: inset 0px 0px 0px 3px #fff;
+  }
+  input[type='checkbox']:disabled,
+  input[type='radio']:disabled {
+    opacity: 0.5;
+    background: #e2e2e2;
+  }
+  input[type='checkbox']#edit-delete:disabled {
+    opacity: 0.5;
+    background: #e88181;
+  }
+  input[type='checkbox']:disabled:hover {
+    border-color: #b5b5b5;
+    cursor: default;
+  }
+  input[type='checkbox']:disabled:hover,
+  input[type='radio']:disabled:hover {
+    border-color: #b5b5b5;
+    cursor: default;
+    /*cursor: not-allowed;*/
+  }
+}
+
+.deeson-admin .dropbutton-single .dropbutton-action a {
+  border-radius: 0 !important;
+  background-image: none;
+  background: #f5f5f2;
+}
+
+.deeson-admin .ui-dialog .ui-dialog-titlebar {
+  border-radius: 0;
+  background: #333;
+}
+
+.deeson-admin .ui-dialog .ui-widget-content.ui-dialog-buttonpane {
+  border-radius: 0;
+}
+
+.deeson-admin .ui-dialog .ui-dialog-titlebar,
+.deeson-admin .ui-dialog {
+  outline: none;
+}
+
+.deeson-admin .ui-dialog {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.deeson-admin .ui-button-icon-only.ui-dialog-titlebar-close.ui-state-active,
+.deeson-admin
+  .ui-button-icon-only.ui-dialog-titlebar-close.ui-widget-content
+  .ui-state-active {
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+.deeson-admin .ui-dialog .ui-dialog-titlebar-close {
+  opacity: 0.5;
+  transition: all, 0.2s;
+}
+
+.deeson-admin .ui-dialog .ui-dialog-titlebar-close:hover {
+  opacity: 1;
+}
+
+.deeson-admin .messages {
+  margin: 1rem 0 1rem 0;
+  border-width: 1px 0px 1px 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  background-size: 1.3rem;
+  background-position: 5px 50%;
+  padding: 30px;
+}
+
+.deeson-admin .messages--error {
+  background-color: #ff0046;
+  color: #fff;
+  background-image: none;
+}
+
+.deeson-admin .messages--warning {
+  background-color: #fbc559;
+  color: #fff;
+  background-image: none;
+}
+
+.deeson-admin .messages--status {
+  background-color: #46af9b;
+  color: #fff;
+  background-image: none;
+}
+
+.deeson-admin .messages--error a,
+.deeson-admin .messages--warning a,
+.deeson-admin .messages--status a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: #fff;
+}
+
+.deeson-admin .messages--error a:hover,
+.deeson-admin .messages--warning a:hover,
+.deeson-admin .messages--status a:hover,
+.deeson-admin .messages--error a:focus,
+.deeson-admin .messages--warning a:focus,
+.deeson-admin .messages--status a:focus {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: #fff;
+}
+
+.deeson-admin .cke_top,
+.deeson-admin .cke_bottom {
+  background: #edeee9;
+  background-image: none;
+  box-shadow: none;
+  border: 0;
+}
+
+.deeson-admin .filter-wrapper {
+  background: #edeee9;
+}
+
+.deeson-admin .cke_ltr .cke_button:first-child,
+.deeson-admin .cke_rtl .cke_button:last-child,
+.deeson-admin .cke_toolgroup {
+  border-radius: 0;
+}
+
+/* Main menu icons. */
+
+.deeson-admin .toolbar-icon-system-admin-content:active:before,
+.deeson-admin .toolbar-icon-system-admin-content.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/file.svg);
+}
+
+.deeson-admin .toolbar-icon-system-admin-structure:active:before,
+.deeson-admin .toolbar-icon-system-admin-structure.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/orgchart.svg);
+}
+
+.deeson-admin .toolbar-icon-system-themes-page:active:before,
+.deeson-admin .toolbar-icon-system-themes-page.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/paintbrush.svg);
+}
+
+.deeson-admin .toolbar-icon-entity-user-collection:active:before,
+.deeson-admin .toolbar-icon-entity-user-collection.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/people.svg);
+}
+
+.deeson-admin .toolbar-icon-system-modules-list:active:before,
+.deeson-admin .toolbar-icon-system-modules-list.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/puzzlepiece.svg);
+}
+
+.deeson-admin .toolbar-icon-system-admin-config:active:before,
+.deeson-admin .toolbar-icon-system-admin-config.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/wrench.svg);
+}
+
+.deeson-admin .toolbar-icon-system-admin-reports:active:before,
+.deeson-admin .toolbar-icon-system-admin-reports.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/barchart.svg);
+}
+
+.deeson-admin .toolbar-icon-help-main:active:before,
+.deeson-admin .toolbar-icon-help-main.is-active:before {
+  background-image: url(/core/themes/stable/images/core/icons/787878/questionmark-disc.svg);
+}
+
+/* Main menu icons end. */
+
+.deeson-admin.path-batch .layout-container {
+  padding-top: 1.3rem;
+}
+
+/* Module: Views */
+
+.deeson-admin .views-display-top {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.deeson-admin .views-displays {
+  border: 1px solid #e8e8e8;
+}
+
+.deeson-admin .views-admin .form-edit .form-actions {
+  border-color: #e8e8e8;
+  background-color: #fafafa;
+}
+
+.deeson-admin
+  .views-ui-display-tab-bucket
+  .views-display-setting:nth-of-type(even) {
+  background-color: inherit;
+}
+
+.deeson-admin .views-displays .tabs.secondary a {
+  border-radius: 0;
+}
+
+.deeson-admin .view-preview-form__title {
+  background-color: #fafdfe;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 1.2em;
+}
+
+.deeson-admin .views-preview-wrapper {
+  border: 1px solid #e8e8e8;
+}
+
+.deeson-admin .views-ui-dialog .views-override {
+  background-color: #f6f6f6;
+}
+
+/* //////////////////////////////
+  New styles
+////////////////////////////// */
+
+.deeson-admin .admin-list li {
+  padding: 30px;
+  margin-bottom: 20px;
+  border: 0;
+  background: #edeee9;
+}
+
+.deeson-admin .admin-list .label {
+  color: #5595d2;
+}
+
+.deeson-admin .panel {
+  border: 0;
+  background: none;
+}
+
+/* /// Edit page section */
+
+.deeson-admin .entity-meta {
+  border: 0;
+  box-shadow: none;
+}
+
+.deeson-admin .entity-meta__header,
+.deeson-admin .entity-meta details {
+  border: 0;
+  background-color: #edeee9;
+}
+
+.deeson-admin .form-textarea-wrapper textarea {
+  border: 0;
+  background-color: #fff;
+}
+
+.deeson-admin .layout-region-node-footer__content {
+  border-top: 0;
+}
+
+.deeson-admin .filter-wrapper {
+  border: 0;
+}
+
+.deeson-admin .cke_chrome {
+  border: 0;
+}
+
+/* ///////// Inner pages ///////////// */
+.deeson-admin details {
+  border: 0;
+  padding: 20px;
+  background-color: #edeee9;
+  margin: 20px 0;
+}
+
+tbody tr {
+  background: #edeee9;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+tbody tr:hover,
+tbody tr:focus {
+  background-color: #5595d2 !important;
+  color: #fff;
 }
