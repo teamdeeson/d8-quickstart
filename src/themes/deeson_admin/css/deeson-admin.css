@@ -221,7 +221,7 @@ body.deeson-admin {
   margin-bottom: 1rem;
   font-size: 2.35em;
   line-height: 1.2em;
-  color: #fff;
+  color: #000;
 }
 
 .deeson-admin .content-header {
@@ -364,7 +364,7 @@ body.deeson-admin {
 
 .deeson-admin .vertical-tabs {
   border-radius: 0;
-  border: 1px solid #b5b5b5;
+  border: 0;
   background: #f2f2f0;
 }
 
@@ -639,6 +639,7 @@ body.deeson-admin {
 .deeson-admin textarea.form-textarea {
   box-shadow: none;
   border-radius: 0;
+  border: 0;
 }
 
 .deeson-admin .form-text:focus,
@@ -1203,6 +1204,6 @@ tbody tr {
 
 tbody tr:hover,
 tbody tr:focus {
-  background-color: #5595d2 !important;
-  color: #fff;
+  background: #edeee9 !important;
+  color: #000;
 }
