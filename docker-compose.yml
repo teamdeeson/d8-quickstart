@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   mariadb:
@@ -8,15 +8,11 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
-    ports:
-      - "3307:3306"
     volumes:
 #      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - ./.persist/mysql:/var/lib/mysql # I want to manage volumes manually.
-    labels:
-      - 'traefik.backend=mariadb'
-      - 'traefik.port=3306'
-      - 'traefik.frontend.rule=Host:localhost'
+    networks:
+      - isolated
 
   php:
 # 2. Images without Drupal – wodby/drupal-php:[PHP_VERSION]-[STABILITY_TAG].
@@ -25,6 +21,7 @@ services:
 #    image: wodby/drupal-php:5.6-2.1.0
 #    image: wodby/drupal-php:5.3-2.1.0
     environment:
+      PHP_FPM_CLEAR_ENV: "false"
       DOCKER_LOCAL: 1
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
       DB_HOST: mariadb
@@ -41,6 +38,8 @@ services:
       - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
       - ./.persist/private:/private
+    networks:
+      - isolated
 
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
@@ -58,38 +57,16 @@ services:
       - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files
     labels:
-      - 'traefik.backend=nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:localhost'
-
-#  varnish:
-#    image: wodby/drupal-varnish:4.1-2.1.0
-#    depends_on:
-#      - nginx
-#    environment:
-#      VARNISH_SECRET: secret
-#      VARNISH_BACKEND_HOST: nginx
-#      VARNISH_BACKEND_PORT: 80
-#    labels:
-#      - 'traefik.backend=varnish'
-#      - 'traefik.port=6081'
-#      - 'traefik.frontend.rule=Host:varnish.localhost'
+      - "traefik.frontend.rule=Host:${COMPOSE_PROJECT_NAME}.localhost"
+    networks:
+      - isolated
+      - proxy
 
   redis:
     image: wodby/redis:3.2-2.1.0
-
-#  pma:
-#    image: phpmyadmin/phpmyadmin
-#    environment:
-#      PMA_HOST: mariadb
-#      PMA_USER: drupal
-#      PMA_PASSWORD: drupal
-#      PHP_UPLOAD_MAX_FILESIZE: 1G
-#      PHP_MAX_INPUT_VARS: 1G
-#    labels:
-#      - 'traefik.backend=pma'
-#      - 'traefik.port=80'
-#      - 'traefik.frontend.rule=Host:pma.localhost'
+    networks:
+      - isolated
 
   solr:
 ## wodby/drupal-solr:[DRUPAL_VERSION]-[SOLR_VERSION]-[STABILITY_TAG].
@@ -102,40 +79,23 @@ services:
     environment:
       SOLR_HEAP: 1024m
     labels:
-      - 'traefik.backend=solr'
       - 'traefik.port=8983'
-      - 'traefik.frontend.rule=Host:solr.localhost'
+      - "traefik.frontend.rule=Host:solr.${COMPOSE_PROJECT_NAME}.localhost"
+    networks:
+      - isolated
+      - proxy
 
   mailhog:
     image: mailhog/mailhog
     labels:
-      - 'traefik.backend=mailhog'
       - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.localhost'
+      - "traefik.frontend.rule=Host:mailhog.${COMPOSE_PROJECT_NAME}.localhost"
+    networks:
+      - isolated
+      - proxy
 
-#  node:
-#    image: node:7-alpine
-#    working_dir: /app
-#    labels:
-#      - 'traefik.backend=node'
-#      - 'traefik.port=3000'
-#      - 'traefik.frontend.rule=Host:front.localhost'
-#    expose:
-#      - "3000"
-#    volumes:
-#      - ./path/to/your/single-page-app:/app
-#    command: sh -c 'npm install && npm run start'
-
-#  memcached:
-#    image: wodby/memcached:1.4-2.0.0
-
-  traefik:
-    image: traefik
-    command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https,http' --entryPoints='Name:https Address::443 TLS:/certs/local.crt,/certs/local.key' --entryPoints='Name:http Address::80'
-    ports:
-      - '80:80'
-      - '443:443'
-#      - '8080:8080' # Dashboard
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./.persist/certs:/certs
+networks:
+  proxy:
+    external: true
+  isolated:
+    external: false

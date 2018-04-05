@@ -10,6 +10,8 @@
  */
 $base_domains = [
   'localhost' => 'local',
+  'quickstart.localhost' => 'local',
+
   'docker.local' => 'local',
   'dev.example.com' => 'dev',
   'test.example.com' => 'test',
@@ -74,6 +76,9 @@ else {
     define('SETTINGS_HOSTING', 'vdd');
   }
   elseif (getenv('DOCKER_LOCAL')) {
+    if ($project_name = getenv('COMPOSE_PROJECT_NAME')) {
+      $base_domains[$project_name. '.localhost'] = 'local';
+    }
     define('SETTINGS_ENVIRONMENT', 'local');
     define('SETTINGS_HOSTING', 'docker');
   }

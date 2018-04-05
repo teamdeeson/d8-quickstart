@@ -82,6 +82,8 @@ post-deploy:
 docker-start: docker-up
 docker-up: docker-local-ssl
 	@echo Bringing docker containers up
+	docker network create proxy || true
+	docker-compose -f scripts/traefik/docker-compose.yml up -d || true
 	docker-compose up -d
 
 # Stop Docker
@@ -89,6 +91,7 @@ docker-stop: docker-down
 docker-down:
 	@echo Bringing docker containers down
 	docker-compose down
+	docker-compose -f scripts/traefik/docker-compose.yml down
 
 # Restart docker
 docker-restart: docker-stop docker-start
