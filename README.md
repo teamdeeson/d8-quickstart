@@ -228,3 +228,9 @@ To import an exported site database into the database container (if you don't ha
 pv database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
 ```
 Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
+
+# Known issues
+
+`ERROR: Network proxy declared as external, but could not be found. Please create the network manually using 'docker network create proxy' and try again.`
+
+The project you are using is dependent on a traefik proxy which allows multiple docker sites to be run together. Instructions for adding and running the proxy (which must be started before you run make docker-start) can be found here: https://bitbucket.org/deesongroup6346/d4d-traefik-proxy
