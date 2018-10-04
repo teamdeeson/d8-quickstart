@@ -6,7 +6,7 @@
  */
 
 // GA code.
-if (SETTINGS_ENVIRONMENT === 'live') {
+if (SETTINGS_ENVIRONMENT === 'prod') {
   // @todo: Fill in client/project GA code.
   $config['google_analytics']['account'] = 'UA-';
 }

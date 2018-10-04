@@ -9,20 +9,23 @@
  * Map domains to environment types here.
  */
 $base_domains = [
-  'localhost' => 'local',
+  getenv('D4D_HOSTNAME') => 'local',
   'docker.local' => 'local',
   'dev.example.com' => 'dev',
   'test.example.com' => 'test',
-  'www.example.com' => 'live',
+  'www.example.com' => 'prod',
 ];
 
 // Pantheon environment settings.
 if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
-  define('SETTINGS_HOSTING', 'pantheon');
+  define('SETTINGS_PLATFORM', 'pantheon');
 
   // Dev / test / live environment.
-  if (in_array($_ENV['PANTHEON_ENVIRONMENT'], ['dev', 'test', 'live'])) {
+  if (in_array($_ENV['PANTHEON_ENVIRONMENT'], ['dev', 'test'])) {
     define('SETTINGS_ENVIRONMENT', $_ENV['PANTHEON_ENVIRONMENT']);
+  }
+  elseif ('live' == $_ENV['PANTHEON_ENVIRONMENT']) {
+    define('SETTINGS_ENVIRONMENT', 'prod');
   }
   else {
     // This is a Pantheon multi-dev environment.
@@ -40,7 +43,7 @@ elseif (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 
   // Live environment.
   if (!empty($_ENV['AH_PRODUCTION'])) {
-    define('SETTINGS_ENVIRONMENT', 'live');
+    define('SETTINGS_ENVIRONMENT', 'prod');
   }
   // Other Acquia environment.
   else {
@@ -53,7 +56,7 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
 
   switch (strtolower($_ENV['PLATFORM_BRANCH'])) {
     case 'master':
-      define('SETTINGS_ENVIRONMENT', 'live');
+      define('SETTINGS_ENVIRONMENT', 'prod');
       break;
 
     case 'develop':
@@ -66,14 +69,7 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
   }
 }
 else {
-  // Environment settings for VDD.
-  $local_settings = '/var/www/settings/PROJECT/settings.inc';
-  if (file_exists($local_settings)) {
-    require_once $local_settings;
-    define('SETTINGS_ENVIRONMENT', 'local');
-    define('SETTINGS_HOSTING', 'vdd');
-  }
-  elseif (getenv('DOCKER_LOCAL')) {
+  if (getenv('DOCKER_LOCAL')) {
     define('SETTINGS_ENVIRONMENT', 'local');
     define('SETTINGS_HOSTING', 'docker');
   }
