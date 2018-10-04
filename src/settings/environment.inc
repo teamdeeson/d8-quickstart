@@ -9,7 +9,7 @@
  * Map domains to environment types here.
  */
 $base_domains = [
-  'localhost' => 'local',
+  getenv('D4D_HOSTNAME') => 'local',
   'docker.local' => 'local',
   'dev.example.com' => 'dev',
   'test.example.com' => 'test',
