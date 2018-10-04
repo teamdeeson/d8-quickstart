@@ -5,7 +5,7 @@
  * Shield settings.
  */
 
-if (in_array(SETTINGS_ENVIRONMENT, ['local', 'live'])) {
+if (in_array(SETTINGS_ENVIRONMENT, ['local', 'prod'])) {
   $config['shield.settings']['user'] = '';
   $config['shield.settings']['pass'] = '';
 }

@@ -37,7 +37,7 @@ if (SETTINGS_ENVIRONMENT != 'local') {
 
 }
 
-if (in_array(SETTINGS_ENVIRONMENT, ['test', 'live'])) {
+if (in_array(SETTINGS_ENVIRONMENT, ['test', 'prod'])) {
   $config['system.performance']['css']['gzip'] = TRUE;
   $config['system.performance']['css']['preprocess'] = TRUE;
 
