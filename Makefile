@@ -1,107 +1,121 @@
-ROOT_DIR=${PWD}
-RUN_DESTRUCTIVE?=false
-ENVIRONMENT?=docker
-DRUSH_ARGS?=-y --nocolor
-DRUSH_CMD?=${ROOT_DIR}/vendor/bin/drush @$(ENVIRONMENT)
-DRUSH?=${DRUSH_CMD} $(DRUSH_ARGS)
-COMPOSER?=$(shell command -v composer 2> /dev/null)
 HOST=php
+SOLR_HOST=solr
 COMMAND=/bin/bash
 
-# Build by default.
-default: build
 
-# Build for the current environment.
-build: build-${ENVIRONMENT} fe-prod
+#
+# Key targets
+#
 
-# Environment aliases.
-build-vdd: build-local
-build-pipelines: build-local
-build-dev: build-local
+# Shortcut for make install, make build and make start
+default: install build start
 
-# Frontend build.
-fe-prod:
-	if [ -f ./scripts/make/fe.sh ]; then BUILD_ENV=prod ./scripts/make/fe.sh; else true; fi;
+# Install dependencies
+install:
+	./scripts/make/install.sh
 
-# Build dependencies for dev environments.
-build-local: fe-prod
-	${COMPOSER} install
-build-docker: docker-up fe-prod
-	docker-compose exec php composer install
-# Build dependencies for prod environment.
-build-prod: fe-prod
-	${COMPOSER} install --no-dev --prefer-dist --ignore-platform-reqs --optimize-autoloader
+# Build all static assets
+build:
+	./scripts/make/build.sh
 
-# Run coding standards checks.
-test-code-quality: build-dev
-	./scripts/make/code_standards.sh "src scripts"
-# Run unit tests.
-test-phpunit: build-dev
-	${ROOT_DIR}/vendor/bin/phpunit
-# Run functional tests.
-test-behat: build-dev
-	cd docroot && ${ROOT_DIR}/vendor/bin/behat --config=${ROOT_DIR}/behat.yml
-# Run all automated tests
-test: build-dev test-code-quality test-phpunit test-behat
-
-# Deploy to hosting. Builds prod dependencies first. Tests MUST pass.
-deploy:	test build-prod
-	if $(RUN_DESTRUCTIVE); then ./scripts/make/deploy.sh; else exit 1; fi
-# Alias deploy to allow different deployment strategies for different environments
-deploy-test: deploy
-deploy-stage: deploy
-deploy-prod: deploy
-
-# Cleanup
-clean:
-	rm -Rf ./docroot ./vendor ./web
-
-# Installation script
-install: install-${ENVIRONMENT}
-# Do nothing. Don't re-install prod.
-install-prod:
-# Local installation
-install-docker: install-vdd
-install-vdd:
-# Drupal needs the settings file to be writable.
-	chmod 777 docroot/sites/default/settings.php
-	cd docroot && ${DRUSH_CMD} -y site-install config_installer
-# Get rid of any changes made to the settings file.
-	git checkout src/settings/settings.php
-	chmod 644 docroot/sites/default/settings.php
-
-# Do stuff to Drupal now it's in a live environment.
-post-deploy:
-	# No master yet :-( .
-	cd docroot && $(DRUSH) cim sync
-	cd docroot && $(DRUSH) updb
-	cd docroot && $(DRUSH) cr
-	cd docroot && $(DRUSH) cc css-js
-
-# Start Docker
-docker-start: docker-up
-docker-up: docker-local-ssl
+# Start Docker Compose services but assume dependencies and build has already taken place
+start:
 	@echo Bringing docker containers up
 	docker-compose up -d
+	docker-compose ps
 
-# Stop Docker
-docker-stop: docker-down
-docker-down:
-	@echo Bringing docker containers down
+# Run all tests
+test:
+	./scripts/make/test.sh
+
+# Update Drupal
+update:
+	./scripts/make/update.sh
+
+# Set the alias required by Xdebug
+xdebug:
+	sudo ifconfig lo0 alias 10.254.254.25
+
+
+
+#
+# Targets for interacting with Docker Compose
+#
+
+# Stop docker
+stop:
 	docker-compose down --remove-orphans
 
 # Restart docker
-docker-restart: docker-stop docker-start
-
-docker-local-ssl: .persist/certs/local.key .persist/certs/local.crt
-.persist/certs/local.%:
-	mkdir -p ./.persist/certs
-	./scripts/make/genlocalcrt.sh ./.persist/certs
-
-build-solr:
-	make docker-shell HOST=solr COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
+restart: stop start
 
 # Connect to the shell on a docker host, defaults to HOST=php COMMAND=/bin/bash
-# Usage: make docker-shell HOST=[container name] COMMAND=[command]
-docker-shell:
-	docker exec -i -t `docker ps | grep $(HOST)_1 | cut -d' ' -f 1` $(COMMAND)
+# Usage: make docker-shell HOST=[service name] COMMAND=[command]
+shell:
+	docker-compose exec $(HOST) $(COMMAND)
+
+
+
+#
+# Targets for orchestrating project build
+#
+
+# Initialise Apache Solr core in service container for Apache Solr (without Search API).
+init-solr:
+	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 config_set=apachesolr -f /usr/local/bin/actions.mk'
+
+# Initialise Apache Solr core in service container for Apache Solr (via Search API).
+init-searchapi-solr:
+	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
+
+
+
+#
+# Targets for cleaning project build artefacts
+#
+
+# Remove everything that's re-buildable. Running make build will reverse this.
+clean: clean-drupal clean-frontend
+
+# Remove NodeJS modules required by front-end
+clean-node:
+	./scripts/make/clean-node.sh
+
+# Remove all front-end build artefacts including NodeJS modules
+clean-frontend: clean-node
+#	rm -rf frontend/pc_pd/assets/css
+#	unlink pc_pd/assets/js/min/app.min.js
+
+# Remove dependencies managed by Composer
+clean-composer:
+	./scripts/make/clean-composer.sh
+
+# Remove Drupal dependencies managed by Drush Make including Composer dependencies
+clean-drupal: clean-composer
+	./scripts/make/clean-drupal.sh
+
+
+
+#
+# Targets for Bitbucket Pipelines
+#
+
+# Build Drupal
+build-drupal:
+	./scripts/make/build-drupal.sh
+
+# Build the frontend resources and copy them into the docroot.
+build-frontend:
+	./scripts/make/build-frontend.sh
+
+# Relay to hosting platform provided Git repository
+deploy:
+	/opt/ci-tools/deployer.sh
+
+
+
+#
+# Targets specific to the project
+#
+# Note: Do not forget to precede the target definition with a comment explaining what it does!
+#

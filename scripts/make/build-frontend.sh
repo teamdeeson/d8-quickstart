@@ -9,5 +9,5 @@ repo_root=$(pwd)
 source "$repo_root/.build.env"
 
 if [ "$frontend_build" == "Y" ]; then
-  docker run -ti -v $repo_root/frontend:/app -w /app "$frontend_build_tag" /bin/bash -c "$frontend_build_command"
+  cd "$frontend_dir" && "$frontend_pipelines_command"
 fi

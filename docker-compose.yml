@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mariadb:
-    image: wodby/mariadb:$MARIADB_TAG
+    image: $MARIADB_TAG
     container_name: "${PROJECT_NAME}_mariadb"
     stop_grace_period: 30s
     environment:
@@ -19,7 +19,7 @@ services:
       - default
 
   php:
-    image: wodby/drupal-php:$PHP_TAG
+    image: $PHP_TAG
     container_name: "${PROJECT_NAME}_php"
     environment:
       DOCKER_LOCAL: 1
@@ -44,7 +44,7 @@ services:
       - default
 
   nginx:
-    image: wodby/drupal-nginx:$NGINX_TAG
+    image: $NGINX_TAG
     container_name: "${PROJECT_NAME}_nginx"
     depends_on:
       - php
@@ -66,7 +66,7 @@ services:
       - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
 
   solr:
-    image: wodby/drupal-solr:$SOLR_TAG
+    image: $SOLR_TAG
     container_name: "${PROJECT_NAME}_solr"
     environment:
       SOLR_HEAP: 1024m
@@ -93,13 +93,13 @@ services:
 
 #  memcached:
 #    container_name: "${PROJECT_NAME}_memcached"
-#    image: wodby/memcached:$MEMCACHED_TAG
+#    image: $MEMCACHED_TAG
 #    networks:
 #      - default
 
   redis:
     container_name: "${PROJECT_NAME}_redis"
-    image: wodby/redis:$REDIS_TAG
+    image: $REDIS_TAG
     networks:
       - default
 
