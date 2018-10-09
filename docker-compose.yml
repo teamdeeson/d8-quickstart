@@ -103,18 +103,32 @@ services:
     networks:
       - default
 
-#  node:
-#    image: node:7-alpine
-#    working_dir: /app
-#    labels:
-#      - 'traefik.backend=node'
-#      - 'traefik.port=3000'
-#      - 'traefik.frontend.rule=Host:front.localhost'
-#    expose:
-#      - "3000"
-#    volumes:
-#      - ./path/to/your/single-page-app:/app
-#    command: sh -c 'npm install && npm run start'
+  fe-node:
+    image: deeson/fe-node
+    container_name: "${PROJECT_NAME}_fe-node"
+    depends_on:
+      - 'fe-php'
+    volumes:
+      - ./src/frontend:/app:delegated
+    working_dir: /app
+    command: sh -c 'yarn install && yarn start'
+    networks:
+      - default
+      - proxy
+    labels:
+      - 'traefik.docker.network=proxy'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:frontend.${PROJECT_BASE_URL}'
+
+  fe-php:
+    image: deeson/fe-php
+    container_name: "${PROJECT_NAME}_fe-php"
+    volumes:
+      - ./src/frontend:/app:delegated
+    working_dir: /app
+    command: sh -c 'composer install && php -S 0.0.0.0:80 node_modules/.bin/deeson-router-php'
+    networks:
+      - default
 
 #  varnish:
 #    image: wodby/drupal-varnish:4.1-2.1.0

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "babel-loader": "^7.1.2",
-    "deeson-webpack-config-starter": "https://github.com/teamdeeson/deeson-webpack-config",
+    "deeson-webpack-config-starter": "https://github.com/johnennewdeeson/deeson-webpack-config",
     "eslint": "^3.13.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.2.0",

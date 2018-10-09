@@ -1,3 +1,5 @@
+ENVIRONMENT?=docker
+DRUSH_ARGS?=-y --nocolor
 HOST=php
 SOLR_HOST=solr
 COMMAND=/bin/bash
@@ -30,7 +32,7 @@ test:
 
 # Update Drupal
 update:
-	./scripts/make/update.sh
+	./scripts/make/update.sh ${ENVIRONMENT} ${DRUSH_ARGS}
 
 # Set the alias required by Xdebug
 xdebug:
@@ -50,7 +52,7 @@ stop:
 restart: stop start
 
 # Connect to the shell on a docker host, defaults to HOST=php COMMAND=/bin/bash
-# Usage: make docker-shell HOST=[service name] COMMAND=[command]
+# Usage: make shell HOST=[service name] COMMAND=[command]
 shell:
 	docker-compose exec $(HOST) $(COMMAND)
 
@@ -61,11 +63,11 @@ shell:
 #
 
 # Initialise Apache Solr core in service container for Apache Solr (without Search API).
-init-solr:
+build-solr:
 	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 config_set=apachesolr -f /usr/local/bin/actions.mk'
 
 # Initialise Apache Solr core in service container for Apache Solr (via Search API).
-init-searchapi-solr:
+build-searchapi-solr:
 	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
 
 
@@ -83,8 +85,7 @@ clean-node:
 
 # Remove all front-end build artefacts including NodeJS modules
 clean-frontend: clean-node
-#	rm -rf frontend/pc_pd/assets/css
-#	unlink pc_pd/assets/js/min/app.min.js
+	./scripts/make/clean-frontend.sh
 
 # Remove dependencies managed by Composer
 clean-composer:
