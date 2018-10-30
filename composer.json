@@ -29,6 +29,7 @@
     "drupal/redis": "^1.0@alpha",
     "drupal/reroute_email": "^1.0@beta",
     "drupal/shield": "^1.0",
+    "drupal/stage_file_proxy": "^1.0",
     "drupal/warden": "^1.0",
     "drush/drush": "~8",
     "guzzlehttp/guzzle": "^6.0@dev"
