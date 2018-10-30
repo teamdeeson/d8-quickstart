@@ -1,0 +1,16 @@
+uuid: bdbfc2a8-bc77-4c3e-aec5-0b09a45b6859
+langcode: en
+status: true
+dependencies: {  }
+id: local
+label: 'Local Development Config'
+description: ''
+folder: ../config/local
+module:
+  dblog: 0
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0
