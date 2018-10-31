@@ -7,9 +7,9 @@ label: 'Local Development Config'
 description: ''
 folder: ../config/local
 module:
+  stage_file_proxy: 0
   dblog: 0
   devel: 0
-  stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }

@@ -30,7 +30,7 @@
  *   );
  * @endcode
  */
-$config_directories[CONFIG_SYNC_DIRECTORY] = dirname(DRUPAL_ROOT) . '/config';
+$config_directories[CONFIG_SYNC_DIRECTORY] = dirname(DRUPAL_ROOT) . '/config/default';
 
 /*
  * Enable local development modules and config
