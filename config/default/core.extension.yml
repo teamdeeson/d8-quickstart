@@ -27,6 +27,7 @@ module:
   path: 0
   rdf: 0
   search: 0
+  syslog: 0
   system: 0
   taxonomy: 0
   text: 0
