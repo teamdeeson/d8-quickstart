@@ -4,12 +4,13 @@ status: true
 dependencies: {  }
 id: local
 label: 'Local Development Config'
-description: ''
+description: 'Configuration settings for local development'
 folder: ../config/local
 module:
-  stage_file_proxy: 0
   dblog: 0
   devel: 0
+  devel_generate: 0
+  stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }
