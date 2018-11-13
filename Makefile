@@ -101,16 +101,16 @@ clean-drupal: clean-composer
 # Targets for Bitbucket Pipelines
 #
 
-# Build Drupal
-build-drupal:
-	./scripts/make/build-drupal.sh
+# Build Drupal under Pipelnes.
+pipelines-build-drupal:
+	./scripts/make/install-drupal.sh
 
-# Build the frontend resources and copy them into the docroot.
-build-frontend:
+# Build the frontend resources and copy them into the docroot under Pipelines
+pipelines-build-frontend:
 	./scripts/make/build-frontend.sh
 
-# Relay to hosting platform provided Git repository
-deploy:
+# Relay to hosting platform provided Git repository under Pipelines.
+pipelines-deploy:
 	/opt/ci-tools/deployer.sh
 
 

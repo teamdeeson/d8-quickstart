@@ -109,8 +109,10 @@ services:
     depends_on:
       - 'fe-php'
     volumes:
-      - ./src/frontend:/app:delegated
+      - .:/app:delegated
     working_dir: /app
+    environment:
+      DOCKER_LOCAL: 1
     command: sh -c 'yarn install && yarn start'
     networks:
       - default
@@ -124,9 +126,11 @@ services:
     image: deeson/fe-php
     container_name: "${PROJECT_NAME}_fe-php"
     volumes:
-      - ./src/frontend:/app:delegated
+      - .:/app:delegated
     working_dir: /app
-    command: sh -c 'composer install && php -S 0.0.0.0:80 node_modules/.bin/deeson-router-php'
+    environment:
+      DOCKER_LOCAL: 1
+    command: sh -c 'composer install && node_modules/.bin/deeson-router-start.sh'
     networks:
       - default
 
@@ -142,30 +146,6 @@ services:
 #      - 'traefik.backend=varnish'
 #      - 'traefik.port=6081'
 #      - 'traefik.frontend.rule=Host:varnish.localhost'
-
-#  pma:
-#    image: phpmyadmin/phpmyadmin
-#    environment:
-#      PMA_HOST: mariadb
-#      PMA_USER: drupal
-#      PMA_PASSWORD: drupal
-#      PHP_UPLOAD_MAX_FILESIZE: 1G
-#      PHP_MAX_INPUT_VARS: 1G
-#    labels:
-#      - 'traefik.backend=pma'
-#      - 'traefik.port=80'
-#      - 'traefik.frontend.rule=Host:pma.localhost'
-
-#  traefik:
-#    image: traefik
-#    command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https,http' --entryPoints='Name:https Address::443 TLS:/certs/local.crt,/certs/local.key' --entryPoints='Name:http Address::80'
-#    ports:
-#      - '80:80'
-#      - '443:443'
-#      - '8080:8080' # Dashboard
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ./.persist/certs:/certs
 
 networks:
   proxy:
