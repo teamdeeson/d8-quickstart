@@ -15,6 +15,7 @@ fi
 if [ "$drupal_build_drush_make" == "Y" ]; then
   cd docroot \
     && ../vendor/bin/drush @none make -y --nocolor --no-recursion ../drush-make.yml
+  cd ..
 fi
 
 if [ "$drupal_fix_settings" == "Y" ]; then
