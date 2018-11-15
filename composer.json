@@ -18,7 +18,7 @@
     "drupal/config_installer": "^1.4",
     "drupal/config_split": "^1.4",
     "drupal/console": "~1.0",
-    "drupal/core": "8.6.0",
+    "drupal/core": "8.6.3",
     "drupal/drupal-extension": "^3.2",
     "drupal/entity": "^1.0@alpha",
     "drupal/google_analytics": "^2.1",
