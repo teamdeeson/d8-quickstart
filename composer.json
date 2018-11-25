@@ -11,7 +11,7 @@
   ],
   "require": {
     "composer/installers": "^1.2",
-    "cweagans/composer-patches": "~1.0",
+    "cweagans/composer-patches": "1.x-dev",
     "drupal-composer/drupal-scaffold": "^2.2",
     "drupal/components": "^1.0",
     "drupal/config_filter": "^1.3",
@@ -97,6 +97,9 @@
       "drush/drush": {
         "Make drush uli work with docker - stop closing pipes": "https://github.com/drush-ops/drush/commit/70fe65a5ce0b1df37c1ac841395158228e5f9be6.patch"
       }
+    },
+    "patchLevel": {
+      "drupal/core": "-p2"
     }
   },
   "config": {
