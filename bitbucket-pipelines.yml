@@ -1,28 +1,131 @@
-image: deeson/default-pipeline:latest
-
 clone:
   depth: full
 
 pipelines:
-  default:
-    - step:
-        script:
-          - ENVIRONMENT=pipelines make test
-
   branches:
     master:
       - step:
+          name: Build Drupal
+          image: wodby/drupal-php:7.1-2.4.3
+          caches:
+            - composer
+            - drush
           script:
-            - ENVIRONMENT=pipelines make test
-            - ENVIRONMENT=pipelines make deploy-stage
+            - make pipelines-build-drupal
+          artifacts:
+            - 'docroot/**'
+            - 'vendor/**'
+            - 'web'
+      - step:
+          name: Build Front-End
+          image:
+            name: deeson/fe-node
+            run-as-user: 1000
+          caches:
+            - node
+          script:
+            - make pipelines-build-frontend
+          artifacts:
+            - 'src/frontend/assets/**'
+            - 'src/frontend/node_modules/**'
+      - step:
+          name: Relay
+          image: deeson/deployer
+          script:
+            - make pipelines-deploy
     develop:
       - step:
+          name: Build Drupal
+          image: wodby/drupal-php:7.1-2.4.3
+          caches:
+            - composer
+            - drush
           script:
-            - ENVIRONMENT=pipelines make test
-            - ENVIRONMENT=pipelines make deploy-test
+            - make pipelines-build-drupal
+          artifacts:
+            - 'docroot/**'
+            - 'vendor/**'
+            - 'web'
+      - step:
+          name: Build Front-End
+          image:
+            name: deeson/fe-node
+            run-as-user: 1000
+          caches:
+            - node
+          script:
+            - make pipelines-build-frontend
+          artifacts:
+            - 'src/frontend/assets/**'
+            - 'src/frontend/node_modules/**'
+      - step:
+          name: Relay
+          image: deeson/deployer
+          script:
+            - make pipelines-deploy
+    UAT:
+      - step:
+          name: Build Drupal
+          image: wodby/drupal-php:7.1-2.4.3
+          caches:
+            - composer
+            - drush
+          script:
+            - make pipelines-build-drupal
+          artifacts:
+            - 'docroot/**'
+            - 'vendor/**'
+            - 'web'
+      - step:
+          name: Build Front-End
+          image:
+            name: deeson/fe-node
+            run-as-user: 1000
+          caches:
+            - node
+          script:
+            - make pipelines-build-frontend
+          artifacts:
+            - 'src/frontend/assets/**'
+            - 'src/frontend/node_modules/**'
+      - step:
+          name: Relay
+          image: deeson/deployer
+          script:
+            - make pipelines-deploy
   tags:
     '*':
       - step:
+          name: Build Drupal
+          image: wodby/drupal-php:7.1-2.4.3
+          caches:
+            - composer
+            - drush
           script:
-            - ENVIRONMENT=pipelines make test
-            - ENVIRONMENT=pipelines make deploy-prod
+            - make pipelines-build-drupal
+          artifacts:
+            - 'docroot/**'
+            - 'vendor/**'
+            - 'web'
+      - step:
+          name: Build Front-End
+          image:
+            name: deeson/fe-node
+            run-as-user: 1000
+          caches:
+            - node
+          script:
+            - make pipelines-build-frontend
+          artifacts:
+            - 'src/frontend/assets/**'
+            - 'src/frontend/node_modules/**'
+      - step:
+          name: Relay
+          image: deeson/deployer
+          script:
+            - make pipelnes-deploy
+
+definitions:
+  caches:
+    drush: ~/.drush/cache
+    node: src/frontend/node_modules

@@ -10,7 +10,10 @@ source "$repo_root/.build.env"
 
 if [ "$frontend_build" == "Y" ]; then
   cd "$frontend_dir"
-  frontend_dir_absolute=$(pwd)
-  cd "$working_dir"
-  docker run -ti -v $frontend_dir_absolute:/app -w /app "$frontend_build_tag" /bin/bash -c "$frontend_build_command"
+  if [ ! -z "$frontend_install_command" ]; then
+    $frontend_install_command
+  fi
+  if [ ! -z "$frontend_build_command" ]; then
+    $frontend_build_command
+  fi
 fi

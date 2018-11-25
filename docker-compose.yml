@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mariadb:
-    image: wodby/mariadb:$MARIADB_TAG
+    image: $MARIADB_TAG
     container_name: "${PROJECT_NAME}_mariadb"
     stop_grace_period: 30s
     environment:
@@ -19,7 +19,7 @@ services:
       - default
 
   php:
-    image: wodby/drupal-php:$PHP_TAG
+    image: $PHP_TAG
     container_name: "${PROJECT_NAME}_php"
     environment:
       DOCKER_LOCAL: 1
@@ -44,7 +44,7 @@ services:
       - default
 
   nginx:
-    image: wodby/drupal-nginx:$NGINX_TAG
+    image: $NGINX_TAG
     container_name: "${PROJECT_NAME}_nginx"
     depends_on:
       - php
@@ -66,7 +66,7 @@ services:
       - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
 
   solr:
-    image: wodby/drupal-solr:$SOLR_TAG
+    image: $SOLR_TAG
     container_name: "${PROJECT_NAME}_solr"
     environment:
       SOLR_HEAP: 1024m
@@ -93,28 +93,46 @@ services:
 
 #  memcached:
 #    container_name: "${PROJECT_NAME}_memcached"
-#    image: wodby/memcached:$MEMCACHED_TAG
+#    image: $MEMCACHED_TAG
 #    networks:
 #      - default
 
   redis:
     container_name: "${PROJECT_NAME}_redis"
-    image: wodby/redis:$REDIS_TAG
+    image: $REDIS_TAG
     networks:
       - default
 
-#  node:
-#    image: node:7-alpine
-#    working_dir: /app
-#    labels:
-#      - 'traefik.backend=node'
-#      - 'traefik.port=3000'
-#      - 'traefik.frontend.rule=Host:front.localhost'
-#    expose:
-#      - "3000"
-#    volumes:
-#      - ./path/to/your/single-page-app:/app
-#    command: sh -c 'npm install && npm run start'
+  fe-node:
+    image: deeson/fe-node
+    container_name: "${PROJECT_NAME}_fe-node"
+    depends_on:
+      - 'fe-php'
+    volumes:
+      - .:/app:delegated
+    working_dir: /app
+    environment:
+      DOCKER_LOCAL: 1
+    command: sh -c 'yarn install && yarn start'
+    networks:
+      - default
+      - proxy
+    labels:
+      - 'traefik.docker.network=proxy'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:frontend.${PROJECT_BASE_URL}'
+
+  fe-php:
+    image: deeson/fe-php
+    container_name: "${PROJECT_NAME}_fe-php"
+    volumes:
+      - .:/app:delegated
+    working_dir: /app
+    environment:
+      DOCKER_LOCAL: 1
+    command: sh -c 'composer install && node_modules/.bin/deeson-router-start.sh'
+    networks:
+      - default
 
 #  varnish:
 #    image: wodby/drupal-varnish:4.1-2.1.0
@@ -128,30 +146,6 @@ services:
 #      - 'traefik.backend=varnish'
 #      - 'traefik.port=6081'
 #      - 'traefik.frontend.rule=Host:varnish.localhost'
-
-#  pma:
-#    image: phpmyadmin/phpmyadmin
-#    environment:
-#      PMA_HOST: mariadb
-#      PMA_USER: drupal
-#      PMA_PASSWORD: drupal
-#      PHP_UPLOAD_MAX_FILESIZE: 1G
-#      PHP_MAX_INPUT_VARS: 1G
-#    labels:
-#      - 'traefik.backend=pma'
-#      - 'traefik.port=80'
-#      - 'traefik.frontend.rule=Host:pma.localhost'
-
-#  traefik:
-#    image: traefik
-#    command: -c /dev/null --web --docker --logLevel=INFO --defaultEntryPoints='https,http' --entryPoints='Name:https Address::443 TLS:/certs/local.crt,/certs/local.key' --entryPoints='Name:http Address::80'
-#    ports:
-#      - '80:80'
-#      - '443:443'
-#      - '8080:8080' # Dashboard
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ./.persist/certs:/certs
 
 networks:
   proxy:
