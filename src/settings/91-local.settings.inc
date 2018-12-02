@@ -9,7 +9,7 @@
 
 use Drupal\Component\Assertion\Handle;
 
-if (SETTINGS_ENVIRONMENT == 'local') {
+if (SETTINGS_ENVIRONMENT == D_ENVIRONMENT_LOCAL) {
   /*
    * Assertions.
    *

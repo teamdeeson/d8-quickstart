@@ -5,6 +5,17 @@
  * Detect the current system environment.
  */
 
+const D_ENVIRONMENT_LOCAL = 'local';
+const D_ENVIRONMENT_DEV = 'dev';
+const D_ENVIRONMENT_TEST = 'test';
+const D_ENVIRONMENT_PROD = 'prod';
+
+const D_PLATFORM_DOCKER = 'docker';
+const D_PLATFORM_PIPELINES = 'pipelines';
+const D_PLATFORM_ACQUIA = 'acquia';
+const D_PLATFORM_PANTHEON = 'pantheon';
+const D_PLATFORM_PLATFORMSH = 'platformsh';
+
 /**
  * Map domains to environment types here.
  */
@@ -16,61 +27,83 @@ $base_domains = [
   'www.example.com' => 'prod',
 ];
 
+$platform = '';
+$env = '';
+$instance = $_SERVER['HTTP_HOST'];
+
 // Pantheon environment settings.
 if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
-  define('SETTINGS_PLATFORM', 'pantheon');
+  $platform = D_PLATFORM_PANTHEON;
 
   // Dev / test / live environment.
-  if (in_array($_ENV['PANTHEON_ENVIRONMENT'], ['dev', 'test'])) {
-    define('SETTINGS_ENVIRONMENT', $_ENV['PANTHEON_ENVIRONMENT']);
-  }
-  elseif ('live' == $_ENV['PANTHEON_ENVIRONMENT']) {
-    define('SETTINGS_ENVIRONMENT', 'prod');
-  }
-  else {
-    // This is a Pantheon multi-dev environment.
-    $pantheon_domain = $_ENV['PANTHEON_ENVIRONMENT'] .
-      '-' . $_ENV['PANTHEON_SITE_NAME'] .
-      '.pantheonsite.io';
-    $base_domains[$pantheon_domain] = 'dev';
+  switch ($_ENV['PANTHEON_ENVIRONMENT']) {
+    case 'dev':
+      $env = D_ENVIRONMENT_DEV;
+      break;
 
-    define('SETTINGS_ENVIRONMENT', 'dev');
+    case 'test':
+      $env = D_ENVIRONMENT_TEST;
+      break;
+
+    case 'live':
+      $env = D_ENVIRONMENT_PROD;
+      break;
+
+    default:
+      $env = D_ENVIRONMENT_DEV;
+      $pantheon_domain = $_ENV['PANTHEON_ENVIRONMENT'] .
+        '-' . $_ENV['PANTHEON_SITE_NAME'] .
+        '.pantheonsite.io';
+      $base_domains[$pantheon_domain] = 'dev';
+      break;
   }
 }
 // Acquia environment settings.
 elseif (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-  define('SETTINGS_HOSTING', 'acquia');
+  $platform = D_PLATFORM_ACQUIA;
 
   // Live environment.
   if (!empty($_ENV['AH_PRODUCTION'])) {
-    define('SETTINGS_ENVIRONMENT', 'prod');
+    $env = D_ENVIRONMENT_PROD;
   }
   // Other Acquia environment.
   else {
-    define('SETTINGS_ENVIRONMENT', $_ENV['AH_SITE_ENVIRONMENT']);
+    $env = $_ENV['AH_SITE_ENVIRONMENT'];
   }
 }
 // Platform.sh environment settings.
 elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
-  define('SETTINGS_HOSTING', 'platformsh');
+  $platform = D_PLATFORM_PLATFORMSH;
 
   switch (strtolower($_ENV['PLATFORM_BRANCH'])) {
     case 'master':
-      define('SETTINGS_ENVIRONMENT', 'prod');
+      $env = D_ENVIRONMENT_PROD;
       break;
 
     case 'develop':
-      define('SETTINGS_ENVIRONMENT', 'test');
+      $env = D_ENVIRONMENT_TEST;
       break;
 
     default:
-      define('SETTINGS_ENVIRONMENT', 'dev');
+      $env = D_ENVIRONMENT_DEV;
       break;
   }
 }
+elseif (getenv('DOCKER_LOCAL')) {
+    // Local environment settings - see 90-docker-settings.inc.
+    $platform = 'docker';
+    $env = $base_domains[$_SERVER['HTTP_HOST']];
+    $instance = $_SERVER['HTTP_HOST'];
+}
 else {
-  if (getenv('DOCKER_LOCAL')) {
-    define('SETTINGS_ENVIRONMENT', 'local');
-    define('SETTINGS_HOSTING', 'docker');
-  }
+    // Running under Pipelines
+    $platform = 'pipelines';
+    $env = $base_domains[$_SERVER['HTTP_HOST']];
+    $instance = $_SERVER['HTTP_HOST'];
+}
+
+if (!empty($env) && !empty($platform) && !empty($instance)) {
+    define('SETTINGS_PLATFORM', $platform);
+    define('SETTINGS_ENVIRONMENT', $env);
+    define('SETTINGS_INSTANCE', $instance);
 }

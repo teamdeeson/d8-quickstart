@@ -5,7 +5,7 @@
  * Drupal 8 settings for docker.
  */
 
-if (SETTINGS_ENVIRONMENT == 'local' && SETTINGS_HOSTING == 'docker') {
+if (SETTINGS_ENVIRONMENT == D_ENVIRONMENT_LOCAL && SETTINGS_PLATFORM == D_PLATFORM_DOCKER) {
   $databases['default']['default'] = [
     'database' => getenv('DB_NAME'),
     'username' => getenv('DB_USER'),
@@ -24,7 +24,7 @@ if (SETTINGS_ENVIRONMENT == 'local' && SETTINGS_HOSTING == 'docker') {
   }
 
   $base_protocol = $https ? 'https' : 'http';
-  $base_url = $base_protocol . '://localhost';
+  $base_url = $base_protocol . '://' . SETTINGS_INSTANCE;
 
   // File paths...
   $conf['file_temporary_path'] = '/tmp';

@@ -18,7 +18,7 @@ define('CACHE_ENABLE_REDIS', FALSE);
  */
 define('CACHE_ENABLE_MEMCACHE', FALSE);
 
-if (SETTINGS_ENVIRONMENT != 'local') {
+if (SETTINGS_ENVIRONMENT != D_ENVIRONMENT_LOCAL) {
   if (CACHE_ENABLE_REDIS) {
     $settings['redis.connection']['interface'] = 'PhpRedis';
 
@@ -37,7 +37,7 @@ if (SETTINGS_ENVIRONMENT != 'local') {
 
 }
 
-if (in_array(SETTINGS_ENVIRONMENT, ['test', 'prod'])) {
+if (in_array(SETTINGS_ENVIRONMENT, [D_ENVIRONMENT_TEST, D_ENVIRONMENT_PROD])) {
   $config['system.performance']['css']['gzip'] = TRUE;
   $config['system.performance']['css']['preprocess'] = TRUE;
 

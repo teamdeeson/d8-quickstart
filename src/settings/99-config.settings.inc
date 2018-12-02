@@ -35,4 +35,4 @@ $config_directories[CONFIG_SYNC_DIRECTORY] = dirname(DRUPAL_ROOT) . '/config/def
 /*
  * Enable local development modules and config
  */
-$config['config_split.config_split.local']['status'] = SETTINGS_ENVIRONMENT == 'local';
+$config['config_split.config_split.local']['status'] = SETTINGS_ENVIRONMENT == D_ENVIRONMENT_LOCAL;
