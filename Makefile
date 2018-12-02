@@ -116,6 +116,30 @@ pipelines-deploy:
 
 
 #
+# Targets for interacting with Docker Compose
+#
+
+# Run all the tests.
+test: test-all
+
+# Run only the coding standards tests.
+test-standards:
+	./scripts/make/test/run-tests.sh --standards
+
+# Run only the unit tests.
+test-unit:
+	./scripts/make/test/run-tests.sh --unit
+
+# Run only the behat tests.
+test-behat:
+	./scripts/make/test/run-tests.sh --behat
+
+# Run all the tests.
+test-all:
+	./scripts/make/test/run-tests.sh --all
+
+
+#
 # Targets specific to the project
 #
 # Note: Do not forget to precede the target definition with a comment explaining what it does!
