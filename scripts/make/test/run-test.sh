@@ -66,10 +66,6 @@ done
 
 # Check parameters
 
-#echo "Standards: {$standards}"
-#echo "Unit: {$unit}"
-#echo "Behat: {$behat}"
-
 if [ "$standards" -eq 1 ]; then
   "$repo_root/scripts/make/test/code-standards.sh"
 fi

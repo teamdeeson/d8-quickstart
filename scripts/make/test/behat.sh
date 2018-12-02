@@ -14,10 +14,8 @@ set -e
 
 # Install test dependencies on bitbucket pipelines.
 if [ $(command -v apk) ]; then
-  #apk update
-  #apk add build-base gcc abuild binutils libpng-dev autoconf automake build-base libtool nasm mysql-client
   apk --no-cache add sqlite
-fi;
+fi
 
 mv /usr/sbin/sendmail /usr/sbin/sendmail_back
 echo "exit 0" > /usr/sbin/sendmail
