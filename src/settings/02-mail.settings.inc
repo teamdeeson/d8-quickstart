@@ -5,7 +5,7 @@
  * E-mail settings.
  */
 
-if (SETTINGS_ENVIRONMENT === 'prod') {
+if (SETTINGS_ENVIRONMENT === D_ENVIRONMENT_PROD) {
   $config['reroute_email.settings']['reroute_email_enable'] = FALSE;
 }
 else {
