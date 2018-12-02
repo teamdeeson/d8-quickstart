@@ -7,8 +7,8 @@ default:
         - %paths.base%/behat-tests
       contexts:
         - DefaultFeatureContext
+        - TeamDeeson\Behat\Context\AdminContext
         - Drupal\DrupalExtension\Context\DrupalContext
-        - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext
         - Drupal\DrupalExtension\Context\DrushContext
   extensions:
@@ -18,7 +18,9 @@ default:
       base_url: http://localhost/
     Drupal\DrupalExtension:
       blackbox: ~
-      api_driver: 'drush'
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: '%paths.base%/docroot'
       drush:
         alias: 'docker'
       selectors:
@@ -28,13 +30,20 @@ default:
         warning_message_selector: '.warning'
       region_map:
         comments: '.comments'
+        header: '#header'
+        'blog listing': '.node--view-mode-blog-listing'
+        pager: '.pagination-nav'
 
-
-vdd:
+pipelines:
   extensions:
+    Bex\Behat\ScreenshotExtension:
+      active_image_drivers: unsee
+      image_drivers:
+        unsee:
+          expire: '1h' # possible values: '10m', '30m', '1h'
     Behat\MinkExtension:
-      base_url: http://PROJECT.dev/
+      base_url: http://localhost:8080/
     Drupal\DrupalExtension:
-      api_driver: 'drupal'
       drush:
-        alias: 'vdd'
+        alias: 'pipelines'
+        binary: %paths.base%/vendor/bin/drush
