@@ -90,20 +90,20 @@ elseif (isset($_ENV['PLATFORM_APPLICATION'])) {
   }
 }
 elseif (getenv('DOCKER_LOCAL')) {
-    // Local environment settings - see 90-docker-settings.inc.
-    $platform = 'docker';
-    $env = $base_domains[$_SERVER['HTTP_HOST']];
-    $instance = $_SERVER['HTTP_HOST'];
+  // Local environment settings - see 90-docker-settings.inc.
+  $platform = 'docker';
+  $env = $base_domains[$_SERVER['HTTP_HOST']];
+  $instance = $_SERVER['HTTP_HOST'];
 }
 else {
-    // Running under Pipelines
-    $platform = 'pipelines';
-    $env = $base_domains[$_SERVER['HTTP_HOST']];
-    $instance = $_SERVER['HTTP_HOST'];
+  // Running under Pipelines
+  $platform = 'pipelines';
+  $env = $base_domains[$_SERVER['HTTP_HOST']];
+  $instance = $_SERVER['HTTP_HOST'];
 }
 
 if (!empty($env) && !empty($platform) && !empty($instance)) {
-    define('SETTINGS_PLATFORM', $platform);
-    define('SETTINGS_ENVIRONMENT', $env);
-    define('SETTINGS_INSTANCE', $instance);
+  define('SETTINGS_PLATFORM', $platform);
+  define('SETTINGS_ENVIRONMENT', $env);
+  define('SETTINGS_INSTANCE', $instance);
 }
