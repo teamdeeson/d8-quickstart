@@ -24,7 +24,7 @@ echo "exit 0" > /usr/sbin/sendmail
 chmod +x /usr/sbin/sendmail
 
 cd docroot
-./vendor/bin/drush si config_installer --db-url=sqlite://../testdb.sqlite -y
+../vendor/bin/drush si config_installer --db-url=sqlite://../testdb.sqlite -y
 
 # Start php built-in webserver in the background
 php -S localhost:8080 > /dev/null 2>&1 &
