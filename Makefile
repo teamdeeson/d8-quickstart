@@ -113,6 +113,25 @@ pipelines-build-frontend:
 pipelines-deploy:
 	/opt/ci-tools/deployer.sh
 
+# Run all the tests under Pipelines.
+pipelines-test: pipelines-test-all
+
+# Run only the coding standards tests under Pipelines.
+pipelines-test-standards:
+	./scripts/make/test/run-test.sh --standards
+
+# Run only the unit tests under Pipelines.
+pipelines-test-unit:
+	./scripts/make/test/run-test.sh --unit
+
+# Run only the behat tests under Pipelines.
+pipelines-test-behat:
+	./scripts/make/test/run-test.sh --behat
+
+# Run all the tests under Pipelines.
+pipelines-test-all:
+	./scripts/make/test/run-test.sh --all
+
 
 
 #

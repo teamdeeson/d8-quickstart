@@ -10,9 +10,11 @@ repo_root=$(pwd)
 
 source "$repo_root/.build.env"
 
+set -e
+
 # On with the testing
 PHPCS_CHECK_DIR="$tests_standards_check_dir"
-if [ "$1" -z ]; then
+if [ -z "$1" ]; then
   PHPCS_CHECK_DIR="$1"
 fi
 PHPCS_PATH="vendor/bin/phpcs"
