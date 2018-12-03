@@ -14,6 +14,8 @@ set -e
 
 # Install test dependencies on bitbucket pipelines.
 if [ $(command -v apk) ]; then
+  #apk update
+  #apk add build-base gcc abuild binutils libpng-dev autoconf automake build-base libtool nasm mysql-client
   apk --no-cache add sqlite
 fi
 
@@ -22,7 +24,7 @@ echo "exit 0" > /usr/sbin/sendmail
 chmod +x /usr/sbin/sendmail
 
 cd docroot
-../vendor/bin/drush si config_installer --db-url=sqlite://../testdb.sqlite -y
+../vendor/bin/drush si "$tests_behat_install_profile" --db-url=sqlite://../testdb.sqlite -y
 
 # Start php built-in webserver in the background
 php -S localhost:8080 > /dev/null 2>&1 &
