@@ -32,3 +32,6 @@ php -S localhost:8080 > /dev/null 2>&1 &
 # Run behat tests.
 cd "$repo_root"
 ./vendor/bin/behat --profile pipelines
+
+# Revert any changes made to the settings file while installing Drupal for testing.
+git checkout src
