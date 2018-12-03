@@ -14,7 +14,7 @@ set -e
 
 # On with the testing
 PHPCS_CHECK_DIR="$tests_standards_check_dir"
-if [ -z "$1" ]; then
+if [ ! -z "$1" ]; then
   PHPCS_CHECK_DIR="$1"
 fi
 PHPCS_PATH="vendor/bin/phpcs"
