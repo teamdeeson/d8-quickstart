@@ -68,12 +68,21 @@ done
 
 if [ "$standards" -eq 1 ]; then
   "$repo_root/scripts/make/test/code-standards.sh"
+  if [ $? != 0 ]; then
+    exit $?
+  fi
 fi
 
 if [ "$unit" -eq 1 ]; then
   "$repo_root/scripts/make/test/unit.sh"
+  if [ $? != 0 ]; then
+    exit $?
+  fi
 fi
 
 if [ "$behat" -eq 1 ]; then
   "$repo_root/scripts/make/test/behat.sh"
+  if [ $? != 0 ]; then
+    exit $?
+  fi
 fi
