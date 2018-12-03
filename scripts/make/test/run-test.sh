@@ -10,6 +10,7 @@ repo_root=$(pwd)
 
 source "$repo_root/.build.env"
 
+set -e
 
 # Declare proper usage
 usage () {
