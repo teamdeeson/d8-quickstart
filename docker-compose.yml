@@ -113,7 +113,7 @@ services:
     working_dir: /app
     environment:
       DOCKER_LOCAL: 1
-    command: sh -c 'yarn install && yarn start'
+    command: bash -c 'yarn install && yarn start'
     networks:
       - default
       - proxy
@@ -130,7 +130,7 @@ services:
     working_dir: /app
     environment:
       DOCKER_LOCAL: 1
-    command: sh -c 'composer install && node_modules/.bin/deeson-router-start.sh'
+    command: bash -c 'composer install && node_modules/.bin/deeson-router-start.sh'
     networks:
       - default
 
