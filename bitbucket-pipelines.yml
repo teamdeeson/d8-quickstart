@@ -29,6 +29,11 @@ pipelines:
             - 'src/frontend/assets/**'
             - 'src/frontend/node_modules/**'
       - step:
+          name: Test Build
+          image: wodby/drupal-php:7.1-2.4.3
+          script:
+            - make pipelines-test-standards
+      - step:
           name: Relay
           image: deeson/deployer
           script:
@@ -58,6 +63,11 @@ pipelines:
           artifacts:
             - 'src/frontend/assets/**'
             - 'src/frontend/node_modules/**'
+      - step:
+          name: Test Build
+          image: wodby/drupal-php:7.1-2.4.3
+          script:
+            - make pipelines-test-standards
       - step:
           name: Relay
           image: deeson/deployer
@@ -89,6 +99,11 @@ pipelines:
             - 'src/frontend/assets/**'
             - 'src/frontend/node_modules/**'
       - step:
+          name: Test Build
+          image: wodby/drupal-php:7.1-2.4.3
+          script:
+            - make pipelines-test-standards
+      - step:
           name: Relay
           image: deeson/deployer
           script:
@@ -119,6 +134,11 @@ pipelines:
           artifacts:
             - 'src/frontend/assets/**'
             - 'src/frontend/node_modules/**'
+      - step:
+          name: Test Build
+          image: wodby/drupal-php:7.1-2.4.3
+          script:
+            - make pipelines-test-standards
       - step:
           name: Relay
           image: deeson/deployer
