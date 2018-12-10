@@ -36,7 +36,7 @@ update:
 
 # Set the alias required by Xdebug
 xdebug:
-	sudo ifconfig lo0 alias 10.254.254.25
+	sudo ifconfig lo0 alias 10.254.254.254
 
 
 
