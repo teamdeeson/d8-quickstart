@@ -143,7 +143,7 @@ pipelines:
           name: Relay
           image: deeson/deployer
           script:
-            - make pipelnes-deploy
+            - make pipelines-deploy
 
 definitions:
   caches:
