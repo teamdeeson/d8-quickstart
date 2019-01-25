@@ -121,9 +121,9 @@ Composer project usage guide:
 
 https://getcomposer.org/doc/01-basic-usage.md
 
-## XDebug
+## Xdebug
 
-You need to run `sudo ifconfig lo0 alias 10.254.254.254` before xdebug connections will work. This is usually required each time you log-in to your development machine, but is safe to run periodically.
+You need to run `sudo ifconfig lo0 alias 10.254.254.254` before Xdebug connections will work. This is usually required each time you log-in to your development machine, but is safe to run periodically.
 
 ## Running tests
 
@@ -259,3 +259,12 @@ You can import the site configuration using `drush @docker cim`
 The default configuration will always be imported.
 
 If the environment is the local development environment then the local configuration is also imported.
+
+## Using Drush with Acquia
+
+You may need to add the following to your ~/.ssh/config when working with Drush and Acquia remote hosts:
+
+```
+Host *.acquia-sites.com
+   LogLevel QUIET
+```
