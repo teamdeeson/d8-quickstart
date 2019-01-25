@@ -54,7 +54,7 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
       $pantheon_domain = $_ENV['PANTHEON_ENVIRONMENT'] .
         '-' . $_ENV['PANTHEON_SITE_NAME'] .
         '.pantheonsite.io';
-      $base_domains[$pantheon_domain] = 'dev';
+      $base_domains[$pantheon_domain] = D_ENVIRONMENT_DEV;
       break;
   }
 }
