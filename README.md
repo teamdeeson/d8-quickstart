@@ -37,7 +37,8 @@ You should check through all of the services and settings files and make any req
 
 `src/settings/environment.inc:` Configure your domain names
 
-`src/settings/01-core.settings.inc:` Configure a hash salt. See [http://drupalhashsalt.com/](http://drupalhashsalt.com/)
+
+`src/settings/01-core.settings.inc:` Configure a hash salt. 
 
 `src/settings/02-shield.settings.inc:` Configure basic-auth access details to protect your dev sites.
 
@@ -72,7 +73,37 @@ make clean
 Once you have run the build for the first time, you can setup and run your Docker environment using the following command.
 
 ```
-make docker-up
+make start
+```
+
+
+You should now have several running docker containers, including nginx, php, mariadb. Run the following command to check this.
+
+```
+$ docker container ls
+CONTAINER ID        IMAGE                             COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+01b7db232917        wodby/drupal-nginx:8-1.13-2.4.2   "/docker-entrypoint.…"   3 minutes ago       Up 3 minutes        80/tcp                                     d8-quickstart_nginx
+b463d169feeb        deeson/fe-node                    "bash -c 'yarn insta…"   3 minutes ago       Up 3 minutes                                                   d8-quickstart_fe-node
+f487f9c5ae93        wodby/drupal-php:7.1-2.4.3        "/docker-entrypoint.…"   3 minutes ago       Up 3 minutes        9000/tcp                                   d8-quickstart_php
+fd56e451e51d        wodby/mariadb:10.1-2.3.3          "/docker-entrypoint.…"   3 minutes ago       Up 3 minutes        3306/tcp                                   d8-quickstart_mariadb
+53d6dcb35ee1        mailhog/mailhog                   "MailHog"                3 minutes ago       Up 3 minutes        1025/tcp, 8025/tcp                         d8-quickstart_mailhog
+fb0ebe6aae0e        wodby/redis:3.2-2.1.0             "/docker-entrypoint.…"   3 minutes ago       Up 3 minutes        6379/tcp                                   d8-quickstart_redis
+834f7edc1c46        wodby/drupal-solr:8-6.4-2.0.0     "docker-entrypoint-s…"   3 minutes ago       Up 3 minutes        8983/tcp                                   d8-quickstart_solr
+c18f97249a71        deeson/fe-php                     "docker-php-entrypoi…"   3 minutes ago       Up 3 minutes                                                   d8-quickstart_fe-php
+2ffcf9dcf72d        traefik:1.6.6-alpine              "/entrypoint.sh --do…"   23 hours ago        Up 20 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   traefik
+```
+
+The output should contain a line like this:
+
+```
+2ffcf9dcf72d        traefik:1.6.6-alpine            "/entrypoint.sh --do…"   21 hours ago        Up 18 hours         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   traefik
+```
+
+This is the docker-proxy container. It must be running for you to view the site in browser. See [dependencies](#dependencies) section for setup instructions.
+
+```
+cd docker-proxy
+make start
 ```
 
 You should now be able to access a vanilla Drupal site at http://localhost
@@ -87,7 +118,7 @@ will install the site and associated configuration. You will be prompted to opti
 You can stop the docker environment at any time using the command below:
 
 ```
-make docker-down
+make stop
 ```
 
 Your site files and database will be stored outside of docker in the `.persist` hidden directory.
@@ -268,3 +299,5 @@ You may need to add the following to your ~/.ssh/config when working with Drush 
 Host *.acquia-sites.com
    LogLevel QUIET
 ```
+
+
