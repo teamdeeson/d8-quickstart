@@ -228,6 +228,8 @@ To import an exported site database into the database container (if you don't ha
 pv database_export_filename.sql | docker-compose exec -T mariadb mysql -udrupal -pdrupal drupal
 ```
 
+Note that this method is up to 33% faster than the drush method `pv database_export_filename.sql | drush @docker sql-cli`
+
 # Dependencies
 
 Our Docker proxy should be installed and running.
