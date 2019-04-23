@@ -103,7 +103,7 @@ else {
 }
 
 if (!empty($env) && !empty($platform)) {
-  if (empty($instance) && php_sapi_name() === 'cli') {
+  if (empty($instance) && php_sapi_name() != 'cli') {
     if (function_exists('drupal_set_message')) {
       drupal_set_message('SETTINGS_INSTANCE is not set and we were not invoked from the CLI.', 'warning');
     }
