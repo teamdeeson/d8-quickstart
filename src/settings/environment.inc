@@ -102,8 +102,18 @@ else {
   $instance = 'localhost';
 }
 
-if (!empty($env) && !empty($platform) && !empty($instance)) {
+if (!empty($env) && !empty($platform)) {
+  if (empty($instance) && php_sapi_name() === 'cli') {
+    if (function_exists('drupal_set_message')) {
+      drupal_set_message('SETTINGS_INSTANCE is not set and we were not invoked from the CLI.', 'warning');
+    }
+  }
   define('SETTINGS_PLATFORM', $platform);
   define('SETTINGS_ENVIRONMENT', $env);
   define('SETTINGS_INSTANCE', $instance);
+}
+else {
+  if (function_exists('drupal_set_message')) {
+    drupal_set_message('SETTINGS_PLATFORM and/or SETTINGS_ENVIRONMENT is not set.', 'error');
+  }
 }
