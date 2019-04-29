@@ -256,7 +256,7 @@ docker-compose exec php
 To import an exported site database into the database container (if you don't have pv installed you can do so with `brew install pv`):
 
 ```bash
-pv database_export_filename.sql | docker exec -i a7162120bee8 mysql -udrupal -pdrupal drupal
+pv database_export_filename.sql | docker-compose exec -t mariadb mysql -udrupal -pdrupal drupal
 ```
 Replace the hash with the instance hash for the docker instance you want to get a terminal prompt for. You can find out that using the `docker ps` command to list active instances.
 
