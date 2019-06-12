@@ -10,14 +10,14 @@
     }
   ],
   "require": {
-    "composer/installers": "^1.6",
+    "composer/installers": "~1.5.0",
     "cweagans/composer-patches": "1.x-dev",
     "drupal-composer/drupal-scaffold": "^2.5",
     "drupal/components": "^1.0",
     "drupal/config_filter": "^1.4",
     "drupal/config_split": "^1.4",
     "drupal/console": "~1.0",
-    "drupal/core": "8.6.10",
+    "drupal/core": "8.6.16",
     "drupal/datalayer": "1.x-dev",
     "drupal/devel": "^2.0",
     "drupal/drupal-extension": "^3.2",
@@ -33,8 +33,8 @@
     "drupal/stage_file_proxy": "^1.0",
     "drupal/warden": "^1.0",
     "drush/drush": "^9.5",
-    "guzzlehttp/guzzle": "^6.0@dev",
-    "phpunit/phpunit": "^6.5"
+    "webflo/drupal-core-strict": "8.6.16",
+    "zendframework/zend-feed": "~2.7.0"
   },
   "require-dev": {
     "behat/mink": "~1.7",
@@ -42,6 +42,7 @@
     "jcalderonzumba/gastonjs": "~1.0.2",
     "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
     "mikey179/vfsstream": "~1.2",
+    "phpunit/phpunit": "^6.5",
     "symfony/css-selector": "~2.8",
     "drupal/coder": "^8.2"
   },
