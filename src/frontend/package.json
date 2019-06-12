@@ -9,14 +9,12 @@
     "build": "./node_modules/.bin/webpack -p"
   },
   "dependencies": {
-    "babel-loader": "^7.1.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "deeson-webpack-config-starter": "https://github.com/teamdeeson/deeson-webpack-config",
-    "eslint": "^3.13.1",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-react": "^6.9.0",
-    "sass-loader": "^6.0.6",
-    "webpack": "^3.4.1"
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0"
   }
 }
