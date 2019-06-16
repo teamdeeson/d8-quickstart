@@ -30,11 +30,18 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
       DB_DRIVER: $DB_DRIVER
+      PHP_FPM_USER: wodby
+      PHP_FPM_GROUP: wodby
+      COLUMNS: 80
+      PHP_IDE_CONFIG: "serverName=drupal"       # Needed for xdebug for drush commands.
       PHP_XDEBUG: 1
       PHP_XDEBUG_DEFAULT_ENABLE: 1
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
-      PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
-      PHP_IDE_CONFIG: "serverName=drupal"       # Needed for xdebug for drush commands.
+      #PHP_XDEBUG_REMOTE_HOST: host.docker.internal # Docker 18.03+ Mac/Win
+      #PHP_XDEBUG_REMOTE_HOST: 172.17.0.1 # Linux
+      PHP_XDEBUG_REMOTE_HOST: 10.254.254.254 # macOS, Docker < 18.03, You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
+      #PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows, Docker < 18.03
+      #PHP_XDEBUG_REMOTE_LOG: /tmp/php-xdebug.log
     volumes:
       - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
@@ -53,6 +60,7 @@ services:
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/docroot
+      NGINX_VHOST_PRESET: $NGINX_VHOST_PRESET
     volumes:
       - ./:/var/www/html:cached
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
