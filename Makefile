@@ -10,7 +10,11 @@ COMMAND=/bin/bash
 #
 
 # Shortcut for make install, make build and make start
-default: install build start
+default: bootstrap install build start
+
+# Bootstrap Deeson Drupal build framework
+bootstrap:
+	./scripts/bootstrap-build-framework.sh
 
 # Install dependencies
 install:
