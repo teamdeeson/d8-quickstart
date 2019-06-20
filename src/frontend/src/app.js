@@ -1,4 +1,3 @@
-
 import myFooter from './components/myFooter';
 
 document.addEventListener('DOMContentLoaded', () => {
