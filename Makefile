@@ -107,7 +107,7 @@ clean-drupal: clean-composer
 
 # Bootstrap scripts/make directory
 pipelines-bootstrap:
-    ./scripts/bootstrap-build-framework.sh
+	./scripts/bootstrap-build-framework.sh
 
 # Build Drupal under Pipelnes.
 pipelines-build-drupal:
