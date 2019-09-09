@@ -106,7 +106,13 @@ cd docker-proxy
 make start
 ```
 
-You should now be able to access a vanilla Drupal site at http://localhost
+You should now be able to access a vanilla Drupal site at [https://d8-quickstart.localhost](https://d8-quickstart.localhost) in Google Chrome. You will need to add a security exemption as Chrome will complain about the SSL certificate being unsigned.
+
+If you want to use other browsers you have to add an entry to your `/etc/hosts` file:
+
+```
+127.0.0.1 d8-quickstart.localhost
+```
 
 You can now run the Drupal installation, either through the interface or from the command line using:
 
