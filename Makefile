@@ -105,6 +105,10 @@ clean-drupal: clean-composer
 # Targets for Bitbucket Pipelines
 #
 
+# Bootstrap scripts/make directory
+pipelines-bootstrap:
+	./scripts/bootstrap-build-framework.sh
+
 # Build Drupal under Pipelnes.
 pipelines-build-drupal:
 	./scripts/make/install-drupal.sh

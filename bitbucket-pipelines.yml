@@ -5,6 +5,13 @@ pipelines:
   branches:
     master:
       - step:
+            name: Bootstrap
+            image: deeson/deployer
+            script:
+              - make pipelines-bootstrap
+            artifacts:
+              - 'scripts/make/**'
+      - step:
           name: Build Drupal
           image: wodby/drupal-php:7.1-2.4.3
           caches:
@@ -39,6 +46,13 @@ pipelines:
           script:
             - make pipelines-deploy
     develop:
+      - step:
+          name: Bootstrap
+          image: deeson/deployer
+          script:
+            - make pipelines-bootstrap
+          artifacts:
+            - 'scripts/make/**'
       - step:
           name: Build Drupal
           image: wodby/drupal-php:7.1-2.4.3
@@ -75,6 +89,13 @@ pipelines:
             - make pipelines-deploy
     UAT:
       - step:
+          name: Bootstrap
+          image: deeson/deployer
+          script:
+            - make pipelines-bootstrap
+          artifacts:
+            - 'scripts/make/**'
+      - step:
           name: Build Drupal
           image: wodby/drupal-php:7.1-2.4.3
           caches:
@@ -110,6 +131,13 @@ pipelines:
             - make pipelines-deploy
   tags:
     '*':
+      - step:
+          name: Bootstrap
+          image: deeson/deployer
+          script:
+            - make pipelines-bootstrap
+          artifacts:
+            - 'scripts/make/**'
       - step:
           name: Build Drupal
           image: wodby/drupal-php:7.1-2.4.3
