@@ -19,7 +19,7 @@ if [ ! -d "./make" ]; then
 
   #If were not under pipelines, run in container, otherwise we're already in a container, run locally.
   if [ -z "$CI" ]; then
-  docker run -v $(pwd):/app -w /app --env DBFVER=$version deeson/deployer /bin/bash -c "$clone_script"
+    docker run -v $(pwd):/app -w /app --env DBFVER=$version deeson/deployer /bin/bash -c "$clone_script"
   else
     eval "$clone_script"
   fi
