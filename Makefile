@@ -4,11 +4,11 @@
 -include .env
 
 #
-# You can choose to use Docker for local development by specifying the USE_DOCKER=1 environment variable in
-# your project .env file.
+# You can choose to not use Docker for local development by specifying the USE_DOCKER=0 environment variable in
+# your project .env file.  The default is to use Docker for local development.
 #
 
-USE_DOCKER ?= 0
+USE_DOCKER ?= 1
 
 #
 # Ensure the local environment has the right binaries installed.
@@ -29,14 +29,20 @@ default: install start build
 #
 
 install: .env
+ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty  --volume $(PWD):/var/www/html:delegated wodby/drupal-php:7.3-dev /bin/bash -c "composer global require hirak/prestissimo; composer install"
+else
+	@echo "TBC ..."
+fi
 
 #
 # Update all Composer dependencies.
 #
 
 update:
+ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update
+fi
 
 #
 # Start the local development server.
