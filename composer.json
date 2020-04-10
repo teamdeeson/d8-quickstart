@@ -10,83 +10,46 @@
     }
   ],
   "require": {
-    "composer/installers": "~1.5.0",
-    "cweagans/composer-patches": "1.x-dev",
-    "drupal-composer/drupal-scaffold": "^2.5",
+    "composer/installers": "~1.9.0",
+    "cweagans/composer-patches": "^1.6.5",
+    "drupal/coffee": "^1.0@beta2",
+    "drupal/config_ignore": "^2.2",
+    "drupal/core-composer-scaffold": "*",
     "drupal/components": "^1.0",
     "drupal/config_filter": "^1.4",
     "drupal/config_split": "^1.4",
-    "drupal/console": "~1.0",
-    "drupal/core": "8.6.16",
-    "drupal/datalayer": "1.x-dev",
-    "drupal/devel": "^2.0",
-    "drupal/drupal-extension": "^3.2",
+    "drupal/core": "8.8.5",
     "drupal/entity": "^1.0@alpha",
-    "drupal/google_analytics": "^2.1",
-    "drupal/masquerade": "^2.0@beta",
-    "drupal/metatag": "^1.0@beta",
-    "drupal/pathauto": "^1.0@beta",
-    "drupal/redirect": "^1.0@alpha",
+    "drupal/field_group": "^3.0",
+    "drupal/focal_point": "^1.2",
+    "drupal/masquerade": "^2.0@beta3",
+    "drupal/media_entity_download": "2.x-dev",
+    "drupal/metatag": "^1.12",
+    "drupal/paragraphs": "^1.10",
+    "drupal/pathauto": "^1.6",
+    "drupal/redirect": "^1.5",
     "drupal/redis": "^1.0@alpha",
     "drupal/reroute_email": "^1.0@beta",
-    "drupal/shield": "^1.0",
+    "drupal/save_edit": "^1.3",
+    "drupal/scheduler": "^1.1",
     "drupal/stage_file_proxy": "^1.0",
     "drupal/warden": "^1.0",
-    "drush/drush": "^9.5",
-    "webflo/drupal-core-strict": "8.6.16",
-    "zendframework/zend-feed": "~2.7.0"
-  },
-  "require-dev": {
-    "behat/mink": "~1.7",
-    "behat/mink-goutte-driver": "~1.2",
-    "jcalderonzumba/gastonjs": "~1.0.2",
-    "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-    "mikey179/vfsstream": "~1.2",
-    "phpunit/phpunit": "^6.5",
-    "symfony/css-selector": "~2.8",
-    "drupal/coder": "^8.2"
+    "drush/drush": "^9.7.2",
   },
   "conflict": {
     "drupal/drupal": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "autoload": {
-    "classmap": [
-      "scripts/composer/ScriptHandler.php",
-      "scripts/composer/DeesonScriptHandler.php"
-    ]
-  },
   "scripts": {
-    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-    "pre-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
-    "pre-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
     "post-install-cmd": [
-      "@drupal-scaffold",
-      "DrupalProject\\composer\\DeesonScriptHandler::createRequiredFiles"
+      "make composer--post-install-cmd"
     ],
     "post-update-cmd": [
-      "@drupal-scaffold",
-      "DrupalProject\\composer\\DeesonScriptHandler::createRequiredFiles"
+      "make composer--post-update-cmd"
     ]
   },
   "extra": {
-    "drupal-scaffold": {
-      "omit-defaults": true,
-      "includes": [
-        "index.php",
-        "sites/default/default.settings.php",
-        "sites/default/default.services.yml"
-      ],
-      "initial": {
-        ".htaccess": ".htaccess",
-        "robots.txt": "robots.txt"
-      }
-    },
     "installer-paths": {
       "docroot/core": ["type:drupal-core"],
       "docroot/libraries/{$name}": ["type:drupal-library"],
@@ -95,13 +58,42 @@
       "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
       "drush/contrib/{$name}": ["type:drupal-drush"]
     },
-    "patches": {
+    "drupal-scaffold": {
+      "allowed-packages": [
+        "drupal/core"
+      ],
+      "locations": {
+        "web-root": "./docroot"
+      },
+      "symlink": true,
+      "overwrite": true,
+      "file-mapping": {
+        "[web-root]/.csslintrc": false,
+        "[web-root]/.editorconfig": false,
+        "[web-root]/.eslintignore": false,
+        "[web-root]/.eslintrc.json": false,
+        "[web-root]/.gitattributes": false,
+        "[web-root]/.ht.router.php": false,
+        "[web-root]/INSTALL.txt": false,
+        "[web-root]/README.txt": false,
+        "[web-root]/example.gitignore": false,
+        "[web-root]/update.php": false,
+        "[web-root]/web.config": false,
+        "[project-root]/.gitignore": false,
+        "[project-root]/.gitattributes": false,
+        "[project-root]/.editorconfig": false,
+        "[web-root]/sites/default/settings.php": "src/settings/settings.php",
+        "[web-root]/sites/default/services.yml": "src/settings/services.yml",
+        "[web-root]/.htaccess": "src/settings/htaccess",
+        "[web-root]/robots.txt": "src/settings/robots.txt"
+      }
     },
-    "patchLevel": {
-      "drupal/core": "-p2"
+    "enable-patching": true,
+    "patches": {
     }
   },
   "config": {
+    "optimize-autoloader": true,
     "sort-packages": true
   }
 }

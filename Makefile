@@ -1,173 +1,174 @@
-ENVIRONMENT?=docker
-DRUSH_ARGS?=-y --nocolor
-HOST=php
-SOLR_HOST=solr
-COMMAND=/bin/bash
-
+#
+# Optionally include a .env file.
+#
+-include .env
 
 #
-# Key targets
+# You can choose to use Docker for local development by specifying the USE_DOCKER=1 environment variable in
+# your project .env file.
 #
 
-# Shortcut for make install, make build and make start
-default: bootstrap install build start
+USE_DOCKER ?= 0
 
-# Bootstrap Deeson Drupal build framework
-bootstrap:
-	./scripts/bootstrap-build-framework.sh
+#
+# Ensure the local environment has the right binaries installed.
+#
 
-# Install dependencies
-install:
-	./scripts/make/install.sh
+REQUIRED_BINS := php composer
+$(foreach bin,$(REQUIRED_BINS),\
+    $(if $(shell command -v $(bin) 2> /dev/null),,$(error Please install `$(bin)`)))
 
-# Build all static assets
-build:
-	./scripts/make/build.sh
+#
+# Default is what happens if you only type make.
+#
 
-# Start Docker Compose services but assume dependencies and build has already taken place
+default: install start build
+
+#
+# Bring in the external project dependencies.
+#
+
+install: .env
+	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer install --ignore-platform-reqs
+
+#
+# Update all Composer dependencies.
+#
+
+update:
+	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update --ignore-platform-reqs
+
+#
+# Start the local development server.
+#
+
 start:
+ifeq ("${USE_DOCKER}","1")
 	@echo Bringing docker containers up
 	docker-compose up -d
 	docker-compose ps
+else
+	./vendor/bin/drush runserver
+endif
 
-# Run all tests
-test:
-	./scripts/make/test.sh
-
-# Update Drupal
-update:
-	./scripts/make/update.sh ${ENVIRONMENT} ${DRUSH_ARGS}
-
-# Set the alias required by Xdebug
-xdebug:
-	sudo ifconfig lo0 alias 10.254.254.254
-
-
-
-#
-# Targets for interacting with Docker Compose
-#
-
-# Stop docker
 stop:
+ifeq ("${USE_DOCKER}","1")
 	docker-compose down --remove-orphans
+endif
 
-# Restart docker
 restart: stop start
 
-# Connect to the shell on a docker host, defaults to HOST=php COMMAND=/bin/bash
-# Usage: make shell HOST=[service name] COMMAND=[command]
-shell:
-	docker-compose exec $(HOST) $(COMMAND)
-
-
-
 #
-# Targets for orchestrating project build
+# Build stages: Setup and configure the application for the environment.
 #
 
-# Initialise Apache Solr core in service container for Apache Solr (without Search API).
-build-solr:
-	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 config_set=apachesolr -f /usr/local/bin/actions.mk'
+build: install-drupal
 
-# Initialise Apache Solr core in service container for Apache Solr (via Search API).
-build-searchapi-solr:
-	make shell HOST=$(SOLR_HOST) COMMAND='make core=core1 -f /usr/local/bin/actions.mk'
-
-
-
-#
-# Targets for cleaning project build artefacts
-#
-
-# Remove everything that's re-buildable. Running make build will reverse this.
-clean: clean-drupal clean-frontend
-
-# Remove NodeJS modules required by front-end
-clean-node:
-	./scripts/make/clean-node.sh
-
-# Remove all front-end build artefacts including NodeJS modules
-clean-frontend: clean-node
-	./scripts/make/clean-frontend.sh
-
-# Remove dependencies managed by Composer
-clean-composer:
-	./scripts/make/clean-composer.sh
-
-# Remove Drupal dependencies managed by Drush Make including Composer dependencies
-clean-drupal: clean-composer
-	./scripts/make/clean-drupal.sh
-
-
+install-drupal:
+ifeq ("${USE_DOCKER}","1")
+	@echo Waiting for db to be ready ...
+	@sleep 45
+	./drush.wrapper @docker cr
+	./drush.wrapper @docker cim --yes
+	./drush.wrapper @docker uli
+else
+	mv src/settings/99-installation.settings.inc.hide src/settings/99-installation.settings.inc
+	./vendor/bin/drush si contenta_jsonapi --yes --db-url=sqlite://../local.sqlite
+	mv src/settings/99-installation.settings.inc src/settings/99-installation.settings.inc.hide
+	./vendor/bin/drush cim --yes
+endif
 
 #
-# Targets for Bitbucket Pipelines
+# Linting / testing / formatting.
 #
 
-# Bootstrap scripts/make directory
-pipelines-bootstrap:
-	./scripts/bootstrap-build-framework.sh
+lint:
+	@echo "TBC ..."
 
-# Build Drupal under Pipelnes.
-pipelines-build-drupal:
-	./scripts/make/install-drupal.sh
+test:
+	@echo "TBC ..."
 
-# Build the frontend resources and copy them into the docroot under Pipelines
-pipelines-build-frontend:
-	./scripts/make/build-frontend.sh
-
-# Relay to hosting platform provided Git repository under Pipelines.
-pipelines-deploy:
-	/opt/ci-tools/deployer.sh
-
-# Run all the tests under Pipelines.
-pipelines-test: pipelines-test-all
-
-# Run only the coding standards tests under Pipelines.
-pipelines-test-standards:
-	./scripts/make/test/run-test.sh --standards
-
-# Run only the unit tests under Pipelines.
-pipelines-test-unit:
-	./scripts/make/test/run-test.sh --unit
-
-# Run only the behat tests under Pipelines.
-pipelines-test-behat:
-	./scripts/make/test/run-test.sh --behat
-
-# Run all the tests under Pipelines.
-pipelines-test-all:
-	./scripts/make/test/run-test.sh --all
-
-
+format:
+	@echo "TBC ..."
 
 #
-# Targets for interacting with Docker Compose
+# Delete all non version controlled files to reset the project.
 #
 
-# Run all the tests.
-test: test-all
+clean: stop clean--reset-installation-file
+	rm -rf docroot vendor
 
-# Run only the coding standards tests.
-test-standards:
-	./scripts/make/test/run-tests.sh --standards
-
-# Run only the unit tests.
-test-unit:
-	./scripts/make/test/run-tests.sh --unit
-
-# Run only the behat tests.
-test-behat:
-	./scripts/make/test/run-tests.sh --behat
-
-# Run all the tests.
-test-all:
-	./scripts/make/test/run-tests.sh --all
-
+clean--reset-installation-file:
+ifneq (,$(wildcard ${PWD}/src/settings/99-installation.settings.inc))
+	mv src/settings/99-installation.settings.inc src/settings/99-installation.settings.inc.hide
+endif
 
 #
-# Targets specific to the project
+# Generate project symlinks and other disposable assets and wiring.
 #
-# Note: Do not forget to precede the target definition with a comment explaining what it does!
+
+.persist/public:
+ifeq ("${USE_DOCKER}","1")
+	mkdir -p .persist/public
+endif
+
+.persist/private:
+ifeq ("${USE_DOCKER}","1")
+	mkdir -p .persist/private
+endif
+
+.env:
+	cp .env.example .env
+
+docroot/sites/default/files/:
+ifeq ("${USE_DOCKER}","1")
+	ln -s ../../../.persist/public docroot/sites/default/files
+endif
+
+docroot/sites/default/files/tmp/:
+	mkdir -p docroot/sites/default/files/tmp/
+
+docroot/sites/default/settings.php:
+	ln -s ../../../src/settings/settings.php docroot/sites/default/settings.php
+
+docroot/modules/custom:
+	ln -s ../../src/modules $@
+
+docroot/themes/custom:
+	ln -s ../../src/themes $@
+
+docroot/profiles/custom:
+	ln -s ../../src/profiles $@
+
 #
+# Commands which get run from composer.json scripts section.
+#
+
+composer--post-install-cmd: composer--post-update-cmd
+composer--post-update-cmd: .persist/public \
+                                .persist/private \
+                                docroot/sites/default/settings.php \
+                                docroot/modules/custom \
+                                docroot/profiles/custom \
+                                docroot/themes/custom;
+
+#
+# Helper CLI commands.
+#
+
+sql-cli:
+ifeq ("${USE_DOCKER}","1")
+	@docker-compose exec ${DB_HOST} mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+else
+	@echo "You need to use whatever sqlite uses..."
+endif
+
+logs:
+ifeq ("${USE_DOCKER}","1")
+	docker-compose logs -f
+else
+	@echo "You need to use whatever sqlite uses..."
+endif
+
+xdebug:
+	sudo ifconfig lo0 alias 10.254.254.254
