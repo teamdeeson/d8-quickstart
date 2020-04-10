@@ -4,17 +4,38 @@
   "description": "A new project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/frontend-serve",
-    "dist": "./node_modules/.bin/webpack -p",
-    "build": "./node_modules/.bin/webpack -p"
+    "start": "frontend-serve",
+    "build": "webpack -p",
+    "format": "prettier --write \"src/**/*.{js,json,css}\""
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "deeson-webpack-config-starter": "https://github.com/teamdeeson/deeson-webpack-config",
+    "@babel/preset-env": "^7.4.5",
+    "autoprefixer": "^9.6.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.0.0",
+    "deeson-webpack-config-starter": "https://github.com/teamdeeson/deeson-webpack-config#feature/split-webpack",
     "eslint": "^5.15.3",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "file-loader": "^4.0.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "postcss-custom-media": "^7.0.8",
+    "postcss-import": "^12.0.1",
+    "postcss-inline-svg": "^4.0.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-mixins": "^6.2.1",
+    "postcss-nested": "^4.1.2",
+    "postcss-preset-env": "^6.6.0",
+    "postcss-responsive-type": "^1.0.0",
+    "postcss-utilities": "^0.8.1",
+    "prettier": "^1.18.2",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.4",
+    "webpack-dev-server": "^3.7.2",
+    "write-file-webpack-plugin": "^4.5.0"
   }
 }
