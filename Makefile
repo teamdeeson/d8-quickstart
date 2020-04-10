@@ -29,14 +29,14 @@ default: install start build
 #
 
 install: .env
-	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer install --ignore-platform-reqs
+	docker run --rm --interactive --tty  --volume $(PWD):/var/www/html:delegated wodby/drupal-php:7.3-dev /bin/bash -c "composer global require hirak/prestissimo; composer install"
 
 #
 # Update all Composer dependencies.
 #
 
 update:
-	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update --ignore-platform-reqs
+	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update
 
 #
 # Start the local development server.
@@ -71,11 +71,6 @@ ifeq ("${USE_DOCKER}","1")
 	./drush.wrapper @docker cr
 	./drush.wrapper @docker cim --yes
 	./drush.wrapper @docker uli
-else
-	mv src/settings/99-installation.settings.inc.hide src/settings/99-installation.settings.inc
-	./vendor/bin/drush si contenta_jsonapi --yes --db-url=sqlite://../local.sqlite
-	mv src/settings/99-installation.settings.inc src/settings/99-installation.settings.inc.hide
-	./vendor/bin/drush cim --yes
 endif
 
 #
@@ -95,13 +90,8 @@ format:
 # Delete all non version controlled files to reset the project.
 #
 
-clean: stop clean--reset-installation-file
+clean: stop
 	rm -rf docroot vendor
-
-clean--reset-installation-file:
-ifneq (,$(wildcard ${PWD}/src/settings/99-installation.settings.inc))
-	mv src/settings/99-installation.settings.inc src/settings/99-installation.settings.inc.hide
-endif
 
 #
 # Generate project symlinks and other disposable assets and wiring.

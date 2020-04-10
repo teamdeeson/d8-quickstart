@@ -12,7 +12,7 @@
   "require": {
     "composer/installers": "~1.9.0",
     "cweagans/composer-patches": "^1.6.5",
-    "drupal/coffee": "^1.0@beta2",
+    "drupal/coffee": "^1.0@beta",
     "drupal/config_ignore": "^2.2",
     "drupal/core-composer-scaffold": "*",
     "drupal/components": "^1.0",
@@ -22,7 +22,7 @@
     "drupal/entity": "^1.0@alpha",
     "drupal/field_group": "^3.0",
     "drupal/focal_point": "^1.2",
-    "drupal/masquerade": "^2.0@beta3",
+    "drupal/masquerade": "^2.0@beta",
     "drupal/media_entity_download": "2.x-dev",
     "drupal/metatag": "^1.12",
     "drupal/paragraphs": "^1.10",
@@ -34,7 +34,7 @@
     "drupal/scheduler": "^1.1",
     "drupal/stage_file_proxy": "^1.0",
     "drupal/warden": "^1.0",
-    "drush/drush": "^9.7.2",
+    "drush/drush": "^9.7.2"
   },
   "conflict": {
     "drupal/drupal": "*"
