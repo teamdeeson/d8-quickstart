@@ -57,3 +57,6 @@ Thumbs.db
 
 # Node
 node_modules
+
+# Project secrets should not be checked in.
+.env
