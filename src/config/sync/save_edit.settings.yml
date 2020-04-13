@@ -1,0 +1,9 @@
+button_value: 'Save & Edit'
+button_weight: '-1'
+dropbutton: '1'
+hide_default_save: '0'
+unpublish: '0'
+unpublish_new_only: '0'
+node_types: {  }
+_core:
+  default_config_hash: nNcqzC75Ga_iQShU0PBJRKk48eiw1ArP7A3xAL5Lveg

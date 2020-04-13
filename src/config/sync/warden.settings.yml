@@ -1,0 +1,15 @@
+warden_allow_requests: false
+warden_public_allow_ips: '127.0.0.1,::1'
+warden_server_host_path: ''
+warden_http_username: ''
+warden_http_password: ''
+warden_token: ''
+warden_match_contrib: true
+warden_match_custom: true
+warden_preg_match_custom: '{^modules\/custom\/*}'
+warden_preg_match_contrib: '{^modules\/contrib\/*}'
+warden_match_core: true
+warden_match_library: false
+warden_list_libraries: {  }
+_core:
+  default_config_hash: QHhUT-UT-9iQoulLBggekAsTvHRFvydlQh5lV0Tb9h8

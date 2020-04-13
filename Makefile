@@ -33,7 +33,7 @@ ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty  --volume $(PWD):/var/www/html:delegated wodby/drupal-php:7.3-dev /bin/bash -c "composer global require hirak/prestissimo; composer install"
 else
 	@echo "TBC ..."
-fi
+endif
 
 #
 # Update all Composer dependencies.
@@ -42,7 +42,7 @@ fi
 update:
 ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update
-fi
+endif
 
 #
 # Start the local development server.

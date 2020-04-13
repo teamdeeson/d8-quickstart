@@ -27,7 +27,7 @@
  *
  * @see install_select_profile()
  */
-$settings['install_profile'] = 'deeson';
+$settings['install_profile'] = 'standard';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -46,7 +46,7 @@ $settings['install_profile'] = 'deeson';
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-// $settings['hash_salt'] = 'ENTER_A_VALUE_HERE';
+$settings['hash_salt'] = !empty($settings['hash_salt']) ? $settings['hash_salt'] : getenv('DRUPAL_HASH_SALT');
 
 /**
  * Deployment identifier.
@@ -479,3 +479,15 @@ $settings['trusted_host_patterns'] = array_map(function($d){return '^' . preg_qu
 # if (file_exists(__DIR__ . '/settings.local.php')) {
 #   include __DIR__ . '/settings.local.php';
 # }
+
+$settings['extension_discovery_scan_tests'] = FALSE;
+
+
+/**
+ * Do not check certain directories for Drupal files.
+ */
+
+$settings['file_scan_ignore_directories'] = [
+  'node_modules',
+  'bower_components',
+];
