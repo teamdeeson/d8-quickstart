@@ -13,7 +13,7 @@ services:
 #    ports:
 #      - "3307:3306"
     volumes:
-#      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - ./mariadb-init:/docker-entrypoint-initdb.d # A starter database is inside here
       - ./.persist/mysql:/var/lib/mysql:delegated # I want to manage volumes manually.
     networks:
       - default
