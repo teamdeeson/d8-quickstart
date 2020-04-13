@@ -32,7 +32,7 @@ install: .env
 ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty  --volume $(PWD):/var/www/html:delegated wodby/drupal-php:7.3-dev /bin/bash -c "composer global require hirak/prestissimo; composer install"
 else
-	@echo "TBC ..."
+	composer install
 endif
 
 #
@@ -42,6 +42,8 @@ endif
 update:
 ifeq ("${USE_DOCKER}","1")
 	docker run --rm --interactive --tty --volume $(PWD):/app  --volume $(PWD)/.persist/composer:/tmp composer update
+else
+	composer update
 endif
 
 #
@@ -74,9 +76,12 @@ install-drupal:
 ifeq ("${USE_DOCKER}","1")
 	@echo Waiting for db to be ready ...
 	@sleep 45
-	./drush.wrapper @docker cr
 	./drush.wrapper @docker cim --yes
 	./drush.wrapper @docker uli
+else
+	./vendor/bin/drush si standard --yes
+	./vendor/bin/drush cim --yes
+	./vendor/bin/drush uli
 endif
 
 #
@@ -97,6 +102,7 @@ format:
 #
 
 clean: stop
+	chmod -R +w docroot/sites/default
 	rm -rf docroot vendor
 
 #
@@ -154,7 +160,7 @@ composer--post-update-cmd: .persist/public \
 
 sql-cli:
 ifeq ("${USE_DOCKER}","1")
-	@docker-compose exec ${DB_HOST} mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+	@docker-compose exec mariadb mysql -udrupal -pdrupal drupal
 else
 	@echo "You need to use whatever sqlite uses..."
 endif

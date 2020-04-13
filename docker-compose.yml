@@ -13,7 +13,7 @@ services:
 #    ports:
 #      - "3307:3306"
     volumes:
-      - ./mariadb-init:/docker-entrypoint-initdb.d # A starter database is inside here
+      - ./.mariadb-init:/docker-entrypoint-initdb.d # A starter database is inside here.
       - ./.persist/mysql:/var/lib/mysql:delegated # I want to manage volumes manually.
     networks:
       - default
@@ -43,7 +43,7 @@ services:
       #PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows, Docker < 18.03
       #PHP_XDEBUG_REMOTE_LOG: /tmp/php-xdebug.log
     volumes:
-      - ./:/var/www/html:cached
+      - ./:/var/www/html:delegated
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
       - ./.persist/private:/private:delegated
     tmpfs: /tmp
@@ -62,7 +62,7 @@ services:
       NGINX_SERVER_ROOT: /var/www/html/docroot
       NGINX_VHOST_PRESET: drupal8
     volumes:
-      - ./:/var/www/html:cached
+      - ./:/var/www/html:delegated
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
     tmpfs: /tmp
     networks:
