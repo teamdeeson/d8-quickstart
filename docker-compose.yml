@@ -2,34 +2,34 @@ version: "3"
 
 services:
   mariadb:
-    image: $MARIADB_TAG
+    image: wodby/mariadb:10.1-2.3.5
     container_name: "${PROJECT_NAME}_mariadb"
     stop_grace_period: 30s
     environment:
-      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
-      MYSQL_DATABASE: $DB_NAME
-      MYSQL_USER: $DB_USER
-      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
 #    ports:
 #      - "3307:3306"
     volumes:
-#      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - ./.mariadb-init:/docker-entrypoint-initdb.d # A starter database is inside here.
       - ./.persist/mysql:/var/lib/mysql:delegated # I want to manage volumes manually.
     networks:
       - default
 
   php:
-    image: $PHP_TAG
+    image: wodby/drupal-php:7.3-dev
     container_name: "${PROJECT_NAME}_php"
     environment:
       DOCKER_LOCAL: 1
       D4D_HOSTNAME: ${PROJECT_BASE_URL}
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
-      DB_HOST: $DB_HOST
-      DB_USER: $DB_USER
-      DB_PASSWORD: $DB_PASSWORD
-      DB_NAME: $DB_NAME
-      DB_DRIVER: $DB_DRIVER
+      DB_HOST: mariadb
+      DB_USER: drupal
+      DB_PASSWORD: drupal
+      DB_NAME: drupal
+      DB_DRIVER: mysql
       PHP_FPM_USER: wodby
       PHP_FPM_GROUP: wodby
       COLUMNS: 80
@@ -43,7 +43,7 @@ services:
       #PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows, Docker < 18.03
       #PHP_XDEBUG_REMOTE_LOG: /tmp/php-xdebug.log
     volumes:
-      - ./:/var/www/html:cached
+      - ./:/var/www/html:delegated
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
       - ./.persist/private:/private:delegated
     tmpfs: /tmp
@@ -51,7 +51,7 @@ services:
       - default
 
   nginx:
-    image: $NGINX_TAG
+    image: wodby/nginx:1.17-5.5.0
     container_name: "${PROJECT_NAME}_nginx"
     depends_on:
       - php
@@ -60,9 +60,9 @@ services:
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/docroot
-      NGINX_VHOST_PRESET: $NGINX_VHOST_PRESET
+      NGINX_VHOST_PRESET: drupal8
     volumes:
-      - ./:/var/www/html:cached
+      - ./:/var/www/html:delegated
       - ./.persist/public:/var/www/html/docroot/sites/default/files:delegated
     tmpfs: /tmp
     networks:
@@ -74,7 +74,7 @@ services:
       - 'traefik.frontend.rule=Host:${PROJECT_BASE_URL}'
 
   solr:
-    image: $SOLR_TAG
+    image: wodby/drupal-solr:8-6.4-2.0.0
     container_name: "${PROJECT_NAME}_solr"
     environment:
       SOLR_HEAP: 1024m
@@ -100,14 +100,14 @@ services:
       - 'traefik.frontend.rule=Host:mailhog.${PROJECT_BASE_URL}'
 
 #  memcached:
+#    image: wodby/memcached:1-2.2.6
 #    container_name: "${PROJECT_NAME}_memcached"
-#    image: $MEMCACHED_TAG
 #    networks:
 #      - default
 
   redis:
+    image: wodby/redis:4-3.0.8
     container_name: "${PROJECT_NAME}_redis"
-    image: $REDIS_TAG
     networks:
       - default
 
@@ -153,7 +153,7 @@ services:
 #    labels:
 #      - 'traefik.backend=varnish'
 #      - 'traefik.port=6081'
-#      - 'traefik.frontend.rule=Host:varnish.localhost'
+#      - 'traefik.frontend.rule=Host:varnish.${PROJECT_BASE_URL}'
 
 networks:
   proxy:

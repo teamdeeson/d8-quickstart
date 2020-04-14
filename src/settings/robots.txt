@@ -1,0 +1,7 @@
+#
+# robots.txt
+#
+# No indexing is required for the content management system itself.
+
+User-agent: *
+Disallow: /

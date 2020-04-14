@@ -27,14 +27,27 @@ if (SETTINGS_ENVIRONMENT == D_ENVIRONMENT_LOCAL && SETTINGS_PLATFORM == D_PLATFO
   $base_url = $base_protocol . '://' . SETTINGS_INSTANCE;
 
   // File paths...
-  $conf['file_temporary_path'] = '/tmp';
+  $settings['file_temp_path'] = '/tmp';
   $settings['file_public_path'] = 'sites/default/files';
-  $settings['file_private_path'] = '/private';
+  $settings['file_private_path'] = '../.persist/private';
 
   // Configure Redis.
-
   $settings['redis.connection']['host'] = 'redis';
   $settings['redis.connection']['port'] = '6379';
   $settings['redis.connection']['password'] = '';
   $settings['redis.connection']['base'] = 0;
+  //$settings['cache']['default'] = 'cache.backend.redis';
+
+  // Use the development service config.
+  $settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+
+  // Disable some caches on docker development.
+  $settings['cache']['bins']['render'] = 'cache.backend.null';
+  $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+  $settings['cache']['bins']['page'] = 'cache.backend.null';
+  $settings['extension_discovery_scan_tests'] = FALSE;
+
+  $settings['trusted_host_patterns'] = [
+    '^d8-quickstart.localhost',
+  ];
 }

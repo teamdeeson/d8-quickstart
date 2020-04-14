@@ -38,7 +38,7 @@ if [[ $@ == *"@docker"* ]]; then
     # Tell Docker the number of columns in our terminal.
     ARGS="${ARGS} -e COLUMNS="`tput cols`
 
-    docker exec $ARGS $CONTAINER ./vendor/bin/drush --local --alias-path=./drush "$@"
+    docker exec $ARGS $CONTAINER ./vendor/bin/drush --local --alias-path=/var/www/html/drush "$@"
 else
     ${basename}/vendor/bin/drush --alias-path=./drush "$@"
 fi
